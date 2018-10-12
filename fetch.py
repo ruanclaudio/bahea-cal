@@ -19,7 +19,8 @@ if not creds or creds.invalid:
     with open(token_name, 'w+') as token_file:
         token_file.write(os.environ.get('TOKEN_JSON'))
         with tempfile.NamedTemporaryFile('w+', delete=False) as creds_file:
-            flow = client.flow_from_clientsecrets('credentials.json', SCOPES)
+            flow = client.flow_from_clientsecrets(
+                os.environ.get('CREDENTIALS_JSON'), SCOPES)
     creds = tools.run_flow(flow, store)
     store.put(creds)
 service = build('calendar', 'v3', http=creds.authorize(Http()))
