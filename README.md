@@ -14,6 +14,7 @@ A partir disso, clone este repositório e siga os passos seguintes:
 - `virtualenv env`
 - `source env/bin/activate`
 - `pip install -r requirements-dev.txt`
-- ```TOKEN_NAME="token.json" CREDENTIALS_JSON="credentials.json" TOKEN_JSON=`cat token.json python fetch.py```
+- ```TOKEN_NAME="token.json" CREDENTIALS_JSON="credentials.json" TOKEN_JSON=`cat token.json` python fetch.py```
+
 
 
