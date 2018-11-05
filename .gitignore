@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.json
 
 # C extensions
 *.so
@@ -102,3 +103,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# vscode stuff
+vs/
+vscode/
