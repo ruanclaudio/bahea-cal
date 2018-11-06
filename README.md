@@ -1,4 +1,4 @@
-# Bahea Calendar
+# Bahea Calendar :us:
 
 Bahea Calendar is a project that will add to your google calendar the schedule of your favorite soccer team games!
 
