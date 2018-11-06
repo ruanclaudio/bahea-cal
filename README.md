@@ -18,7 +18,7 @@ After that, clone this repository and follow these steps:
 
 
 
-# Bahea Calendar
+# Bahea Calendar 🇧🇷
 
 O Bahea Calendar é um projeto que adicionará ao seu calendário google a agenda de jogos do seu time do coração!
 
