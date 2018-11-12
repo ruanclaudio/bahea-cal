@@ -1,12 +1,12 @@
 # Bahea Calendar :us:
 
-Bahea Calendar is a project that will add to your google calendar the schedule of your favorite soccer team games!
+Bahea Calendar is a project that adds the standings of your favorite soccer team games to your google calendar!
 
 ## How to run
 
 You must have Python3 and pip installed on your computer.
 
-Also, you need to create a project to access the google calendar API. You can do it accessing the google's [developers console](https://console.developers.google.com/). When it's done, download the JSON file with your credentials and rename it with `credentials.json`
+Also, you need to create a project to access the google calendar API. You can do it by accessing the google's [developers console](https://console.developers.google.com/). When it's done, download the JSON file with your credentials and rename it with `credentials.json`
 
 After that, clone this repository and follow these steps:
 
