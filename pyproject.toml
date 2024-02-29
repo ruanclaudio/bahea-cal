@@ -25,6 +25,8 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 dependencies = [
+  "oauth2client==4.1.3",
+  "attrs==23.2.0",
   "google-api-python-client==2.119.0",
   "beautifulsoup4==4.12.3",
   "arrow==1.3.0",
