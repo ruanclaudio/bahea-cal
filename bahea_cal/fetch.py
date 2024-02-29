@@ -68,7 +68,7 @@ class CalendarEvent:
             description=f"{match.championship}: {match.homeTeam} x {match.awayTeam}, {match.location}",
             start_datetime=start_date,
             start_timezone=timezone,
-            end_datetime=start_date.replace(minutes=+110),
+            end_datetime=start_date.shift(minutes=+110),
             end_timezone=timezone,
             location=match.location,
         )
