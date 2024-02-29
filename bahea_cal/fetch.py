@@ -146,5 +146,60 @@ def schedule():
             print(f"Event already in calendar: {event.description} {possible.get('htmlLink')}")
 
 
+def store(event):
+    with transaction.atomic():
+        home_team = event.match.homeTeam
+        home_team_obj = Team.objects.get_or_create(ref=home_team.id, defaults={"popular_name": home_team.popularName})[
+            0
+        ]
+
+        away_team = event.match.awayTeam
+        away_team_obj = Team.objects.get_or_create(ref=away_team.id, defaults={"popular_name": away_team.popularName})[
+            0
+        ]
+
+        championship = event.match.championship
+        championship_obj = Championship.objects.get_or_create(name=championship.name)[0]
+
+        location = event.match.location
+        if location:
+            location_obj = Location.objects.get_or_create(name=location.name, popular_name=location.popularName)[0]
+        else:
+            location_obj = None
+
+        phase = event.match.phase
+        phase_obj = Phase.objects.get_or_create(name=phase.name, phase_type=phase.type)[0]
+
+        round = event.match.round
+        round_obj = Round.objects.get_or_create(name=str(round))[0]
+
+        start_date = event.match.startDate
+        start_hour = event.match.startHour
+        timezone = "America/Bahia"
+        if start_hour:
+            start_at = arrow.get(f"{start_date} {start_hour} {timezone}", "YYYY-MM-DD HH:mm:ss ZZZ").datetime
+        else:
+            start_at = arrow.get(f"{start_date} {timezone}", "YYYY-MM-DD ZZZ").datetime
+
+        match = Match.objects.get_or_create(
+            home_team=home_team_obj,
+            away_team=away_team_obj,
+            championship=championship_obj,
+            location=location_obj,
+            phase=phase_obj,
+            round=round_obj,
+            start_at=start_at,
+        )[0]
+        SoccerEvent.objects.get_or_create(match=match)
+
+
+def fetch():
+    from parse import parse
+
+    events = parse()
+    for event in events:
+        store(event)
+
+
 if __name__ == "__main__":
-    schedule()
+    fetch()
