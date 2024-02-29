@@ -53,6 +53,13 @@ class Match(models.Model):
     round = models.ForeignKey("core.Round", on_delete=models.SET_NULL, null=True)
     start_at = models.DateTimeField()
 
+    class Meta:
+        unique_together = ("championship", "home_team", "away_team", "start_at")
+
+    def __str__(self):
+        if self.championship:
+            return f"{self.championship}: {self.home_team} x {self.away_team}"
+
 
 class SoccerEvent(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
