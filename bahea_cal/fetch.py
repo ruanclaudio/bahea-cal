@@ -1,12 +1,28 @@
 import datetime
 import os
+import pathlib
 import tempfile
 
 import arrow
 import attrs
 from apiclient.discovery import build
+from django.db import transaction
 from httplib2 import Http
 from oauth2client import file, client, tools
+
+import sys
+import django
+
+# Add the project path to the sys.path
+project_path = pathlib.Path(__file__).parent
+sys.path.append(str(project_path))
+
+# Set the Django settings module
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "webapp.settings")
+
+django.setup()
+
+from core.models import Team, Championship, Location, Phase, Round, Match, SoccerEvent
 
 
 def get_service():
