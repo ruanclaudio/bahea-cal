@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = djsettings.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = djsettings.get("DEBUG", False, cast=bool)
+DEBUG = djsettings.get("DEBUG", False, cast='@bool')
 
 ALLOWED_HOSTS = djsettings.ALLOWED_HOSTS
 
