@@ -14,7 +14,7 @@ import sys
 import django
 
 # Add the project path to the sys.path
-project_path = pathlib.Path(__file__).parent
+project_path = pathlib.Path(__file__).parent.parent
 sys.path.append(str(project_path))
 
 # Set the Django settings module
