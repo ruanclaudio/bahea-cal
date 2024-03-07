@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+
 import json
 from pathlib import Path
 from config import djsettings
@@ -83,7 +84,7 @@ DATABASES = {
         "PASSWORD": djsettings.DATABASES__default__PASSWORD,
         "HOST": djsettings.DATABASES__default__HOST,
         "PORT": djsettings.DATABASES__default__PORT,
-        "OPTIONS": json.loads(djsettings.DATABASES__default__OPTIONS),
+        # "OPTIONS": json.loads(djsettings.DATABASES__default__OPTIONS),
     }
 }
 
