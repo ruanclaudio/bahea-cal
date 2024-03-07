@@ -26,7 +26,7 @@ SECRET_KEY = djsettings.SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = djsettings.get("DEBUG", False, cast='@bool')
 
-ALLOWED_HOSTS = djsettings.ALLOWED_HOSTS
+ALLOWED_HOSTS = djsettings.get("ALLOWED_HOSTS", cast="@str").split(",")
 
 
 # Application definition
