@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import json
 from pathlib import Path
 from config import djsettings
 
@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = djsettings.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = djsettings.get("DEBUG", False, cast='@bool')
+DEBUG = djsettings.get("DEBUG", False, cast="@bool")
 
 ALLOWED_HOSTS = djsettings.get("ALLOWED_HOSTS", cast="@str").split(",")
 
@@ -79,11 +79,11 @@ DATABASES = {
     "default": {
         "ENGINE": djsettings.DATABASES__default__ENGINE,
         "NAME": djsettings.DATABASES__default__NAME,
-        'USER': djsettings.DATABASES__default__USER,
-        'PASSWORD': djsettings.DATABASES__default__PASSWORD,
-        'HOST': djsettings.DATABASES__default__HOST,
-        'PORT': djsettings.DATABASES__default__PORT,
-        'OPTIONS': djsettings.DATABASES__default__OPTIONS,
+        "USER": djsettings.DATABASES__default__USER,
+        "PASSWORD": djsettings.DATABASES__default__PASSWORD,
+        "HOST": djsettings.DATABASES__default__HOST,
+        "PORT": djsettings.DATABASES__default__PORT,
+        "OPTIONS": json.loads(djsettings.DATABASES__default__OPTIONS),
     }
 }
 
@@ -94,7 +94,6 @@ if DEBUG:
             "NAME": djsettings.DATABASES__default__NAME,
         }
     }
-
 
 
 # Password validation
