@@ -18,6 +18,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from core import views
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("calendar/init/", views.google_calendar_init_view, name="google_permission"),
+    path("calendar/redirect/", views.google_calendar_redirect_view, name="google_redirect"),
 ]
