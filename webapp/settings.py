@@ -24,12 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = djsettings.SECRET_KEY
 
+ALLOWED_HOSTS = djsettings.get("ALLOWED_HOSTS", cast="@str").split(",")
+BASE_URL = djsettings.get("BASE_URL", cast="@str")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = djsettings.get("DEBUG", False, cast="@bool")
-
-ALLOWED_HOSTS = djsettings.get("ALLOWED_HOSTS", cast="@str").split(",")
-
-BASE_URL = djsettings.get("BASE_URL", cast="@str")
+ENVIRONMENT = djsettings.ENVIRONMENT
 
 
 # Application definition
@@ -79,7 +78,7 @@ WSGI_APPLICATION = "webapp.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-if DEBUG:
+if ENVIRONMENT == "dev":
     DATABASES = {
         "default": {
             "ENGINE": djsettings.DATABASES__default__ENGINE,
