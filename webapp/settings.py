@@ -77,23 +77,23 @@ WSGI_APPLICATION = "webapp.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": djsettings.DATABASES__default__ENGINE,
-        "NAME": djsettings.DATABASES__default__NAME,
-        "USER": djsettings.DATABASES__default__USER,
-        "PASSWORD": djsettings.DATABASES__default__PASSWORD,
-        "HOST": djsettings.DATABASES__default__HOST,
-        "PORT": djsettings.DATABASES__default__PORT,
-        # "OPTIONS": json.loads(djsettings.DATABASES__default__OPTIONS),
-    }
-}
-
 if DEBUG:
     DATABASES = {
         "default": {
             "ENGINE": djsettings.DATABASES__default__ENGINE,
             "NAME": djsettings.DATABASES__default__NAME,
+        }
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": djsettings.DATABASES__default__ENGINE,
+            "NAME": djsettings.DATABASES__default__NAME,
+            "USER": djsettings.DATABASES__default__USER,
+            "PASSWORD": djsettings.DATABASES__default__PASSWORD,
+            "HOST": djsettings.DATABASES__default__HOST,
+            "PORT": djsettings.DATABASES__default__PORT,
+            # "OPTIONS": json.loads(djsettings.DATABASES__default__OPTIONS),
         }
     }
 
