@@ -29,6 +29,8 @@ DEBUG = djsettings.get("DEBUG", False, cast="@bool")
 
 ALLOWED_HOSTS = djsettings.get("ALLOWED_HOSTS", cast="@str").split(",")
 
+BASE_URL = djsettings.get("BASE_URL", cast="@str")
+
 
 # Application definition
 
