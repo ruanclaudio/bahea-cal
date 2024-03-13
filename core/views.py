@@ -24,6 +24,10 @@ API_SERVICE_NAME = "calendar"
 API_VERSION = "v3"
 
 
+def home(request):
+    return render(request, "core/home.html")
+
+
 def google_calendar_init_view(request):
     client_id = request.session.get("client_id")
 

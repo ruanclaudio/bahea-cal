@@ -24,4 +24,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("calendar/init/", views.google_calendar_init_view, name="google_permission"),
     path("calendar/redirect/", views.google_calendar_redirect_view, name="google_redirect"),
+    path("", views.home, name="home")
 ]
