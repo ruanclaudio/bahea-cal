@@ -19,7 +19,7 @@ SCOPES = [
     "https://www.googleapis.com/auth/userinfo.profile",
     "openid",
 ]
-REDIRECT_URL = f"{settings.BASE_URL}/calendar/redirect"
+REDIRECT_URL = f"{settings.BASE_URL}/calendar/redirect/"
 API_SERVICE_NAME = "calendar"
 API_VERSION = "v3"
 
@@ -32,7 +32,6 @@ def google_calendar_init_view(request):
     client_id = request.session.get("client_id")
 
     config = get_secret("staging/google/calendar")
-
     creds = CredentialsService.init_for(client_id, scopes=SCOPES)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
