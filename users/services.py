@@ -30,6 +30,9 @@ class Credentials(GoogleCredentials):
 class CredentialsService:
     @staticmethod
     def init_for(user, scopes):
+        if not user or not user.is_authenticated:
+            return
+
         if not (user_credentials := CredentialsService.get_for(user)):
             return
 
