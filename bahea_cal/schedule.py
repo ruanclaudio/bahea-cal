@@ -14,23 +14,34 @@ django.setup()
 import googleapiclient.discovery
 
 from bahea_cal.fetch import CalendarEvent
+from google.auth.transport.requests import Request
 
-from users.services import Credentials
+from users.services import CredentialsService
 from users.models import UserCredential, UserEvent
 
+SCOPES = [
+    "https://www.googleapis.com/auth/calendar",
+    "https://www.googleapis.com/auth/userinfo.email",
+    "https://www.googleapis.com/auth/userinfo.profile",
+    "openid",
+]
 API_SERVICE_NAME = "calendar"
 API_VERSION = "v3"
 
 
 def get_service(user_credentials):
-    credentials = Credentials.from_user_credentials(user_credentials)
-    return googleapiclient.discovery.build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
+    creds = CredentialsService.init_for(user_credentials.user, scopes=SCOPES)
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+    # credentials = Credentials.from_user_credentials(user_credentials)
+    return googleapiclient.discovery.build(API_SERVICE_NAME, API_VERSION, credentials=creds)
 
 
 def schedule_for(credential):
     service = get_service(credential)
 
-    events = UserEvent.objects.filter(eid__isnull=True)
+    events = UserEvent.objects.filter(eid__isnull=True, user=credential.user)
 
     for event in events:
         try:
