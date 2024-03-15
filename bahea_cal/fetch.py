@@ -102,50 +102,6 @@ class CalendarEvent:
         }
 
 
-def schedule():
-    from parse import parse
-
-    service = get_service()
-
-    soccer_events = parse()
-    events = soccer_events
-
-    for event in events:
-        try:
-            event = CalendarEvent.from_parsed(event)
-        except:
-            print(f"Skipping: {event.match.homeTeam} x {event.match.awayTeam}")
-            continue
-
-        when = event.start_datetime
-
-        possible_existing = (
-            service.events()
-            .list(
-                calendarId="primary",
-                timeMin=when,
-                maxResults=20,
-                singleEvents=True,
-                orderBy="startTime",
-                timeMax=when.shift(minutes=+140),
-            )
-            .execute()
-        )
-
-        existent = False
-        for possible in possible_existing.get("items", []):
-            if possible["summary"] == event.summary:
-                existent = True
-                break
-
-        if not existent:
-            event_dict = event.as_dict()
-            eventc = service.events().insert(calendarId="primary", body=event_dict).execute()
-            print(f"Event created: {event.description} {eventc.get('htmlLink')}")
-        else:
-            print(f"Event already in calendar: {event.description} {possible.get('htmlLink')}")
-
-
 def store(event):
     with transaction.atomic():
         home_team = event.match.homeTeam
