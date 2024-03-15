@@ -1,50 +1,22 @@
-import datetime
 import os
 import pathlib
-import tempfile
-
-import arrow
-import attrs
-from apiclient.discovery import build
-from django.db import transaction
-from httplib2 import Http
-from oauth2client import file, client, tools
-
 import sys
+
 import django
 
-# Add the project path to the sys.path
 project_path = pathlib.Path(__file__).parent.parent
 sys.path.append(str(project_path))
 
-# Set the Django settings module
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "webapp.settings")
 
 django.setup()
 
+import arrow
+import attrs
+
+from django.db import transaction
+
 from core.models import Team, Championship, Location, Phase, Round, Match, SoccerEvent
-
-
-def get_service():
-    SCOPES = "https://www.googleapis.com/auth/calendar"
-
-    # import ipdb; ipdb.set_trace()
-
-    token_name = os.environ.get("TOKEN_NAME")
-    store = file.Storage(token_name)
-    creds = store.get()
-    if not creds or creds.invalid:
-        with open(token_name, "w+") as token_file:
-            token_file.write(os.environ.get("TOKEN_JSON"))
-            with tempfile.NamedTemporaryFile("w+", delete=False) as creds_file:
-                flow = client.flow_from_clientsecrets(os.environ.get("CREDENTIALS_JSON"), SCOPES)
-        creds = tools.run_flow(flow, store)
-        store.put(creds)
-    service = build("calendar", "v3", http=creds.authorize(Http()))
-    return service
-
-
-now = datetime.datetime.utcnow().isoformat() + "Z"  # 'Z' indicates UTC time
 
 
 @attrs.define
@@ -62,34 +34,24 @@ class CalendarEvent:
         match = event.match
 
         timezone = "America/Bahia"
-        start_date = arrow.get(f"{match.startDate} {match.startHour} {timezone}", "YYYY-MM-DD HH:mm:ss ZZZ")
+
+        description = f"{match.championship.name}: {match.home_team.popular_name} x {match.away_team.popular_name}"
+        if match.location:
+            description += f", {match.location.popular_name}"
         return cls(
-            summary=f"{match.homeTeam} x {match.awayTeam}",
-            description=f"{match.championship}: {match.homeTeam} x {match.awayTeam}, {match.location}",
-            start_datetime=start_date,
+            summary=f"[{match.championship.name}] {match.home_team.popular_name} x {match.away_team.popular_name}",
+            description=description,
+            start_datetime=arrow.get(match.start_at),
             start_timezone=timezone,
-            end_datetime=start_date.shift(minutes=+110),
+            end_datetime=arrow.get(match.start_at).shift(minutes=+120),
             end_timezone=timezone,
-            location=match.location,
+            location=match.location and match.location.popular_name or "",
         )
-        # self.__typename = kwargs.pop("__typename")
-        # self.awayTeam = kwargs.pop("awayTeam")
-        # self.championship = kwargs.pop("championship")
-        # self.homeTeam = kwargs.pop("homeTeam")
-        # self.liveWatchSources = kwargs.pop("liveWatchSources")
-        # self.location = kwargs.pop("location")
-        # self.phase = kwargs.pop("phase")
-        # self.round = kwargs.pop("round")
-        # self.scoreboard = kwargs.pop("scoreboard")
-        # self.startDate = kwargs.pop("startDate")
-        # self.startHour = kwargs.pop("startHour")
-        # self.transmission = kwargs.pop("transmission")
-        # self.winner = kwargs.pop("winner")
 
     def as_dict(self):
         return {
             "summary": self.summary,
-            "location": str(self.location),
+            "location": self.location,
             "description": self.description,
             "start": {
                 "dateTime": self.start_datetime.isoformat(),
