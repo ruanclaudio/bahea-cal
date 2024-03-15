@@ -3,6 +3,7 @@ import os.path
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
 from django.conf import settings
+from django.contrib.auth import authenticate, login, get_user_model
 from django.shortcuts import redirect
 from django.shortcuts import render
 from google.auth.transport.requests import Request
@@ -68,8 +69,23 @@ def google_calendar_redirect_view(request):
 
     request.session["client_id"] = credentials.client_id
     service = googleapiclient.discovery.build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
-    # service2 = googleapiclient.discovery.build('people', 'v1', credentials=credentials)
-    # service2.people().get(resourceName="people/me").execute()
+
+    userinfo_service = googleapiclient.discovery.build("oauth2", "v2", credentials=credentials)
+    user_info = userinfo_service.userinfo().get().execute()
+
+    email = user_info.get("email")
+    User = get_user_model()
+    user, created = User.objects.get_or_create(username=email, email=email)
+    if created:
+        user.set_unusable_password()
+        user.save()
+
+    saved_credentials.user = user
+    saved_credentials.save(update_fields=["user"])
+
+    user = authenticate(request, username=email)
+    if user:
+        login(request, user)
 
     try:
         calendar_list = service.calendarList().list().execute()
