@@ -67,6 +67,8 @@ def schedule_for(credential):
             event.save()
             print(f"Event created: {calendar_event.description} {eventc.get('htmlLink')}")
         else:
+            event.eid = possible.get("htmlLink").split("eid=")[1]
+            event.save()
             print(f"Event already in calendar: {calendar_event.description} {possible.get('htmlLink')}")
 
 
