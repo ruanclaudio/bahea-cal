@@ -29,16 +29,16 @@ class Credentials(GoogleCredentials):
 
 class CredentialsService:
     @staticmethod
-    def init_for(client_id, scopes):
-        if not (user_credentials := CredentialsService.get_for(client_id)):
+    def init_for(user, scopes):
+        if not (user_credentials := CredentialsService.get_for(user)):
             return
 
         return Credentials.from_authorized_user_info(user_credentials.as_dict(), scopes=scopes)
 
     @staticmethod
-    def get_for(client_id):
+    def get_for(user):
         try:
-            return UserCredential.objects.get(client_id=client_id)
+            return UserCredential.objects.get(user=user)
         except UserCredential.DoesNotExist:
             return
 

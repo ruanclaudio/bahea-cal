@@ -30,10 +30,8 @@ def home(request):
 
 
 def google_calendar_init_view(request):
-    client_id = request.session.get("client_id")
-
     config = get_secret("staging/google/calendar")
-    creds = CredentialsService.init_for(client_id, scopes=SCOPES)
+    creds = CredentialsService.init_for(request.user, scopes=SCOPES)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
