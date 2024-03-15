@@ -16,7 +16,7 @@ import googleapiclient.discovery
 from bahea_cal.fetch import CalendarEvent
 from google.auth.transport.requests import Request
 
-from users.services import CredentialsService
+from users.services import Credentials
 from users.models import UserCredential, UserEvent
 
 SCOPES = [
@@ -30,11 +30,10 @@ API_VERSION = "v3"
 
 
 def get_service(user_credentials):
-    creds = CredentialsService.init_for(user_credentials.user, scopes=SCOPES)
+    creds = Credentials.from_user_credentials(user_credentials)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
-    # credentials = Credentials.from_user_credentials(user_credentials)
     return googleapiclient.discovery.build(API_SERVICE_NAME, API_VERSION, credentials=creds)
 
 
