@@ -4,7 +4,6 @@ from django.db import models
 
 
 class Team(models.Model):
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     ref = models.IntegerField(unique=True)
     popular_name = models.CharField(max_length=64, unique=True)
@@ -14,7 +13,6 @@ class Team(models.Model):
 
 
 class Championship(models.Model):
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=64, unique=True)
 
@@ -23,7 +21,6 @@ class Championship(models.Model):
 
 
 class Location(models.Model):
-
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=64, unique=True)
     popular_name = models.CharField(max_length=64)
