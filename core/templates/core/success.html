@@ -2,6 +2,12 @@
 <html>
 <body>
 
+{% if user.is_authenticated %}
+  <p>Obrigado, {{ user.username }}!</p>
+{% else %}
+  <p>Obrigado, visitante!</p>
+{% endif %}
+
 <h1>Calendário Conectado!</h1>
 <p>Os eventos começarão a aparecer em breve.</p>
 
