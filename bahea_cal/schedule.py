@@ -11,7 +11,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "webapp.settings")
 
 django.setup()
 
-import googleapiclient
+import googleapiclient.discovery
 
 from bahea_cal.fetch import CalendarEvent
 
