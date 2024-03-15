@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class UserCredential(models.Model):
-    client_id = models.CharField(max_length=128, unique=True)
+    client_id = models.CharField(max_length=128)
     credentials = models.JSONField(editable=False, blank=True, null=True)
     user = models.ForeignKey("users.User", on_delete=models.CASCADE, blank=True, null=True)
 
