@@ -60,13 +60,6 @@ def google_calendar_redirect_view(request):
     flow.fetch_token(authorization_response=authorization_response)
 
     credentials = Credentials.from_flow(flow.credentials)
-    saved_credentials = CredentialsService.create_for(credentials.client_id, credentials)
-
-    if not saved_credentials:
-        return redirect("/calendar/init")
-
-    request.session["client_id"] = credentials.client_id
-    service = googleapiclient.discovery.build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
 
     userinfo_service = googleapiclient.discovery.build("oauth2", "v2", credentials=credentials)
     user_info = userinfo_service.userinfo().get().execute()
@@ -78,6 +71,13 @@ def google_calendar_redirect_view(request):
         user.set_unusable_password()
         user.save()
 
+    if not CredentialsService.get_for(user):
+        saved_credentials = CredentialsService.create_for(user, credentials)
+    else:
+        saved_credentials = CredentialsService.update_for(user, credentials)
+    if not saved_credentials:
+        return redirect("/calendar/init")
+
     saved_credentials.user = user
     saved_credentials.save(update_fields=["user"])
 
@@ -86,10 +86,11 @@ def google_calendar_redirect_view(request):
         login(request, user)
 
     try:
+        service = googleapiclient.discovery.build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
         calendar_list = service.calendarList().list().execute()
         calendar_id = calendar_list["items"][0]["id"]
         service.events().list(calendarId=calendar_id).execute()
     except:
-        return render(request, "core/success.html", {"error": "Algo de errado aconteceu"})
+        return render(request, "core/error.html")
     else:
         return render(request, "core/success.html")
