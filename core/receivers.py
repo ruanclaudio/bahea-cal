@@ -8,7 +8,7 @@ from .models import SoccerEvent
 def update_user_events(sender, instance, created, **kwargs):
     if created:
         home_team_subscriptions = instance.match.home_team.subscriptions.all()
-        away_team_subscriptions = instance.match.home_team.subscriptions.all()
+        away_team_subscriptions = instance.match.away_team.subscriptions.all()
 
         for subscription in home_team_subscriptions:
             subscription.user.events.add(instance)
