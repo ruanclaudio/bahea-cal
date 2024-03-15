@@ -1,15 +1,41 @@
 <!DOCTYPE html>
 <html>
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>BaheaCal - Adicione Jogos do Seu Time Favorito</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem; /* Responsive font size */
+            color: #007bff; /* Bootstrap primary color */
+        }
+    </style>
+</head>
 <body>
+    <div class="container">
+        <h1>Calendário Conectado!</h1>
+        {% if user.is_authenticated %}
+          <p class="col text-center">Obrigado, {{ user.username }}!</p>
+        {% else %}
+          <p class="col text-center">Obrigado, visitante!</p>
+        {% endif %}
 
-{% if user.is_authenticated %}
-  <p>Obrigado, {{ user.username }}!</p>
-{% else %}
-  <p>Obrigado, visitante!</p>
-{% endif %}
+        <p class="col text-center">Os eventos começarão a aparecer em breve.</p>
+    </div>
 
-<h1>Calendário Conectado!</h1>
-<p>Os eventos começarão a aparecer em breve.</p>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
 </html>

@@ -1,10 +1,58 @@
 <!DOCTYPE html>
 <html>
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>BaheaCal - Adicione Jogos do Seu Time Favorito</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem; /* Responsive font size */
+            color: #007bff; /* Bootstrap primary color */
+        }
+    </style>
+</head>
 <body>
+    <div class="container">
+        <h1>Adicione Jogos do Seu Time</h1>
+        <div class="row mt-5">
+            <h2 class="col text-center">no calendário do seu celular</h2>
+        </div>
+        <div class="row mt-5">
+            <div class="col text-center">
+                <!-- Bahia Button -->
+                <a href="/calendar/init" class="btn btn-primary">
+                    <img src="{% static 'icons/bahia.png' %}" alt="Bahia" style="height: 50px;"> Bahia
+                </a>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <span class="col text-center">Em breve:</span>
+        </div>
+        <div class="row mt-3">
+            <!-- Disabled Buttons for Other Teams -->
+            <div class="col text-center">
+                <button class="btn btn-secondary disabled" disabled><img src="{% static 'icons/flamengo.png' %}" alt="Team 2" style="height: 20px;"> Flamengo</button>
+                <button class="btn btn-secondary disabled" disabled><img src="{% static 'icons/palmeiras.png' %}" alt="Team 3" style="height: 20px;"> Palmeiras</button>
+                <button class="btn btn-secondary disabled" disabled><img src="{% static 'icons/corinthians.png' %}" alt="Team 4" style="height: 20px;"> Corinthians</button>
+                <button class="btn btn-secondary disabled" disabled><img src="{% static 'icons/fluminense.png' %}" alt="Team 1" style="height: 20px;"> Fluminense</button>
+                <button class="btn btn-secondary disabled" disabled><img src="{% static 'icons/atletico.png' %}" alt="Team 5" style="height: 20px;"> Atlético</button>
+            </div>
+        </div>
+    </div>
 
-<h1>Adicione os jogos do seu time</h1>
-
-<a href="/calendar/init/">Adicione os jogos do Bahia</a>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
 </html>
