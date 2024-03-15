@@ -43,6 +43,11 @@ class CredentialsService:
             return
 
     @staticmethod
+    def create_for(client_id, raw_credentials):
+        new_credentials = raw_credentials.as_dict(strip=["client_id"])
+        return UserCredential.objects.create(client_id=client_id, credentials=new_credentials)
+
+    @staticmethod
     def update_for(client_id, raw_credentials):
         new_credentials = raw_credentials.as_dict(strip=["client_id"])
         credentials, _ = UserCredential.objects.update_or_create(

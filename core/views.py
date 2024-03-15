@@ -62,7 +62,7 @@ def google_calendar_redirect_view(request):
     flow.fetch_token(authorization_response=authorization_response)
 
     credentials = Credentials.from_flow(flow.credentials)
-    saved_credentials = CredentialsService.update_for(credentials.client_id, credentials)
+    saved_credentials = CredentialsService.create_for(credentials.client_id, credentials)
 
     if not saved_credentials:
         return redirect("/calendar/init")
