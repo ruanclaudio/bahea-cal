@@ -173,7 +173,10 @@ def parse():
         except json.JSONDecodeError as e:
             print("Error decoding JSON:", e)
         else:
-            soccer_events = instantiate_from_json(parsed_data["SCHEDULE_TEAM"]["teamAgenda"]["future"])
-            return soccer_events
+            # past_events = instantiate_from_json(parsed_data["SCHEDULE_TEAM"]["teamAgenda"]["past"])
+            past_events = []
+            current_events = instantiate_from_json(parsed_data["SCHEDULE_TEAM"]["teamAgenda"]["now"])
+            future_events = instantiate_from_json(parsed_data["SCHEDULE_TEAM"]["teamAgenda"]["future"])
+            return past_events + current_events + future_events
     else:
         print("JavaScript object not found in the HTML content")
