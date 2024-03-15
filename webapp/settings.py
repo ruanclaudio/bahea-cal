@@ -31,6 +31,9 @@ DEBUG = djsettings.get("DEBUG", False, cast="@bool")
 ENVIRONMENT = djsettings.ENVIRONMENT
 
 
+AUTH_USER_MODEL = "users.User"
+
+
 # Application definition
 
 INSTALLED_APPS = [
