@@ -63,11 +63,11 @@ def schedule_for(credential):
         if not existent:
             event_dict = calendar_event.as_dict()
             eventc = service.events().insert(calendarId="primary", body=event_dict).execute()
-            event.eid = eventc.get("htmlLink").split("eid=")[1]
+            event.eid = eventc["id"]
             event.save()
             print(f"Event created: {calendar_event.description} {eventc.get('htmlLink')}")
         else:
-            event.eid = possible.get("htmlLink").split("eid=")[1]
+            event.eid = possible["id"]
             event.save()
             print(f"Event already in calendar: {calendar_event.description} {possible.get('htmlLink')}")
 
