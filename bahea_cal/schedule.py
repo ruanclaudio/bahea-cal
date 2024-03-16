@@ -40,7 +40,9 @@ def get_service(user_credentials):
             creds.refresh(Request())
             CredentialsService.update_for(user_credentials.user, creds)
         else:
-            raise ScheduleException("Credentials invalid or expired, and unable to refresh")
+            raise ScheduleException(
+                f"Credentials for user %s invalid or expired, and unable to refresh", user_credentials.user.username
+            )
     return googleapiclient.discovery.build(API_SERVICE_NAME, API_VERSION, credentials=creds)
 
 
