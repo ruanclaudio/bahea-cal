@@ -39,7 +39,9 @@ def google_calendar_init_view(request):
             flow = InstalledAppFlow.from_client_config(config, SCOPES)
             flow.redirect_uri = REDIRECT_URL
 
-            authorization_url, state = flow.authorization_url(access_type="offline", include_granted_scopes="true")
+            authorization_url, state = flow.authorization_url(
+                access_type="offline", prompt="consent", include_granted_scopes="true"
+            )
             request.session["state"] = state
 
             return redirect(authorization_url)
