@@ -98,6 +98,8 @@ def process():
             schedule_for(credential)
         except Exception as e:
             exceptions.append(e)
+        else:
+            print(f"Successfully processed for user: {credential.user.username}")
 
     if exceptions:
         raise exceptions[0]
