@@ -16,7 +16,7 @@ import googleapiclient.discovery
 from bahea_cal.fetch import CalendarEvent
 from google.auth.transport.requests import Request
 
-from users.services import Credentials
+from users.services import Credentials, CredentialsService
 from users.models import UserCredential, UserEvent
 
 SCOPES = [
@@ -29,11 +29,18 @@ API_SERVICE_NAME = "calendar"
 API_VERSION = "v3"
 
 
+class ScheduleException(Exception):
+    pass
+
+
 def get_service(user_credentials):
     creds = Credentials.from_user_credentials(user_credentials)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
+            CredentialsService.update_for(user_credentials.user, creds)
+        else:
+            raise ScheduleException("Credentials invalid or expired, and unable to refresh")
     return googleapiclient.discovery.build(API_SERVICE_NAME, API_VERSION, credentials=creds)
 
 
@@ -83,8 +90,15 @@ def schedule_for(credential):
 
 
 def process():
+    exceptions = []
     for credential in UserCredential.objects.all():
-        schedule_for(credential)
+        try:
+            schedule_for(credential)
+        except Exception as e:
+            exceptions.append(e)
+
+    if exceptions:
+        raise exceptions[0]
 
 
 if __name__ == "__main__":
