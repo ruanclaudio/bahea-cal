@@ -2,8 +2,10 @@ import uuid
 
 from django.db import models
 
+from model_utils.models import TimeStampedModel
 
-class Team(models.Model):
+
+class Team(TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     ref = models.IntegerField(unique=True)
     popular_name = models.CharField(max_length=64, unique=True)
@@ -12,7 +14,7 @@ class Team(models.Model):
         return f"<Team: {self.popular_name}>"
 
 
-class Championship(models.Model):
+class Championship(TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=64, unique=True)
 
@@ -20,7 +22,7 @@ class Championship(models.Model):
         return f"<Championship: {self.name}>"
 
 
-class Location(models.Model):
+class Location(TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=64, unique=True)
     popular_name = models.CharField(max_length=64)
@@ -29,18 +31,18 @@ class Location(models.Model):
         return f"<MatchLocation: {self.popular_name}>"
 
 
-class Phase(models.Model):
+class Phase(TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=64, unique=True)
     phase_type = models.CharField(max_length=64)
 
 
-class Round(models.Model):
+class Round(TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=64, unique=True)
 
 
-class Match(models.Model):
+class Match(TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     championship = models.ForeignKey("core.Championship", on_delete=models.SET_NULL, null=True)
     home_team = models.ForeignKey("core.Team", on_delete=models.CASCADE, related_name="home_matches")
@@ -58,6 +60,6 @@ class Match(models.Model):
             return f"{self.championship}: {self.home_team} x {self.away_team}"
 
 
-class SoccerEvent(models.Model):
+class SoccerEvent(TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     match = models.ForeignKey("core.Match", on_delete=models.CASCADE, related_name="event")
