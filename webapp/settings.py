@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import json
+from socket import gethostname, gethostbyname
 from pathlib import Path
 from config import djsettings
 
@@ -25,6 +26,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = djsettings.SECRET_KEY
 
 ALLOWED_HOSTS = djsettings.get("ALLOWED_HOSTS", cast="@str").split(",")
+ALLOWED_HOSTS.append(gethostbyname(gethostname()))
+
 BASE_URL = djsettings.get("BASE_URL", cast="@str")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = djsettings.get("DEBUG", False, cast="@bool")
