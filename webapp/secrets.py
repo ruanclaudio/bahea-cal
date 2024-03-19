@@ -4,11 +4,6 @@ import json
 
 
 def get_secret(secret_name, region_name="sa-east-1"):
-
-    secret_name = "staging/google/calendar"
-    region_name = "sa-east-1"
-
-    # Create a Secrets Manager client
     session = boto3.session.Session()
     client = session.client(
         service_name='secretsmanager',
