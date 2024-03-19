@@ -30,7 +30,7 @@ def home(request):
 
 
 def google_calendar_init_view(request):
-    config = get_secret("staging/google/calendar")
+    config = get_secret(f"{settings.ENVIRONMENT}/google/calendar")
     creds = CredentialsService.init_for(request.user, scopes=SCOPES)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
@@ -54,7 +54,7 @@ def google_calendar_redirect_view(request):
     if state is None:
         return render(request, "core/success.html", {"error": "Algo de errado aconteceu."})
 
-    config = get_secret("staging/google/calendar")
+    config = get_secret(f"{settings.ENVIRONMENT}/google/calendar")
     flow = google_auth_oauthlib.flow.Flow.from_client_config(config, scopes=SCOPES, state=state)
     flow.redirect_uri = REDIRECT_URL
 
