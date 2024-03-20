@@ -18,6 +18,7 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import path
+from django.views.generic import TemplateView
 
 from core import views
 
@@ -28,5 +29,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("calendar/init/", views.google_calendar_init_view, name="google_permission"),
     path("calendar/redirect/", views.google_calendar_redirect_view, name="google_redirect"),
-    path("", views.home, name="home")
+    path("", views.home, name="home"),
+    path("privacidade/", TemplateView.as_view(template_name='core/privacy.html')),
+    path("termos/", TemplateView.as_view(template_name='core/terms.html')),
 ]
