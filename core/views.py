@@ -15,7 +15,7 @@ from webapp.secrets import get_secret
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 SCOPES = [
-    "https://www.googleapis.com/auth/calendar",
+    "https://www.googleapis.com/auth/calendar.app.created",
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/userinfo.profile",
     "openid",
@@ -83,16 +83,21 @@ def google_calendar_redirect_view(request):
     saved_credentials.user = user
     saved_credentials.save(update_fields=["user"])
 
-    user = authenticate(request, username=email)
-    if user:
-        login(request, user)
+    authenticated_user = authenticate(request, username=email)
+    if authenticated_user:
+        login(request, authenticated_user)
 
     try:
         service = googleapiclient.discovery.build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
-        calendar_list = service.calendarList().list().execute()
-        calendar_id = calendar_list["items"][0]["id"]
-        service.events().list(calendarId=calendar_id).execute()
-    except:
+
+        if not user.calendar_id:
+            calendar = {"summary": "BaheaCal", "timeZone": "America/Bahia"}
+            created_calendar = service.calendars().insert(body=calendar).execute()
+            user.calendar_id = created_calendar["id"]
+            user.save(update_fields=["calendar_id"])
+
+        service.events().list(calendarId=user.calendar_id).execute()
+    except Exception as e:
         return render(request, "core/error.html")
     else:
         return render(request, "core/success.html")
