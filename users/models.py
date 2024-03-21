@@ -35,6 +35,7 @@ class User(AbstractUser, TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     events = models.ManyToManyField("core.SoccerEvent", through=UserEvent, blank=True)
     subscriptions = models.ManyToManyField("core.Team", through=UserSubscription, blank=True)
+    calendar_id = models.CharField(max_length=128, blank=True, null=True)
 
 
 user = User
