@@ -24,11 +24,15 @@ class UserSubscriptionAdmin(admin.ModelAdmin):
     search_fields = ("team__popular_name", "user__username")
 
 
+class UserEventsAdmin(admin.TabularInline):
+    model = User.events.through
+
+
+class UserSubscriptionsAdmin(admin.TabularInline):
+    model = User.subscriptions.through
+
+
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
-    # fieldsets = BaseUserAdmin.fieldsets + (("Additional Info", {"fields": ("events", "subscriptions")}),)
-    # filter_horizontal = (
-    #     "events",
-    #     "subscriptions",
-    # )
-    ...
+    fieldsets = BaseUserAdmin.fieldsets + (("Additional Info", {"fields": ("calendar_id",)}),)
+    inlines = (UserEventsAdmin, UserSubscriptionsAdmin)
