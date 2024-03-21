@@ -20,7 +20,7 @@ from users.services import Credentials, CredentialsService
 from users.models import UserCredential, UserEvent
 
 SCOPES = [
-    "https://www.googleapis.com/auth/calendar",
+    "https://www.googleapis.com/auth/calendar.app.created",
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/userinfo.profile",
     "openid",
@@ -63,7 +63,7 @@ def schedule_for(credential):
         possible_existing = (
             service.events()
             .list(
-                calendarId="primary",
+                calendarId=credential.user.calendar_id,
                 timeMin=when,
                 maxResults=20,
                 singleEvents=True,
@@ -81,7 +81,7 @@ def schedule_for(credential):
 
         if not existent:
             event_dict = calendar_event.as_dict()
-            eventc = service.events().insert(calendarId="primary", body=event_dict).execute()
+            eventc = service.events().insert(calendarId=credential.user.calendar_id, body=event_dict).execute()
             event.eid = eventc["id"]
             event.save()
             print(f"Event created: {calendar_event.description} {eventc.get('htmlLink')}")
