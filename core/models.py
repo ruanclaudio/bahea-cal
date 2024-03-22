@@ -1,7 +1,7 @@
 import uuid
 
+import arrow
 from django.db import models
-
 from model_utils.models import TimeStampedModel
 
 
@@ -54,12 +54,20 @@ class Match(TimeStampedModel):
 
     class Meta:
         unique_together = ("championship", "home_team", "away_team", "start_at")
+        ordering = ("start_at",)
 
     def __str__(self):
         if self.championship:
-            return f"{self.championship}: {self.home_team} x {self.away_team}"
+            start_at = arrow.get(self.start_at).to("America/Bahia").strftime("%d/%m/%Y %H:%M")
+            return f"{self.championship}: {self.home_team} x {self.away_team} {start_at}"
 
 
 class SoccerEvent(TimeStampedModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     match = models.ForeignKey("core.Match", on_delete=models.CASCADE, related_name="event")
+
+    class Meta:
+        ordering = ("match__start_at",)
+
+    def __str__(self):
+        return f"{self.match}"

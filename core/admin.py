@@ -38,10 +38,10 @@ class MatchAdmin(admin.ModelAdmin):
         "championship",
         "home_team",
         "away_team",
+        "start_at",
         "location",
         "phase",
         "round",
-        "start_at",
         "created",
         "modified",
     )
