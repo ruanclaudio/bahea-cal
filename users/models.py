@@ -21,6 +21,7 @@ class UserEvent(TimeStampedModel):
 
     class Meta:
         unique_together = ("user", "event")
+        ordering = ("event__match__start_at",)
 
 
 class UserSubscription(TimeStampedModel):
