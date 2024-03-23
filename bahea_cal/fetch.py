@@ -41,9 +41,9 @@ class CalendarEvent:
         return cls(
             summary=f"[{match.championship.name}] {match.home_team.popular_name} x {match.away_team.popular_name}",
             description=description,
-            start_datetime=arrow.get(match.start_at),
+            start_datetime=arrow.get(match.start_at).to(timezone),
             start_timezone=timezone,
-            end_datetime=arrow.get(match.start_at).shift(minutes=+120),
+            end_datetime=arrow.get(match.start_at).to(timezone).shift(minutes=+120),
             end_timezone=timezone,
             location=match.location and match.location.popular_name or "",
         )
