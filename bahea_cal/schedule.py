@@ -2,6 +2,7 @@ import os
 import pathlib
 import sys
 
+import arrow
 import django
 
 project_path = pathlib.Path(__file__).parent.parent
@@ -91,11 +92,53 @@ def schedule_for(credential):
             print(f"Event already in calendar: {calendar_event.description} {possible.get('htmlLink')}")
 
 
+def update_for(credential):
+    service = get_service(credential)
+    now = arrow.utcnow()
+
+    events = UserEvent.objects.filter(eid__isnull=False, user=credential.user, event__match__start_at__gte=now.datetime)
+
+    for event in events:
+        try:
+            calendar_event = CalendarEvent.from_parsed(event.event)
+        except:
+            print(f"Failed to parse: {event.match}")
+            continue
+
+        event_dict = calendar_event.as_dict()
+
+        remote_event = service.events().get(calendarId=credential.user.calendar_id, eventId=event.eid).execute()
+
+        start = arrow.get(event_dict["start"]["dateTime"], tzinfo=event_dict["start"]["timeZone"])
+        remote_start = arrow.get(remote_event["start"]["dateTime"], tzinfo=remote_event["start"]["timeZone"])
+
+        end = arrow.get(event_dict["end"]["dateTime"], tzinfo=event_dict["end"]["timeZone"])
+        remote_end = arrow.get(remote_event["end"]["dateTime"], tzinfo=remote_event["end"]["timeZone"])
+
+        location = event_dict["location"]
+        remote_location = remote_event.get("location", "")
+        if start != remote_start or end != remote_end or location != remote_location:
+            updated_event = (
+                service.events()
+                .update(calendarId=credential.user.calendar_id, eventId=event.eid, body=event_dict)
+                .execute()
+            )
+            print(f"Event updated: {calendar_event.description} {updated_event.get('htmlLink')}")
+
+
 def process():
     exceptions = []
     for credential in UserCredential.objects.all():
         try:
             schedule_for(credential)
+        except Exception as e:
+            exceptions.append(e)
+        else:
+            print(f"Successfully processed for user: {credential.user.username}")
+
+    for credential in UserCredential.objects.all():
+        try:
+            update_for(credential)
         except Exception as e:
             exceptions.append(e)
         else:
