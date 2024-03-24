@@ -14,6 +14,7 @@ django.setup()
 import arrow
 import attrs
 
+from django.conf import settings
 from django.db import transaction
 
 from core.models import Team, Championship, Location, Phase, Round, Match, SoccerEvent
@@ -39,7 +40,7 @@ class CalendarEvent:
         if match.location:
             description += f", {match.location.popular_name}"
         return cls(
-            summary=f"[{match.championship.name}] {match.home_team.popular_name} x {match.away_team.popular_name}",
+            summary=f"{settings.CALENDAR_NAME_PREFIX}[{match.championship.name}] {match.home_team.popular_name} x {match.away_team.popular_name}",
             description=description,
             start_datetime=arrow.get(match.start_at).to(timezone),
             start_timezone=timezone,

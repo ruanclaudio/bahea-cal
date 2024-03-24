@@ -92,7 +92,7 @@ def google_calendar_redirect_view(request):
         service = googleapiclient.discovery.build(API_SERVICE_NAME, API_VERSION, credentials=credentials)
 
         if not user.calendar_id:
-            calendar = {"summary": "BaheaCal", "timeZone": "America/Bahia"}
+            calendar = {"summary": f"{settings.CALENDAR_NAME_PREFIX}BaheaCal", "timeZone": "America/Bahia"}
             created_calendar = service.calendars().insert(body=calendar).execute()
             user.calendar_id = created_calendar["id"]
             user.save(update_fields=["calendar_id"])

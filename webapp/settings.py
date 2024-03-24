@@ -34,6 +34,8 @@ BASE_URL = djsettings.get("BASE_URL", cast="@str")
 DEBUG = djsettings.get("DEBUG", False, cast="@bool")
 ENVIRONMENT = djsettings.ENVIRONMENT
 
+CALENDAR_NAME_PREFIX = djsettings.get('CALENDAR_NAME_PREFIX', '', cast="@str")
+
 
 AUTH_USER_MODEL = "users.User"
 
