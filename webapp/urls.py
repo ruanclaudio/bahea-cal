@@ -29,9 +29,11 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("calendar/init/", views.google_calendar_init_view, name="google_permission"),
     path("calendar/redirect/", views.google_calendar_redirect_view, name="google_redirect"),
+    path("calendar/success/", views.google_calendar_success, name="google_success"),
     path("", views.home, name="home"),
     path("privacidade/", TemplateView.as_view(template_name='core/privacy.html')),
     path("termos/", TemplateView.as_view(template_name='core/terms.html')),
+    path("user/", include('users.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include('api.urls')),
 ]
