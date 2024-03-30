@@ -1,13 +1,12 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 
-<!DOCTYPE html>
-{% load static %}
-<html>
+
 <head>
     <title>BaheaCal - Adicione Jogos do Seu Time Favorito</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
@@ -26,13 +25,24 @@
 <body>
     <div class="container">
         <h1>Calendário Conectado!</h1>
-        {% if user.is_authenticated %}
-          <p class="col text-center">Obrigado, {{ user.username }}!</p>
-        {% else %}
-          <p class="col text-center">Obrigado, visitante!</p>
-        {% endif %}
 
-        <p class="col text-center">Os eventos começarão a aparecer em breve.</p>
+        <div class="row">
+            <div class="col-12">
+
+                <form method="post" action="/user/confirm/">
+                    {% csrf_token %}
+                    <div class="row d-flex justify-content-center">
+                        <label>Confirmar Inscrição no botão abaixo:</label>
+                    </div>
+                    <div class="row d-flex justify-content-center">
+                        <button type="submit" name="subscription" value="265" class="btn btn-primary">
+                            <img src="{% static 'icons/bahia.png' %}" alt="Bahia" style="height: 50px;"> Bahia
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
