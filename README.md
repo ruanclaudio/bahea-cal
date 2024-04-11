@@ -43,7 +43,7 @@ source env/bin/activate
 **6. Install the project dependencies from the file `requirements-dev.txt`:**
 
 ```
-pip install -r requirements-dev.txt`
+pip install -r requirements-dev.txt
 ```
 
 **7. Create a .env file in the project root**
@@ -112,7 +112,7 @@ source env/bin/activate
 **6. Instale as dependências do projeto do arquivo `requirements-dev.txt`:**
 
 ```
-pip install -r requirements-dev.txt`
+pip install -r requirements-dev.txt
 ```
 
 **7. Crie um arquivo `.env` na pasta raiz do projeto.**
