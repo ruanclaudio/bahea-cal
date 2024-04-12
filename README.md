@@ -52,11 +52,11 @@ pip install -r requirements-dev.txt
 
 ```
 DJANGO_DEBUG=true
-DJANGO_SECRET_KEY="qualquerstring"
+DJANGO_SECRET_KEY="anyonestring"
 DJANGO_ALLOWED_HOSTS="*"
 DJANGO_BASE_URL="http://localhost:8889"
 DJANGO_DATABASES__default__ENGINE="django.db.backends.sqlite3"
-DJANGO_DATABASES__default__NAME="/caminho/para/o/projeto/bahea-cal/db.sqlite3"
+DJANGO_DATABASES__default__NAME="/path/to/your/project/bahea-cal/db.sqlite3"
 DJANGO_ENVIRONMENT="dev"
 DJANGO_CALENDAR_NAME_PREFIX="(dev) "
 ```
