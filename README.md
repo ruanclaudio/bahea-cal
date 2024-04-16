@@ -70,7 +70,7 @@ python manager.py migrate
 **10. Collect static files:**
 
 ```
-python manage.py static collector
+python manage.py collectstatic
 ```
 
 **11. Execute the project:**
