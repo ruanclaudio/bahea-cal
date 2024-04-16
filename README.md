@@ -54,14 +54,26 @@ pip install -r requirements-dev.txt
 DJANGO_DEBUG=true
 DJANGO_SECRET_KEY="anyonestring"
 DJANGO_ALLOWED_HOSTS="*"
-DJANGO_BASE_URL="http://localhost:8889"
+DJANGO_BASE_URL="http://localhost:8000"
 DJANGO_DATABASES__default__ENGINE="django.db.backends.sqlite3"
 DJANGO_DATABASES__default__NAME="/path/to/your/project/bahea-cal/db.sqlite3"
 DJANGO_ENVIRONMENT="dev"
 DJANGO_CALENDAR_NAME_PREFIX="(dev) "
 ```
 
-**9. Execute the project:**
+**9. Apply database migrations:**
+
+```
+python manager.py migrate
+```
+
+**10. Collect static files:**
+
+```
+python manage.py static collector
+```
+
+**11. Execute the project:**
 
 ```
 python manage.py runserver
@@ -123,14 +135,26 @@ pip install -r requirements-dev.txt
 DJANGO_DEBUG=true
 DJANGO_SECRET_KEY="qualquerstring"
 DJANGO_ALLOWED_HOSTS="*"
-DJANGO_BASE_URL="http://localhost:8889"
+DJANGO_BASE_URL="http://localhost:8000"
 DJANGO_DATABASES__default__ENGINE="django.db.backends.sqlite3"
 DJANGO_DATABASES__default__NAME="/caminho/para/o/projeto/bahea-cal/db.sqlite3"
 DJANGO_ENVIRONMENT="dev"
 DJANGO_CALENDAR_NAME_PREFIX="(dev) "
 ```
 
-**9. Execute o projeto:**
+**9. Aplique as migrações do banco de dados:**
+
+```
+python manage.py migrate
+```
+
+**10. Colete os arquivos estáticos:**
+
+```
+python manage.py collectstatic
+```
+
+**11. Execute o projeto:**
 
 ```
 python manage.py runserver
