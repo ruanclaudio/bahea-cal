@@ -11,9 +11,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import json
+import os
 from socket import gethostname, gethostbyname
 from pathlib import Path
 from config import djsettings
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -150,3 +153,5 @@ STATIC_ROOT = "static"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+DJANGO_BASE_URL = str(os.getenv('DJANGO_BASE_URL'))
+CSRF_TRUSTED_ORIGINS = [DJANGO_BASE_URL]
