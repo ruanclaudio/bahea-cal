@@ -8,25 +8,53 @@ To run the Bahea Calendar, follow these steps:
 
 **1. Make sure you have Python3 and pip installed on your machine.**
 
-**2. Clone this repository to your local environment.**
+**2. Acess the Google Calendar API.**
+
+To acess the Google Calendar API, you must create a project. You can create a project by going to the [Developer Console](https://console.developers.google.com/)
+
+- Enable the Google Calendar API;
+
+- Create a client ID;
+
+- Under _Authorized JavaScript origins_ configure this URI:
+
+```
+http://localhost:800
+```
+
+- Under _Authorized redirect URIs_ configure this URI:
+
+```
+http://localhost:8000/calendar/redirect
+```
+
+- Create a _secret.json_ file in the _webapp_ folder and insert the credentials you downloaded previously, as show in the following example:
+
+```
+{
+    "dev/google/calendar": {YOUR GOOGLE CREDENTIALS}
+}
+```
+
+**3. Clone this repository to your local environment.**
 
 ```
 git clone https://github.com/gogixweb/bahea-cal.git
 ```
 
-**3. Install `virtualenv` if you haven't already installed it:**
+**4. Install `virtualenv` if you haven't already installed it:**
 
 ```
 pip install virtualenv
 ```
 
-**4. Create a virtual environment in the project folder:**
+**5. Create a virtual environment in the project folder:**
 
 ```
 virtualenv env
 ```
 
-**5. Activate the virtual environment:**
+**6. Activate the virtual environment:**
 
 - On Windows:
 
@@ -40,15 +68,15 @@ env\Scripts\activate
 source env/bin/activate
 ```
 
-**6. Install the project dependencies from the file `requirements-dev.txt`:**
+**7. Install the project dependencies from the file `requirements-dev.txt`:**
 
 ```
 pip install -r requirements-dev.txt
 ```
 
-**7. Create a .env file in the project root**
+**8. Create a .env file in the project root**
 
-**8. Insert the environment variables into the .env file and edit them according to your needs:**
+**9. Insert the environment variables into the .env file and edit them according to your needs:**
 
 ```
 DJANGO_DEBUG=true
@@ -61,19 +89,19 @@ DJANGO_ENVIRONMENT="dev"
 DJANGO_CALENDAR_NAME_PREFIX="(dev) "
 ```
 
-**9. Apply database migrations:**
+**10. Apply database migrations:**
 
 ```
-python manager.py migrate
+python manage.py migrate
 ```
 
-**10. Collect static files:**
+**11. Collect static files:**
 
 ```
 python manage.py collectstatic
 ```
 
-**11. Execute the project:**
+**12. Execute the project:**
 
 ```
 python manage.py runserver
@@ -89,25 +117,57 @@ Para executar o Bahea Calendar, siga estas etapas:
 
 **1. Certifique-se de ter o Python3 e o pip instalados na sua máquina.**
 
-**2. Clone este repositório para o seu ambiente local.**
+**2. Acesse a API do Google Calendar.**
+
+É preciso criar um projeto para acessar a API do google calendar. Você pode criar acessando o [Console de Desenvolvedores](https://console.developers.google.com/)
+
+- Ative a API do Google Calendar
+
+- Crie uma client ID
+
+- Em _Origens JavaScript autorizada_ configure a seguinte URI:
+
+  ```
+  http://localhost:8000
+  ```
+
+- Em _URIs de redirecionamento autorizados_ configure a seguinte URI:
+
+  ```
+  http://localhost:8000/calendar/redirect
+  ```
+
+- Navegue até a Tela de permissão OAuth e adicione um usuário de teste.
+
+- Faça o download do arquivo JSON das suas credenciais
+
+- Crie um arquivo _secrets.json_ na pasta _webapp_ e insira as credenciais que você baixou anteriormente, conforme o exemplo a seguir:
+
+  ```
+  {
+  "dev/google/calendar": {SUAS CREDENCIAIS GOOGLE}
+  }
+  ```
+
+**3. Clone este repositório para o seu ambiente local.**
 
 ```
 git clone https://github.com/gogixweb/bahea-cal.git
 ```
 
-**3. Instale o `virtualenv` se ainda não o tiver instalado:**
+**4. Instale o `virtualenv` se ainda não o tiver instalado:**
 
 ```
 pip install virtualenv
 ```
 
-**4. Crie um ambiente virtual na pasta do projeto:**
+**5. Crie um ambiente virtual na pasta do projeto:**
 
 ```
 virtualenv env
 ```
 
-**5. Ative o ambiente virtual:**
+**6. Ative o ambiente virtual:**
 
 - No Windows:
 
@@ -121,15 +181,15 @@ env\Scripts\activate
 source env/bin/activate
 ```
 
-**6. Instale as dependências do projeto do arquivo `requirements-dev.txt`:**
+**7. Instale as dependências do projeto do arquivo `requirements-dev.txt`:**
 
 ```
 pip install -r requirements-dev.txt
 ```
 
-**7. Crie um arquivo `.env` na pasta raiz do projeto.**
+**8. Crie um arquivo `.env` na pasta raiz do projeto.**
 
-**8. Insira as variáveis de ambiente no arquivo `.env` e personalize conforme sua necessidade:**
+**9. Insira as variáveis de ambiente no arquivo `.env` e personalize conforme sua necessidade:**
 
 ```
 DJANGO_DEBUG=true
@@ -142,19 +202,19 @@ DJANGO_ENVIRONMENT="dev"
 DJANGO_CALENDAR_NAME_PREFIX="(dev) "
 ```
 
-**9. Aplique as migrações do banco de dados:**
+**10. Aplique as migrações do banco de dados:**
 
 ```
 python manage.py migrate
 ```
 
-**10. Colete os arquivos estáticos:**
+**11. Colete os arquivos estáticos:**
 
 ```
 python manage.py collectstatic
 ```
 
-**11. Execute o projeto:**
+**12. Execute o projeto:**
 
 ```
 python manage.py runserver
