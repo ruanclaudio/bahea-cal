@@ -1,38 +1,161 @@
-# Bahea Calendar :us:
+# Bahea Calendar 🇺🇸
 
 Bahea Calendar is a project that adds the standings of your favorite soccer team games to your google calendar!
 
 ## How to run
 
-You must have Python3 and pip installed on your computer.
+To run the Bahea Calendar, follow these steps:
 
-Also, you need to create a project to access the google calendar API. You can do it by accessing the google's [developers console](https://console.developers.google.com/). When it's done, download the JSON file with your credentials and rename it with `credentials.json`
+**1. Make sure you have Python3 and pip installed on your machine.**
 
-After that, clone this repository and follow these steps:
+**2. Clone this repository to your local environment.**
 
-- `pip install virtualenv`
-- `virtualenv env`
-- `source env/bin/activate`
-- `pip install -r requirements-dev.txt`
-- ```TOKEN_NAME="token.json" CREDENTIALS_JSON="credentials.json" TOKEN_JSON=`cat token.json` python fetch.py```
+```
+git clone https://github.com/gogixweb/bahea-cal.git
+```
 
+**3. Install `virtualenv` if you haven't already installed it:**
 
+```
+pip install virtualenv
+```
+
+**4. Create a virtual environment in the project folder:**
+
+```
+virtualenv env
+```
+
+**5. Activate the virtual environment:**
+
+- On Windows:
+
+```
+env\Scripts\activate
+```
+
+- Ond macOS and Linux:
+
+```
+source env/bin/activate
+```
+
+**6. Install the project dependencies from the file `requirements-dev.txt`:**
+
+```
+pip install -r requirements-dev.txt
+```
+
+**7. Create a .env file in the project root**
+
+**8. Insert the environment variables into the .env file and edit them according to your needs:**
+
+```
+DJANGO_DEBUG=true
+DJANGO_SECRET_KEY="anyonestring"
+DJANGO_ALLOWED_HOSTS="*"
+DJANGO_BASE_URL="http://localhost:8000"
+DJANGO_DATABASES__default__ENGINE="django.db.backends.sqlite3"
+DJANGO_DATABASES__default__NAME="/path/to/your/project/bahea-cal/db.sqlite3"
+DJANGO_ENVIRONMENT="dev"
+DJANGO_CALENDAR_NAME_PREFIX="(dev) "
+```
+
+**9. Apply database migrations:**
+
+```
+python manager.py migrate
+```
+
+**10. Collect static files:**
+
+```
+python manage.py collectstatic
+```
+
+**11. Execute the project:**
+
+```
+python manage.py runserver
+```
 
 # Bahea Calendar 🇧🇷
 
-O Bahea Calendar é um projeto que adicionará ao seu calendário google a agenda de jogos do seu time do coração!
+O Bahea Calendar é um projeto que permite adicionar a agenda de jogos do seu time do coração ao seu calendário do Google!
 
 ## Como rodar o projeto
 
-É necessário ter Python3 e o pip instalados na sua máquina. 
+Para executar o Bahea Calendar, siga estas etapas:
 
-Além disso, é preciso criar um projeto para acessar a API do google calendar. Você pode criar acessando o [console de desenvolvedores](https://console.developers.google.com/) do google. Depois de criado, baixe o arquivo JSON das suas credenciais e salve no mesmo diretório do projeto com o nome `credentials.json`
+**1. Certifique-se de ter o Python3 e o pip instalados na sua máquina.**
 
-A partir disso, clone este repositório e siga os passos seguintes:
+**2. Clone este repositório para o seu ambiente local.**
 
-- `pip install virtualenv`
-- `virtualenv env`
-- `source env/bin/activate`
-- `pip install -r requirements-dev.txt`
-- ```TOKEN_NAME="token.json" CREDENTIALS_JSON="credentials.json" TOKEN_JSON=`cat token.json` python fetch.py```
+```
+git clone https://github.com/gogixweb/bahea-cal.git
+```
 
+**3. Instale o `virtualenv` se ainda não o tiver instalado:**
+
+```
+pip install virtualenv
+```
+
+**4. Crie um ambiente virtual na pasta do projeto:**
+
+```
+virtualenv env
+```
+
+**5. Ative o ambiente virtual:**
+
+- No Windows:
+
+```
+env\Scripts\activate
+```
+
+- No macOS e Linux:
+
+```
+source env/bin/activate
+```
+
+**6. Instale as dependências do projeto do arquivo `requirements-dev.txt`:**
+
+```
+pip install -r requirements-dev.txt
+```
+
+**7. Crie um arquivo `.env` na pasta raiz do projeto.**
+
+**8. Insira as variáveis de ambiente no arquivo `.env` e personalize conforme sua necessidade:**
+
+```
+DJANGO_DEBUG=true
+DJANGO_SECRET_KEY="qualquerstring"
+DJANGO_ALLOWED_HOSTS="*"
+DJANGO_BASE_URL="http://localhost:8000"
+DJANGO_DATABASES__default__ENGINE="django.db.backends.sqlite3"
+DJANGO_DATABASES__default__NAME="/caminho/para/o/projeto/bahea-cal/db.sqlite3"
+DJANGO_ENVIRONMENT="dev"
+DJANGO_CALENDAR_NAME_PREFIX="(dev) "
+```
+
+**9. Aplique as migrações do banco de dados:**
+
+```
+python manage.py migrate
+```
+
+**10. Colete os arquivos estáticos:**
+
+```
+python manage.py collectstatic
+```
+
+**11. Execute o projeto:**
+
+```
+python manage.py runserver
+```
