@@ -30,7 +30,6 @@ def home(request):
 
 
 def google_calendar_init_view(request):
-    print(settings.ENVIRONMENT)
     config = get_secret(f"{settings.ENVIRONMENT}/google/calendar")
     creds = CredentialsService.init_for(request.user, scopes=SCOPES)
     if not creds or not creds.valid:
