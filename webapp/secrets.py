@@ -11,7 +11,7 @@ def get_secret(secret_name, region_name="sa-east-1"):
                 secrets = json.load(f)
                 return secrets[secret_name]
         except Exception as e_:
-            raise e_ from e_
+            raise e_ from e
     else:
         session = boto3.session.Session()
         client = session.client(
