@@ -1,14 +1,17 @@
 [project]
 name = "bahea-cal"
 dynamic = ["version"]
-description = "Django project template managed by PDM"
+description = "Bahea Calendar is a project that adds the standings of your favorite soccer team games to your google calendar!"
 readme = "README.md"
-requires-python = "==3.12.*"
+requires-python = ">3.10"
 license = {text = "MIT"}
 keywords = []
 authors = [
-    { name = "Ivan Neto", email = "ivan.cr.neto@gmail.com" },
-    {name = "Ruan", email = "ruanclaudio4@gmail.com"},
+    {name = "Ivan Neto", email = "ivan.cr.neto@gmail.com"},
+    {name = "Ruan Claudio", email = "ruanclaudio4@gmail.com"},
+    {name = "Kauan", email = "kauannery0500@gmail.com"},
+    {name = "Fernando Mota", email = "nando.mot@gmail.com"},
+    
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
