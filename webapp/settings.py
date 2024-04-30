@@ -15,6 +15,7 @@ from socket import gethostname, gethostbyname
 from pathlib import Path
 from config import djsettings
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -150,3 +151,4 @@ STATIC_ROOT = "static"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+CSRF_TRUSTED_ORIGINS = [BASE_URL]
