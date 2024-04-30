@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import json
-import os
 from socket import gethostname, gethostbyname
 from pathlib import Path
 from config import djsettings
@@ -152,5 +151,4 @@ STATIC_ROOT = "static"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-DJANGO_BASE_URL = str(os.getenv('BASE_URL'))
 CSRF_TRUSTED_ORIGINS = [BASE_URL]
