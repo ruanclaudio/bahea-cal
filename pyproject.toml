@@ -7,10 +7,10 @@ requires-python = ">3.10"
 license = {text = "MIT"}
 keywords = []
 authors = [
-    {name = "Ivan Neto", email = "ivan.cr.neto@gmail.com"},
-    {name = "Ruan Claudio", email = "ruanclaudio4@gmail.com"},
-    {name = "Kauan", email = "kauannery0500@gmail.com"},
     {name = "Fernando Mota", email = "nando.mot@gmail.com"},
+    {name = "Ivan Neto", email = "ivan.cr.neto@gmail.com"},
+    {name = "Kauan Nery", email = "kauannery0500@gmail.com"},
+    {name = "Ruan Claudio", email = "ruanclaudio4@gmail.com"}, 
     
 ]
 classifiers = [
@@ -37,6 +37,7 @@ dependencies = [
     "Django==5.0.2",
     "dynaconf==3.2.4",
     "django>=4",
+    "djangorestframework>=3.15.1",
 ]
 version = "0.1.0"
 
