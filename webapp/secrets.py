@@ -1,30 +1,27 @@
 import boto3
 import os
-from botocore.exceptions import ClientError
+from botocore.exceptions import ClientError, NoCredentialsError
 import json
 
 
 def get_secret(secret_name, region_name="sa-east-1"):
         try:
             session = boto3.session.Session()
-            try:
-                client = session.client(
-                    service_name='secretsmanager',
-                    region_name=region_name
-                )
-            except Exception as e:
-                print(e)
+            client = session.client(
+                service_name='secretsmanager',
+                region_name=region_name
+            )
+                
             get_secret_value_response = client.get_secret_value(
                 SecretId=secret_name
             )
             
-            with open(os.path.join(os.getcwd(), 'webapp/secrets.json'), 'r') as f:
-                secrets = json.load(f)
-        except ClientError as e:
-            # For a list of exceptions thrown, see
-            # https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
-            raise e      
-        except Exception as e:
-             raise e from e
-  
-        return secrets[secret_name], json.loads(json.loads(get_secret_value_response['SecretString'])['credentials'])
+        except (ClientError, NoCredentialsError):
+            try:
+                with open(os.path.join(os.getcwd(), 'webapp/secrets.json'), 'r') as f:
+                    secrets = json.load(f)
+                    return secrets[secret_name]
+            except Exception as e_:
+                raise e_
+
+        return json.loads(json.loads(get_secret_value_response['SecretString'])['credentials'])
