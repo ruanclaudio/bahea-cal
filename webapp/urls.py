@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.views.generic import TemplateView
 
 from core import views
@@ -32,4 +32,6 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("privacidade/", TemplateView.as_view(template_name='core/privacy.html')),
     path("termos/", TemplateView.as_view(template_name='core/terms.html')),
+    path('api-auth/', include('rest_framework.urls')),
+    path('test-drf', views.test_drf, name="test-drf"),
 ]
