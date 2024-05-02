@@ -40,7 +40,8 @@ def google_calendar_init_view(request):
             flow.redirect_uri = REDIRECT_URL
 
             authorization_url, state = flow.authorization_url(
-                access_type="offline", prompt="consent", include_granted_scopes="true"
+                access_type="offline",
+                prompt="consent", include_granted_scopes="true"
             )
             request.session["state"] = state
 
@@ -50,7 +51,7 @@ def google_calendar_init_view(request):
 
 
 def google_calendar_redirect_view(request):
-    state = request.session["state"]
+    state = request.session.get("state") or request.GET.get("state")
     if state is None:
         return render(request, "core/success.html", {"error": "Algo de errado aconteceu."})
 
