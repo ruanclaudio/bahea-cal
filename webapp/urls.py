@@ -33,5 +33,5 @@ urlpatterns = [
     path("privacidade/", TemplateView.as_view(template_name='core/privacy.html')),
     path("termos/", TemplateView.as_view(template_name='core/terms.html')),
     path('api-auth/', include('rest_framework.urls')),
-    path('test-drf', views.test_drf, name="test-drf"),
+    path('test-drf/', views.test_drf, name="test-drf"),
 ]
