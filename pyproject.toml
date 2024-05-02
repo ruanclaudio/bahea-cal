@@ -1,17 +1,17 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
 [project]
 name = "bahea-cal"
 dynamic = ["version"]
-description = 'Bahea Calendar is a project that adds the standings of your favorite soccer team games to your google calendar!'
+description = "Bahea Calendar is a project that adds the standings of your favorite soccer team games to your google calendar!"
 readme = "README.md"
-requires-python = ">=3.8"
-license = "MIT"
+requires-python = ">3.10"
+license = {text = "MIT"}
 keywords = []
 authors = [
-  { name = "Ivan Neto", email = "ivan.cr.neto@gmail.com" },
+    {name = "Fernando Mota", email = "nando.mot@gmail.com"},
+    {name = "Ivan Neto", email = "ivan.cr.neto@gmail.com"},
+    {name = "Kauan Nery", email = "kauannery0500@gmail.com"},
+    {name = "Ruan Claudio", email = "ruanclaudio4@gmail.com"}, 
+    
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -40,6 +40,7 @@ dependencies = [
   "psycopg2==2.9.1",
   "gunicorn==23.9.1",
 ]
+version = "0.1.0"
 
 [project.urls]
 Documentation = "https://github.com/ivancrneto/bahea-cal#readme"
@@ -94,3 +95,15 @@ exclude_lines = [
   "if __name__ == .__main__.:",
   "if TYPE_CHECKING:",
 ]
+
+[tool.pdm]
+distribution = false
+[tool.pdm.scripts]
+migrate = "python manage.py migrate"
+start = "python manage.py runserver"
+post_init = { composite = [
+    "pdm install",
+    "migrate",
+    "start",
+] }
+
