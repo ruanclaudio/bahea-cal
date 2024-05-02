@@ -36,6 +36,9 @@ dependencies = [
   "requests==2.31.0",
   "Django==5.0.2",
   "dynaconf==3.2.4",
+  "gevent==23.9.1",
+  "psycopg2==2.9.1",
+  "gunicorn==23.9.1",
 ]
 
 [project.urls]
