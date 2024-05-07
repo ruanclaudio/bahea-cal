@@ -3,8 +3,8 @@ import React from 'react';
 import {} from 'react-router-dom'
 
 const config = {
-  clientId: process.env.GOOGLE_CLIENT_ID,
-  apiKey: process.env.GOOGLE_API_KEY,
+  clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+  apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
   scope: "https://www.googleapis.com/auth/calendar",
   discoveryDocs: [
     "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
@@ -19,13 +19,23 @@ export default class Login extends React.Component {
     super(props);
     this.handleItemClick = this.handleItemClick.bind(this);
   }
-  handleItemClick(event, name) {
-    if (name === 'sign-in') {
-    console.log( apiCalendar.handleAuthClick())
 
+ handleItemClick = async (event, name) => {
+    console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
+    if (name === 'sign-in') {
+        try {
+            await apiCalendar.handleAuthClick();
+            console.log('Autenticado com sucesso!');
+            // Ou qualquer outra ação após o login bem-sucedido
+        } catch (error) {
+            console.error(error);
+            console.log(event);
+            console.log('Não Autenticado com sucesso!');
+        }
     } else if (name === 'sign-out') {
-      apiCalendar.handleSignoutClick();     }
-  }
+        apiCalendar.handleSignoutClick();
+    }
+};
 
   
   render() {
