@@ -12,9 +12,6 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from users.services import Credentials
 from users.services import CredentialsService
 from webapp.secrets import get_secret
-from rest_framework import permissions, viewsets
-from rest_framework.decorators import api_view, schema
-from rest_framework.response import Response
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 SCOPES = [
@@ -105,7 +102,3 @@ def google_calendar_redirect_view(request):
         return render(request, "core/error.html")
     else:
         return render(request, "core/success.html")
-    
-@api_view(['GET'])
-def test_drf(request):
-    return Response({"message": "Hello for today! See you tomorrow!"})
