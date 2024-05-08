@@ -115,6 +115,7 @@ dev = [
     "pytest>=8.2.0",
     "coverage[toml]>=7.5.0",
     "ipdb>=0.13.13",
+    "pytest-django>=4.8.0",
 ]
 
 [tool.pytest.ini_options]
