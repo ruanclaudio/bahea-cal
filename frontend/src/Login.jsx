@@ -21,20 +21,21 @@ export default class Login extends React.Component {
   }
 
  handleItemClick = async (event, name) => {
-    console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
+    
+
     if (name === 'sign-in') {
         try {
             await apiCalendar.handleAuthClick();
-            console.log('Autenticado com sucesso!');
+           
             // Ou qualquer outra ação após o login bem-sucedido
-        } catch (error) {
-            console.error(error);
-            console.log(event);
-            console.log('Não Autenticado com sucesso!');
+        } catch(error){
+            //console.error('erro ocorrido' , error);
+            
         }
-    } else if (name === 'sign-out') {
+
+       } else if (name === 'sign-out') {
         apiCalendar.handleSignoutClick();
-    }
+    } 
 };
 
   
@@ -56,4 +57,4 @@ export default class Login extends React.Component {
       );
   }
 }
-
+  
