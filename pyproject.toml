@@ -116,3 +116,7 @@ dev = [
     "coverage[toml]>=7.5.0",
     "ipdb>=0.13.13",
 ]
+
+[tool.pytest.ini_options]
+DJANGO_CONFIGURATION = "webapp.settings"
+python_files = ["tests.py", "test_.py", "_test.py", "testing/python/*.py"]
