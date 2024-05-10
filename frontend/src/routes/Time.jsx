@@ -1,6 +1,6 @@
 import React from 'react';
 import BahiaLogo from '../assets/bahia.png'; // Corrigindo o caminho para os arquivos de imagem
-import flamengologo from '../assets/flamengo.png';
+import flamengologo from '../assets/flamengo1.png';
 import palmeiraslogo from '../assets/palmeiras.png';
 
 class Time extends React.Component {
