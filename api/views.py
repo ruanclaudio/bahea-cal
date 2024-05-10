@@ -102,11 +102,3 @@ def calendar_flow_view(request):
         return JsonResponse({"error": str(e)})
     else:
         return JsonResponse({"sucess": True})
-    
-@api_view(['GET', 'POST'])
-def test_drf(request):
-    if request.method == 'GET':
-        return Response({"message": "Isso é tudo por hoje pessoal!"})
-    if request.method == 'POST':
-        data = request.data
-        return Response({"message": "Post recebido com sucesso!"})
