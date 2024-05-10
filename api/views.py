@@ -5,13 +5,16 @@ import googleapiclient.discovery
 from django.conf import settings
 from django.contrib.auth import authenticate, login, get_user_model
 from django.shortcuts import redirect
-from django.shortcuts import render
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 
 from users.services import Credentials
 from users.services import CredentialsService
 from webapp.secrets import get_secret
+
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from django.http import JsonResponse
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 SCOPES = [
@@ -20,16 +23,13 @@ SCOPES = [
     "https://www.googleapis.com/auth/userinfo.profile",
     "openid",
 ]
+
 REDIRECT_URL = f"{settings.BASE_URL}/calendar/redirect/"
 API_SERVICE_NAME = "calendar"
 API_VERSION = "v3"
 
-
-def home(request):
-    return render(request, "core/home.html")
-
-
-def google_calendar_init_view(request):
+@api_view(['GET'])
+def calendar_init_view(request):
     config = get_secret(f"{settings.ENVIRONMENT}/google/calendar")
     creds = CredentialsService.init_for(request.user, scopes=SCOPES)
     if not creds or not creds.valid:
@@ -45,15 +45,15 @@ def google_calendar_init_view(request):
             )
             request.session["state"] = state
 
-            return redirect(authorization_url)
+            return JsonResponse({"authorization_url": authorization_url})
 
-    return render(request, "core/success.html", {})
+    return JsonResponse({"message": "Sucess"})
 
-
-def google_calendar_redirect_view(request):
+@api_view(['GET'])
+def calendar_flow_view(request):
     state = request.session.get("state") or request.GET.get("state")
     if state is None:
-        return render(request, "core/success.html", {"error": "Algo de errado aconteceu."})
+        return JsonResponse({"error": "Algo de errado aconteceu."})
 
     config = get_secret(f"{settings.ENVIRONMENT}/google/calendar")
     flow = google_auth_oauthlib.flow.Flow.from_client_config(config, scopes=SCOPES, state=state)
@@ -62,7 +62,7 @@ def google_calendar_redirect_view(request):
     authorization_response = request.get_full_path()
     flow.fetch_token(authorization_response=authorization_response)
 
-    credentials = Credentials.from_flow(flow.credentials)
+    credentials = flow.credentials
 
     userinfo_service = googleapiclient.discovery.build("oauth2", "v2", credentials=credentials)
     user_info = userinfo_service.userinfo().get().execute()
@@ -79,7 +79,7 @@ def google_calendar_redirect_view(request):
     else:
         saved_credentials = CredentialsService.update_for(user, credentials)
     if not saved_credentials:
-        return redirect("/calendar/init")
+        return redirect("api/v1/calendar/init")
 
     saved_credentials.user = user
     saved_credentials.save(update_fields=["user"])
@@ -99,6 +99,6 @@ def google_calendar_redirect_view(request):
 
         service.events().list(calendarId=user.calendar_id).execute()
     except Exception as e:
-        return render(request, "core/error.html")
+        return JsonResponse({"error": str(e)})
     else:
-        return render(request, "core/success.html")
+        return JsonResponse({"sucess": True})
