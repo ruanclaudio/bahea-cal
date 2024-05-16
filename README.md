@@ -6,7 +6,11 @@ Bahea Calendar is a project that adds the standings of your favorite soccer team
 
 To run the Bahea Calendar, follow these steps:
 
-**1. Make sure you have Python3 and pip installed on your machine.**
+**1. Make sure you have Python version 3.8+ and pdm installed on your machine.**
+
+For more details acess:
+[PDM Project](https://pdm-project.org/en/stable/)
+[Python Official](https://www.python.org/)
 
 **2. Acess the Google Calendar API.**
 
@@ -42,41 +46,28 @@ http://localhost:8000/calendar/redirect
 git clone https://github.com/gogixweb/bahea-cal.git
 ```
 
-**4. Install `virtualenv` if you haven't already installed it:**
+**4. Create a new virtual environment named `.venv` in the project folder:**
 
 ```
-pip install virtualenv
+pdm venv create
 ```
 
-**5. Create a virtual environment in the project folder:**
+**5. Activate the virtual environment:**
 
 ```
-virtualenv env
+pdm use
 ```
+Select the virtual environment located in the root folder of the project.
 
-**6. Activate the virtual environment:**
-
-- On Windows:
-
-```
-env\Scripts\activate
-```
-
-- Ond macOS and Linux:
+**6. Install the project dependencies from the file `pyproject.toml`:**
 
 ```
-source env/bin/activate
+pdm install
 ```
 
-**7. Install the project dependencies from the file `requirements-dev.txt`:**
+**7. Create a .env file in the project root**
 
-```
-pip install -r requirements-dev.txt
-```
-
-**8. Create a .env file in the project root**
-
-**9. Insert the environment variables into the .env file and edit them according to your needs:**
+**8. Insert the environment variables into the .env file and edit them according to your needs:**
 
 ```
 DJANGO_DEBUG=true
@@ -89,22 +80,51 @@ DJANGO_ENVIRONMENT="dev"
 DJANGO_CALENDAR_NAME_PREFIX="(dev) "
 ```
 
-**10. Apply database migrations:**
+**9. Apply database migrations:**
 
 ```
 python manage.py migrate
 ```
 
-**11. Collect static files:**
+**10. Collect static files:**
 
 ```
 python manage.py collectstatic
 ```
 
-**12. Execute the project:**
+**11. Execute the project:**
 
 ```
 python manage.py runserver
+```
+## How to add new dependencies to the project:
+
+**1. Activate the pdm virtual environment:**
+
+```
+pdm use
+```
+
+**2. Add a new dependency:**
+
+```
+pdm add -d <dependency_name>
+```
+
+**3. Install the new dependency:** 
+
+```
+pdm install
+```
+
+**4. Check that the dependency has been installed correctly:**
+```
+pdm show <dependency_name>
+```
+
+**5. Export the new dependency to the project:**
+```
+pdm export -d -o requirements-dev.txt --without-hashes
 ```
 
 # Bahea Calendar 🇧🇷
@@ -115,7 +135,12 @@ O Bahea Calendar é um projeto que permite adicionar a agenda de jogos do seu ti
 
 Para executar o Bahea Calendar, siga estas etapas:
 
-**1. Certifique-se de ter o Python3 e o pip instalados na sua máquina.**
+**1. Certifique-se de ter o Python3 e o pdm instalados na sua máquina.**
+
+Para mais detalhes acesse:
+[PDM Project](https://pdm-project.org/en/stable/)
+[Python Official](https://www.python.org/)
+
 
 **2. Acesse a API do Google Calendar.**
 
@@ -155,41 +180,29 @@ Para executar o Bahea Calendar, siga estas etapas:
 git clone https://github.com/gogixweb/bahea-cal.git
 ```
 
-**4. Instale o `virtualenv` se ainda não o tiver instalado:**
+**4. Crie um ambiente virtual chamado `.venv` na pasta do projeto:**
 
 ```
-pip install virtualenv
+pdm venv create
 ```
 
-**5. Crie um ambiente virtual na pasta do projeto:**
+**5. Ative o ambiente virtual:**
 
 ```
-virtualenv env
+pdm use
 ```
 
-**6. Ative o ambiente virtual:**
+Selecione o ambiente virtual localizado da pasta raiz do projeto.
 
-- No Windows:
-
-```
-env\Scripts\activate
-```
-
-- No macOS e Linux:
+**6. Instale as dependências do projeto do arquivo `pyproject.toml`:**
 
 ```
-source env/bin/activate
+pdm install
 ```
 
-**7. Instale as dependências do projeto do arquivo `requirements-dev.txt`:**
+**7. Crie um arquivo `.env` na pasta raiz do projeto.**
 
-```
-pip install -r requirements-dev.txt
-```
-
-**8. Crie um arquivo `.env` na pasta raiz do projeto.**
-
-**9. Insira as variáveis de ambiente no arquivo `.env` e personalize conforme sua necessidade:**
+**8. Insira as variáveis de ambiente no arquivo `.env` e personalize conforme sua necessidade:**
 
 ```
 DJANGO_DEBUG=true
@@ -202,20 +215,48 @@ DJANGO_ENVIRONMENT="dev"
 DJANGO_CALENDAR_NAME_PREFIX="(dev) "
 ```
 
-**10. Aplique as migrações do banco de dados:**
+**9. Aplique as migrações do banco de dados:**
 
 ```
 python manage.py migrate
 ```
 
-**11. Colete os arquivos estáticos:**
+**10. Colete os arquivos estáticos:**
 
 ```
 python manage.py collectstatic
 ```
 
-**12. Execute o projeto:**
+**11. Execute o projeto:**
 
 ```
 python manage.py runserver
+```
+
+## Como adicionar novas dependências ao projeto:
+
+**1. Ative o ambiente virtual do pdm:**
+
+```
+pdm use
+```
+
+**2. Adicione a nova dependência ao pdm:**
+
+```
+pdm add -d <nome_da_dependencia>
+```
+
+**3. Instale a nova dependência:** 
+
+```
+pdm install
+```
+**4. Verifique se a dependência foi instalada corretamente:**
+```
+pdm show <nome_da_dependencia>
+```
+**5. Exporte a dependência para o projeto:**
+```
+pdm export -d -o requirements-dev.txt --without-hashes
 ```
