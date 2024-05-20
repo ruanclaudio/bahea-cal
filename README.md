@@ -52,22 +52,36 @@ git clone https://github.com/gogixweb/bahea-cal.git
 pdm venv create
 ```
 
-**5. Activate the virtual environment:**
+By default, pdm creates a virtualenv called `.venv` in the root directory of the project.
+
+**5. Select your Python interpreter:**
 
 ```
 pdm use
 ```
 Select the virtual environment located in the root folder of the project.
 
-**6. Install the project dependencies from the file `pyproject.toml`:**
+**6. Activate your virtual environment.**
+
+- On windows:
+```
+.venv/Scripts/activate
+```
+
+- On macOS and Linux:
+```
+sorce .venv/bin/activate
+```
+
+**7. Install the project dependencies from the file `pyproject.toml`:**
 
 ```
 pdm install
 ```
 
-**7. Create a .env file in the project root**
+**8. Create a .env file in the project root**
 
-**8. Insert the environment variables into the .env file and edit them according to your needs:**
+**9. Insert the environment variables into the .env file and edit them according to your needs:**
 
 ```
 DJANGO_DEBUG=true
@@ -80,19 +94,19 @@ DJANGO_ENVIRONMENT="dev"
 DJANGO_CALENDAR_NAME_PREFIX="(dev) "
 ```
 
-**9. Apply database migrations:**
+**10. Apply database migrations:**
 
 ```
 python manage.py migrate
 ```
 
-**10. Collect static files:**
+**11. Collect static files:**
 
 ```
 python manage.py collectstatic
 ```
 
-**11. Execute the project:**
+**12. Execute the project:**
 
 ```
 python manage.py runserver
@@ -101,8 +115,14 @@ python manage.py runserver
 
 **1. Activate the pdm virtual environment:**
 
+- On windows:
 ```
-pdm use
+.venv/Scripts/activate
+```
+
+- On macOS and Linux:
+```
+sorce .venv/bin/activate
 ```
 
 **2. Add a new dependency:**
@@ -186,7 +206,9 @@ git clone https://github.com/gogixweb/bahea-cal.git
 pdm venv create
 ```
 
-**5. Ative o ambiente virtual:**
+Por padrão o pdm cria uma virtualenv chamada `.venv` no diretorio raiz do projeto.
+
+**5. Selecione o seu interpretador Python:**
 
 ```
 pdm use
@@ -194,15 +216,27 @@ pdm use
 
 Selecione o ambiente virtual localizado da pasta raiz do projeto.
 
-**6. Instale as dependências do projeto do arquivo `pyproject.toml`:**
+**6. Ative o seu ambiente virtual.**
+
+- No windows:
+```
+.venv/Scripts/activate
+```
+
+- No macOS e Linux:
+```
+sorce .venv/bin/activate
+```
+
+**7. Instale as dependências do projeto do arquivo `pyproject.toml`:**
 
 ```
 pdm install
 ```
 
-**7. Crie um arquivo `.env` na pasta raiz do projeto.**
+**8. Crie um arquivo `.env` na pasta raiz do projeto.**
 
-**8. Insira as variáveis de ambiente no arquivo `.env` e personalize conforme sua necessidade:**
+**9. Insira as variáveis de ambiente no arquivo `.env` e personalize conforme sua necessidade:**
 
 ```
 DJANGO_DEBUG=true
@@ -215,19 +249,19 @@ DJANGO_ENVIRONMENT="dev"
 DJANGO_CALENDAR_NAME_PREFIX="(dev) "
 ```
 
-**9. Aplique as migrações do banco de dados:**
+**10. Aplique as migrações do banco de dados:**
 
 ```
 python manage.py migrate
 ```
 
-**10. Colete os arquivos estáticos:**
+**11. Colete os arquivos estáticos:**
 
 ```
 python manage.py collectstatic
 ```
 
-**11. Execute o projeto:**
+**12. Execute o projeto:**
 
 ```
 python manage.py runserver
@@ -237,8 +271,14 @@ python manage.py runserver
 
 **1. Ative o ambiente virtual do pdm:**
 
+- No windows:
 ```
-pdm use
+.venv/Scripts/activate
+```
+
+- No macOS e Linux:
+```
+sorce .venv/bin/activate
 ```
 
 **2. Adicione a nova dependência ao pdm:**
@@ -252,11 +292,15 @@ pdm add -d <nome_da_dependencia>
 ```
 pdm install
 ```
+
 **4. Verifique se a dependência foi instalada corretamente:**
+
 ```
 pdm show <nome_da_dependencia>
 ```
+
 **5. Exporte a dependência para o projeto:**
+
 ```
 pdm export -d -o requirements-dev.txt --without-hashes
 ```
