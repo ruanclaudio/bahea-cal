@@ -10,11 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-import json
+import sentry_sdk
+import django.db.models.signals
 from socket import gethostname, gethostbyname
 from pathlib import Path
 from config import djsettings
-
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -155,3 +156,20 @@ STATIC_ROOT = "static"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CSRF_TRUSTED_ORIGINS = [BASE_URL]
+
+sentry_sdk.init(
+    dsn="https://e19909e9414044d9981111c4b4acdf30@app.glitchtip.com/6805",
+    environment=ENVIRONMENT,
+    integrations=[
+        DjangoIntegration(
+            transaction_style='url',
+            middleware_spans=True,
+            signals_spans=True,
+            signals_denylist=[
+                django.db.models.signals.pre_init,
+                django.db.models.signals.post_init,
+            ],
+            cache_spans=False,
+        ),
+    ],
+)
