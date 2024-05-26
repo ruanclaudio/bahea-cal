@@ -16,6 +16,7 @@ from webapp.secrets import get_secret
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 SCOPES = [
+    "https://www.googleapis.com/auth/calendar",
     "https://www.googleapis.com/auth/calendar.app.created",
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/userinfo.profile",
@@ -132,7 +133,7 @@ class UserService:
 
 
 def google_calendar_redirect_view(request):
-    state = request.session["state"]
+    state = request.session.get("state") or request.GET.get("state")
     if state is None:
         return render(request, "core/success.html", {"error": "Algo de errado aconteceu."})
 
