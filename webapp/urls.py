@@ -25,6 +25,10 @@ from core import views
 admin.site.site_header = f'[{settings.ENVIRONMENT}] BaheaCal Admin'
 
 
+def trigger_error(request):
+    division_by_zero = 1 / 0
+
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("calendar/init/", views.google_calendar_init_view, name="google_permission"),
@@ -36,4 +40,5 @@ urlpatterns = [
     path("user/", include('users.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include('api.urls')),
+    path('sentry-debug/', trigger_error),
 ]
