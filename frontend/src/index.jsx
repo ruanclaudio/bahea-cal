@@ -30,7 +30,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-  
-  </React.StrictMode>,
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+      <RouterProvider router={router} />
+    </GoogleOAuthProvider>
+  </React.StrictMode>
 )

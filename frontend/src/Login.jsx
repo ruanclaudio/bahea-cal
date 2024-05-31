@@ -1,60 +1,69 @@
-import ApiCalendar from "react-google-calendar-api";
-import React from 'react';
-import {} from 'react-router-dom'
 
-const config = {
-  clientId: process.env.REACT_APP_GOOGLE_CLIENT_ID,
-  apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-  scope: "https://www.googleapis.com/auth/calendar",
-  discoveryDocs: [
-    "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
-  ],
-};
+import axios from 'axios';
 
+export default function Login() {
+  
+  <GoogleOAuthProvider clientId="470653035644-rkr19rof1eclp7f7gmd4044jt110hf9g.apps.googleusercontent.com"></GoogleOAuthProvider>;
 
+  const scope = ["https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.app.created",
+                  "https://www.googleapis.com/auth/userinfo.email",
+                  "https://www.googleapis.com/auth/userinfo.profile",
+                  "openid"]
+  console.log('scope configurado = ', scope)
+  const login = GoogleLogin({
+    onSuccess: tokenResponse => console.log(tokenResponse),
+  });
 
-const apiCalendar = new ApiCalendar(config);
-export default class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleItemClick = this.handleItemClick.bind(this);
-  }
+  const hasAccess = hasGrantedAllScopesGoogle(
+    login.tokenResponse,
+    scope
+  );  
+  console.log(hasAccess);
 
- handleItemClick = async (event, name) => {
-    
+  // return (<div>
+  //         <button onClick={ () => login()}>Login com Google</button>
+  //         <button>(nao funciona) Log out</button>
+  //   </div>);
 
-    if (name === 'sign-in') {
-        try {
-            await apiCalendar.handleAuthClick();
-           
-            // Ou qualquer outra ação após o login bem-sucedido
-        } catch(error){
-            //console.error('erro ocorrido' , error);
-            
+  const handleLogin = async (credentialResponse) => {
+    console.log('credential Response', credentialResponse);
+
+    try {
+      const response = await axios.post('http://localhost:8000/api/v1/calendar/token/', credentialResponse, {
+        headers: {
+          // 'Access-Control-Allow-Headers': '*',
+          'Content-Type': 'application/json',
+          // 'Allow-Control-Allow-Origin': '*',
+          // 'Access-Control-Allow-Methods': '*'
         }
-
-       } else if (name === 'sign-out') {
-        apiCalendar.handleSignoutClick();
-    } 
-};
-
-  
-  render() {
-    return (
-      <div>
-          <button
-              onClick={(e) => this.handleItemClick(e, 'sign-in')}
-              
-          >
-            sign-in
-          </button>
-          <button
-              onClick={(e) => this.handleItemClick(e, 'sign-out')}
-          >
-            sign-out
-          </button>
-       </div>
-      );
+      });
+      
+      console.log('response-data: ', response.data);
+    } catch (error) {
+      console.error('error: ', error);
+    }
   }
+
+  const login = useGoogleLogin({
+    scope: "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.app.created https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid",
+    flow: 'auth-code',
+    access_type: 'offline',
+    prompt: 'consent',
+    onSuccess: handleLogin,
+  });
+
+  // return (<button onClick={() => teste()}> oiasodiaosio</button>)
+  return (<button onClick={() => login()}> Fazer login</button>)
+
+  // return(<GoogleLogin onSuccess={credentialResponse => {
+  //     console.log(credentialResponse);
+  //   }}
+  //   onError={() => {
+  //     console.log('Login Failed');
+  //   }}
+  // />) 
+
 }
-  
+
+
+ 
