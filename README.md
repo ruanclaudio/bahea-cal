@@ -6,7 +6,11 @@ Bahea Calendar is a project that adds the standings of your favorite soccer team
 
 To run the Bahea Calendar, follow these steps:
 
-**1. Make sure you have Python3 and pip installed on your machine.**
+**1. Make sure you have Python version 3.8+ and pdm installed on your machine.**
+
+For more details acess:
+[PDM Project](https://pdm-project.org/en/stable/)
+[Python Official](https://www.python.org/)
 
 **2. Acess the Google Calendar API.**
 
@@ -42,36 +46,37 @@ http://localhost:8000/calendar/redirect
 git clone https://github.com/gogixweb/bahea-cal.git
 ```
 
-**4. Install `virtualenv` if you haven't already installed it:**
+**4. Create a new virtual environment named `.venv` in the project folder:**
 
 ```
-pip install virtualenv
+pdm venv create
 ```
 
-**5. Create a virtual environment in the project folder:**
+By default, pdm creates a virtualenv called `.venv` in the root directory of the project.
+
+**5. Select your Python interpreter:**
 
 ```
-virtualenv env
+pdm use
+```
+Select the virtual environment located in the root folder of the project.
+
+**6. Activate your virtual environment.**
+
+- On windows:
+```
+.venv/Scripts/activate
 ```
 
-**6. Activate the virtual environment:**
-
-- On Windows:
-
+- On macOS and Linux:
 ```
-env\Scripts\activate
+sorce .venv/bin/activate
 ```
 
-- Ond macOS and Linux:
+**7. Install the project dependencies from the file `pyproject.toml`:**
 
 ```
-source env/bin/activate
-```
-
-**7. Install the project dependencies from the file `requirements-dev.txt`:**
-
-```
-pip install -r requirements-dev.txt
+pdm install
 ```
 
 **8. Create a .env file in the project root**
@@ -106,6 +111,41 @@ python manage.py collectstatic
 ```
 python manage.py runserver
 ```
+## How to add new dependencies to the project:
+
+**1. Activate the pdm virtual environment:**
+
+- On windows:
+```
+.venv/Scripts/activate
+```
+
+- On macOS and Linux:
+```
+sorce .venv/bin/activate
+```
+
+**2. Add a new dependency:**
+
+```
+pdm add -d <dependency_name>
+```
+
+**3. Install the new dependency:** 
+
+```
+pdm install
+```
+
+**4. Check that the dependency has been installed correctly:**
+```
+pdm show <dependency_name>
+```
+
+**5. Export the new dependency to the project:**
+```
+pdm export -d -o requirements-dev.txt --without-hashes
+```
 
 # Bahea Calendar 🇧🇷
 
@@ -115,7 +155,12 @@ O Bahea Calendar é um projeto que permite adicionar a agenda de jogos do seu ti
 
 Para executar o Bahea Calendar, siga estas etapas:
 
-**1. Certifique-se de ter o Python3 e o pip instalados na sua máquina.**
+**1. Certifique-se de ter o Python3 e o pdm instalados na sua máquina.**
+
+Para mais detalhes acesse:
+[PDM Project](https://pdm-project.org/en/stable/)
+[Python Official](https://www.python.org/)
+
 
 **2. Acesse a API do Google Calendar.**
 
@@ -155,36 +200,38 @@ Para executar o Bahea Calendar, siga estas etapas:
 git clone https://github.com/gogixweb/bahea-cal.git
 ```
 
-**4. Instale o `virtualenv` se ainda não o tiver instalado:**
+**4. Crie um ambiente virtual chamado `.venv` na pasta do projeto:**
 
 ```
-pip install virtualenv
+pdm venv create
 ```
 
-**5. Crie um ambiente virtual na pasta do projeto:**
+Por padrão o pdm cria uma virtualenv chamada `.venv` no diretorio raiz do projeto.
+
+**5. Selecione o seu interpretador Python:**
 
 ```
-virtualenv env
+pdm use
 ```
 
-**6. Ative o ambiente virtual:**
+Selecione o ambiente virtual localizado da pasta raiz do projeto.
 
-- No Windows:
+**6. Ative o seu ambiente virtual.**
 
+- No windows:
 ```
-env\Scripts\activate
+.venv/Scripts/activate
 ```
 
 - No macOS e Linux:
+```
+sorce .venv/bin/activate
+```
+
+**7. Instale as dependências do projeto do arquivo `pyproject.toml`:**
 
 ```
-source env/bin/activate
-```
-
-**7. Instale as dependências do projeto do arquivo `requirements-dev.txt`:**
-
-```
-pip install -r requirements-dev.txt
+pdm install
 ```
 
 **8. Crie um arquivo `.env` na pasta raiz do projeto.**
@@ -218,4 +265,42 @@ python manage.py collectstatic
 
 ```
 python manage.py runserver
+```
+
+## Como adicionar novas dependências ao projeto:
+
+**1. Ative o ambiente virtual do pdm:**
+
+- No windows:
+```
+.venv/Scripts/activate
+```
+
+- No macOS e Linux:
+```
+sorce .venv/bin/activate
+```
+
+**2. Adicione a nova dependência ao pdm:**
+
+```
+pdm add -d <nome_da_dependencia>
+```
+
+**3. Instale a nova dependência:** 
+
+```
+pdm install
+```
+
+**4. Verifique se a dependência foi instalada corretamente:**
+
+```
+pdm show <nome_da_dependencia>
+```
+
+**5. Exporte a dependência para o projeto:**
+
+```
+pdm export -d -o requirements-dev.txt --without-hashes
 ```
