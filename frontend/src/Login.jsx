@@ -1,29 +1,18 @@
-
 import axios from 'axios';
+import { useGoogleLogin } from '@react-oauth/google';
+import {} from 'react-router-dom';
 
 export default function Login() {
+  const scope = [
+    "https://www.googleapis.com/auth/calendar",
+    "https://www.googleapis.com/auth/calendar.app.created",
+    "https://www.googleapis.com/auth/userinfo.email",
+    "https://www.googleapis.com/auth/userinfo.profile",
+    "openid"
+  ];
   
-  <GoogleOAuthProvider clientId="470653035644-rkr19rof1eclp7f7gmd4044jt110hf9g.apps.googleusercontent.com"></GoogleOAuthProvider>;
-
-  const scope = ["https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.app.created",
-                  "https://www.googleapis.com/auth/userinfo.email",
-                  "https://www.googleapis.com/auth/userinfo.profile",
-                  "openid"]
-  console.log('scope configurado = ', scope)
-  const login = GoogleLogin({
-    onSuccess: tokenResponse => console.log(tokenResponse),
-  });
-
-  const hasAccess = hasGrantedAllScopesGoogle(
-    login.tokenResponse,
-    scope
-  );  
-  console.log(hasAccess);
-
-  // return (<div>
-  //         <button onClick={ () => login()}>Login com Google</button>
-  //         <button>(nao funciona) Log out</button>
-  //   </div>);
+  console.log('escopo configurado:');
+  console.log(scope);
 
   const handleLogin = async (credentialResponse) => {
     console.log('credential Response', credentialResponse);
@@ -31,8 +20,8 @@ export default function Login() {
     try {
       const response = await axios.post('http://localhost:8000/api/v1/calendar/token/', credentialResponse, {
         headers: {
-          // 'Access-Control-Allow-Headers': '*',
           'Content-Type': 'application/json',
+          // 'Access-Control-Allow-Headers': '*',
           // 'Allow-Control-Allow-Origin': '*',
           // 'Access-Control-Allow-Methods': '*'
         }
@@ -52,18 +41,5 @@ export default function Login() {
     onSuccess: handleLogin,
   });
 
-  // return (<button onClick={() => teste()}> oiasodiaosio</button>)
-  return (<button onClick={() => login()}> Fazer login</button>)
-
-  // return(<GoogleLogin onSuccess={credentialResponse => {
-  //     console.log(credentialResponse);
-  //   }}
-  //   onError={() => {
-  //     console.log('Login Failed');
-  //   }}
-  // />) 
-
+  return (<button onClick={() => login()}> Fazer login</button>);
 }
-
-
- 
