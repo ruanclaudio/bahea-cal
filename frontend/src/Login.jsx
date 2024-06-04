@@ -20,10 +20,7 @@ export default function Login() {
     try {
       const response = await axios.post('http://localhost:8000/api/v1/calendar/token/', credentialResponse, {
         headers: {
-          'Content-Type': 'application/json',
-          // 'Access-Control-Allow-Headers': '*',
-          // 'Allow-Control-Allow-Origin': '*',
-          // 'Access-Control-Allow-Methods': '*'
+          'Content-Type': 'application/json',        
         }
       });
       
