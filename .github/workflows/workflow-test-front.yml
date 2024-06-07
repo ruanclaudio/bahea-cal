@@ -1,26 +1,21 @@
 name: continuos Integration-FE
 on:
-    pull_request:
-        branches:
-            ['main']
+  pull_request:
+    branches:
+      ['main']
 
 jobs:
-    continuos-integration-FE:
-        runs-on: ubuntu-latest
+    continuos Integration-FE:
+            runs-on: ubuntu-latest
 
-        steps:
-            - name: checkout repo
-              uses: actions/checkout@v4
-            
-            - name: config nodejs
-              uses: actions/setup-node@v2
-              with:
-                node-version: 16.x
-
-            - name: install build and test
-              run: |
-                cd frontend
-                npm install
-                npm run build 
-                npm run test
-
+    steps:
+        - name: Using Node.js
+        - uses: actions/checkout@v4
+          uses: actions/setup-node@v2
+          with:
+          node-version: 16.x
+         - name: run install, build and test
+          run: |
+            npm install
+            npm run build 
+            npm run test
