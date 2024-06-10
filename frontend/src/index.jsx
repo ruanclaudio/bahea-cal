@@ -11,6 +11,7 @@ import {
 import Time from "./routes/Time.jsx";
 import  { GoogleOAuthProvider }  from  '@react-oauth/google' ;
 import './index.css'
+import UserSettings from './UserSettings.jsx';
 
 const router = createBrowserRouter([
 
@@ -24,10 +25,14 @@ const router = createBrowserRouter([
     element: <div> hello</div>,
   },
   {
-    path: "/Time",
+    path: "/time",
     element: <Time />,
   },
 
+  {
+    path: "/settings",
+    element: <UserSettings/>,
+  },
 
 ]);
 
