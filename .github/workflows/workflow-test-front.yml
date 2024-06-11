@@ -21,7 +21,7 @@ jobs:
         run: ls -la
 
       - name: Navigate to frontend directory
-        run: cd frontend
+        run: cd bahea-cal/frontend/
 
       - name: Verify package.json existence
         run: |
