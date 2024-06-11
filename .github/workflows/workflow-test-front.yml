@@ -17,11 +17,15 @@ jobs:
         with:
           node-version: 16.x
 
-      - name: List directory contents
+      - name: List root directory contents
         run: ls -la
+
+      - name: Change directory to project
+        run: cd frontend\package.json
 
       - name: Verify package.json existence
         run: |
+          cd path/to/your/project
           if [ ! -f package.json ]; then
             echo "package.json not found!"
             exit 1
@@ -29,6 +33,7 @@ jobs:
 
       - name: Install dependencies, build, and test
         run: |
+          cd frontend\package.json
           npm install
           npm run build
           npm run test
