@@ -20,20 +20,18 @@ jobs:
       - name: List root directory contents
         run: ls -la
 
-      - name: Change directory to project
-        run: cd frontend\package.json
+      - name: Navigate to frontend directory
+        run: cd frontend
 
       - name: Verify package.json existence
         run: |
-          cd path/to/your/project
           if [ ! -f package.json ]; then
-            echo "package.json not found!"
+            echo "package.json not found in frontend directory!"
             exit 1
           fi
 
       - name: Install dependencies, build, and test
         run: |
-          cd frontend\package.json
           npm install
           npm run build
           npm run test
