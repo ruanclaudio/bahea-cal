@@ -20,8 +20,7 @@ jobs:
       - name: List root directory contents
         run: ls -la
 
-      - name: Navigate to frontend directory
-        run: cd "bahea-cal/frontend/"
+    
 
       - name: Verify package.json existence
         run: |
@@ -32,6 +31,7 @@ jobs:
 
       - name: Install dependencies, build, and test
         run: |
+          cd "bahea-cal/frontend/"
           npm install
           npm run build
           npm run test
