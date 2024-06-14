@@ -1,0 +1,53 @@
+name: Continuous Integration and Delivery
+
+on: [push]
+
+env:
+  WEB_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/web
+  NGINX_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/nginx
+
+jobs:
+
+  build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v2
+      - name: Add environment variables to .env
+        run: |
+          echo DEBUG=1 >> .env
+          echo SQL_ENGINE=django.db.backends.postgresql >> .env
+          echo DJANGO_DEBUG=${{ secrets.DJANGO_DEBUG}} >> .env
+          echo DJANGO_DATABASES__default__HOST=${{ secrets.DJANGO_DATABASES__default__HOST }} >> .env
+          echo DJANGO_DATABASES__default__ENGINE=${{ secrets.DJANGO_DATABASES__default__ENGINE }} >> .env
+          echo DJANGO_DATABASES__default__NAME=${{ secrets.DJANGO_DATABASES__default__NAME }} >> .env
+          echo DJANGO_DATABASES__default__OPTIONS=${{ secrets.DJANGO_DATABASES__default__OPTIONS }} >> .env
+          echo DJANGO_DATABASES__default__PORT=${{ secrets.DJANGO_DATABASES__default__PORT }} >> .env
+          echo DJANGO_DATABASES__default__USER=${{ secrets.DJANGO_DATABASES__default__USER }} >> .env
+          echo DJANGO_DATABASES__default__PASSWORD=${{ secrets.DJANGO_DATABASES__default__PASSWORD }} >> .env
+          echo DJANGO_ENVIRONMENT=${{ secrets.DJANGO_ENVIRONMENT }} >> .env
+          echo DJANGO_ALLOWED_HOSTS=${{ secrets.DJANGO_ALLOWED_HOSTS }} >> .env
+          echo DJANGO_BASE_URL=${{ secrets.DJANGO_BASE_URL }} >> .env
+          echo DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }} >> .env
+          echo DJANGO_SETTINGS_MODULE=${{ secrets.DJANGO_SETTINGS_MODULE }} >> .env
+          echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} >> .env
+          echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} >> .env
+      - name: Set environment variables
+        run: |
+          echo "BACKEND_IMAGE=$(echo ${{env.BACKEND_IMAGE}} )" >> $GITHUB_ENV
+      - uses: actions/checkout@v2
+      - name: Log in to GitHub Packages
+        run: |
+            echo ${{ secrets.BAHEA_CAL_DEPLOY_TOKEN }} | docker login ghcr.io -u gogixweb --password-stdin
+        env:
+          BAHEA_CAL_DEPLOY_TOKEN: ${{ env.BAHEA_CAL_DEPLOY_TOKEN }}
+      - name: Pull images
+        run: |
+          docker pull ${{ env.BACKEND_IMAGE }} || true
+      - name: Build images
+        run: |
+          docker build -f Dockerfile -t ghcr.io/gogixweb/bahea-cal/backend:latest
+      - name: Push images
+        run: |
+          docker push ${{ env.BACKEND_IMAGE }}
