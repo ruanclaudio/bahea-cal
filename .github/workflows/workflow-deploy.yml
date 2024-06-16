@@ -59,9 +59,9 @@ jobs:
         uses: actions/checkout@v2
       - name: Add environment variables to .env
         run: |
-          echo $BAHEA_CAL_DEPLOY_TOKEN=${{ secrets.GHCR_PAT }} >> .env
-          echo $ENVIRONMENT=${{ env.DJANGO_ENVIRONMENT }} >> .env
-          echo $BACKEND_IMAGE=${{ env.BACKEND_IMAGE }} >> .env
+          echo BAHEA_CAL_DEPLOY_TOKEN=${{ secrets.GHCR_PAT }} >> .env
+          echo ENVIRONMENT=${{ env.DJANGO_ENVIRONMENT }} >> .env
+          echo BACKEND_IMAGE=${{ env.BACKEND_IMAGE }} >> .env
       - name: Add the private SSH key to the ssh-agent
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
