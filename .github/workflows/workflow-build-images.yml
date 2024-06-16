@@ -39,7 +39,7 @@ jobs:
         with:
           registry: ghcr.io
           username: gogixweb
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.GHCR_PAT }}
       - name: Pull images
         run: |
           docker pull ${{ env.BACKEND_IMAGE }} || true
