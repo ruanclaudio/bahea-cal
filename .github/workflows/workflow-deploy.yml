@@ -45,10 +45,10 @@ jobs:
           docker pull ${{ vars.BACKEND_IMAGE }} || true
       - name: Build images
         run: |
-          docker build . -f Dockerfile -t ${{ vars.BACKEND_IMAGE }}:latest
+          docker build . -f Dockerfile -t ${{ env.BACKEND_IMAGE }}:latest
       - name: Push images
         run: |
-          docker push ${{ vars.BACKEND_IMAGE }}:latest
+          docker push ${{ env.BACKEND_IMAGE }}:latest
 
   deploy:
     name: Deploy to DigitalOcean
@@ -61,7 +61,7 @@ jobs:
         run: |
           echo BAHEA_CAL_DEPLOY_TOKEN=${{ secrets.GHCR_PAT }} >> .env
           echo ENVIRONMENT=${{ vars.DJANGO_ENVIRONMENT }} >> .env
-          echo BACKEND_IMAGE=${{ vars.BACKEND_IMAGE }} >> .env
+          echo BACKEND_IMAGE=${{ env.BACKEND_IMAGE }} >> .env
       - name: Add the private SSH key to the ssh-agent
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
