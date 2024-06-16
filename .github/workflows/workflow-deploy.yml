@@ -76,9 +76,10 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no -r ./.env root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }}:/app/${{ vars.DJANGO_ENVIRONMENT }}
           ssh -o StrictHostKeyChecking=no root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} << 'ENDSSH'
-            cd /app/${{ vars.DJANGO_ENVIRONMENT }}
+            cd /app/$ENVIRONMENT
             source .env
             docker login ghcr.io -u gogixweb -p $BAHEA_CAL_DEPLOY_TOKEN
             docker pull $BACKEND_IMAGE
+            docker stop bahea-cal-backend-$ENVIRONMENT || true
             docker run -d --name bahea-cal-backend-$ENVIRONMENT $BACKEND_IMAGE
           ENDSSH
