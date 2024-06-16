@@ -37,7 +37,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: gogixweb
           password: ${{ secrets.BAHEA_CAL_DEPLOY_TOKEN }}
       - name: Pull images
         run: |
