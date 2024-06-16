@@ -45,7 +45,8 @@ jobs:
           docker pull ${{ env.BACKEND_IMAGE }} || true
       - name: Build images
         run: |
-          docker build -f Dockerfile -t ${{ env.BACKEND_IMAGE }} .
+          docker build . -f Dockerfile -t ${{ env.BACKEND_IMAGE }}:latest
       - name: Push images
         run: |
-          docker push ${{ env.BACKEND_IMAGE }}
+          echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u gogixweb --password-stdin
+          docker push ${{ env.BACKEND_IMAGE }}:latest
