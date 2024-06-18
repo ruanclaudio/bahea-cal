@@ -24,14 +24,15 @@ jobs:
 
       - name: Verify package.json existence
         run: |
+          cd frontend 
           if [ ! -f package.json ]; then
-            echo "package.json not found in frontend directory!"
-            exit 1
+          echo "package.json not found in frontend directory!"
+          exit 1
           fi
 
       - name: Install dependencies, build, and test
         run: |
-          cd "bahea-cal/frontend/"
+          cd frontend
           npm install
           npm run build
           npm run test
