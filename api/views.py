@@ -1,3 +1,4 @@
+import json
 import os.path
 
 from django.conf import settings
@@ -5,13 +6,18 @@ from django.contrib.auth import login
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from core.views import UserService
+from distutils.command import build
 from users.services import Credentials, CredentialsService
 from webapp.secrets import get_secret
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from google_auth_oauthlib.flow import Flow
 from google.auth.transport import Request
+from google.oauth2 import service_account
+from googleapiclient.discovery import build as apiClientBuild
 
+
+FULL_SECRET_PATH = 'C:/Users/ruanc/OneDrive/Documentos/Workspace/bahea-cal/webapp/secrets.json'
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 SCOPES = [
     "https://www.googleapis.com/auth/calendar.app.created",
@@ -28,6 +34,7 @@ API_VERSION = "v3"
 def calendar_init_view(request):
     config = get_secret(f"{settings.ENVIRONMENT}/google/calendar")
     creds = CredentialsService.init_for(request.user, scopes=SCOPES)
+    print("cred= ", creds)
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
@@ -65,3 +72,33 @@ def calendar_token(request):
         return JsonResponse({"error": str(e)})
     else:
         return JsonResponse({"sucess": True})
+    
+
+@api_view(["GET"])
+def user_info_view(request):
+    user = request.user
+    creds = Credentials(
+        token=user.social_auth.get(provider='google-oauth2').access_token,
+        refresh_token=user.social_auth.get(provider='google-oauth2').refresh_token,
+        client_id=settings.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY,
+        client_secret=settings.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET,
+        scopes=SCOPES  
+    )
+    service_account_info = json.load(open(FULL_SECRET_PATH))
+    creds = Credentials.from_service_account_info(service_account_info, scopes=SCOPES) 
+    
+    print(creds)
+    calendar_service = build('calendar', 'v3', credentials=creds)
+    choiced_teams = {}
+    time_to_match = {}
+        
+    user_info = {
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'user_email': user.email,
+        'photo': user.profile.photo,
+        'teams': choiced_teams,
+        'time_to_match': time_to_match
+    }
+
+    return JsonResponse(user_info)
