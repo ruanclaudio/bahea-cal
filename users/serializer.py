@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 class UserInfoSerializer(serializers.Serializer):
     first_name = serializers.CharField()
     last_name = serializers.CharField()
-    user_email = serializers.EmailField()
-    user_photo = serializers.ImageField()
-    choiced_teams = serializers.DictField(child=serializers.ListField(child=serializers.EmailField()))
+    email = serializers.EmailField()
+    photo = serializers.ImageField()
+    selected_teams = serializers.DictField(child=serializers.ListField(child=serializers.EmailField()))
     time_to_match = serializers.DictField(
         child=serializers.DateTimeField()
     )
