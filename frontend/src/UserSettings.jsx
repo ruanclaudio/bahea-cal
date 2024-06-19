@@ -1,17 +1,35 @@
-
+import { useState, useEffect, response } from 'react';
+import axios from 'axios';
 
 const UserSettings = () => {
- 
- const userData = {
-      picture: null,
-      email: null,
-      team: null,
-      notificationTime: null,
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+          axios.get('https://4adc8e583c254fee819e0930bf451559.api.mockbin.io/').then(function (response) {
+          setUserData(response.data);
+        });
+        setUserData(response.data);
+        console.log(response);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        setLoading(false);
+      }
+    };
 
- }
+    fetchData();
+  }, []);
 
-  
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!userData) {
+    return <div>Error loading user data.</div>;
+  }
 
   return (
     <div className="container">
