@@ -1,0 +1,35 @@
+name: Continuous Integration-FE
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  continuous_integration_fe:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        
+
+      - name: List root directory contents
+        run: ls -la
+
+
+      - name: Verify package.json existence
+        run: |
+          cd frontend 
+          if [ ! -f package.json ]; then
+          echo "package.json not found in frontend directory!"
+          exit 1
+          fi
+
+      - name: Install dependencies, build, and test
+        run: |
+          cd frontend
+          npm install
+          npm run build
