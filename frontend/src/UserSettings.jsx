@@ -1,9 +1,15 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+
 
 const UserSettings = () => {
-  const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
+ 
+ const userData = {
+      picture: null,
+      email: null,
+      team: null,
+      notificationTime: null,
+
+
+ }
 
   
 
