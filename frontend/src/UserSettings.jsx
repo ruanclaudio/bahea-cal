@@ -5,28 +5,7 @@ const UserSettings = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('URL_DO_SEU_MOCKBIN'); // Substitua pela URL do seu Mockbin que retorna um JSON com dados do usuário
-        setUserData(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!userData) {
-    return <div>Error loading user data.</div>;
-  }
+  
 
   return (
     <div className="container">
