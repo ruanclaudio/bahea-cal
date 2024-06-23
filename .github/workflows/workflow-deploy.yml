@@ -4,6 +4,8 @@ on: [push]
 
 env:
   BACKEND_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/backend
+  BAHEA_CAL_DEPLOY_TOKEN: ${{ secrets.GHCR_PAT }}
+  ENVIRONMENT: ${{ vars.DJANGO_ENVIRONMENT }}
 
 jobs:
 
@@ -60,8 +62,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Add environment variables to .env
         run: |
-          echo BAHEA_CAL_DEPLOY_TOKEN=${{ secrets.GHCR_PAT }} >> .env
-          echo ENVIRONMENT=${{ vars.DJANGO_ENVIRONMENT }} >> .env
+          echo BAHEA_CAL_DEPLOY_TOKEN=${{ env.BAHEA_CAL_DEPLOY_TOKEN }} >> .env
+          echo ENVIRONMENT=${{ env.ENVIRONMENT }} >> .env
           echo BACKEND_IMAGE=${{ env.BACKEND_IMAGE }} >> .env
       - name: Add the private SSH key to the ssh-agent
         env:
@@ -75,7 +77,7 @@ jobs:
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
-          scp -o StrictHostKeyChecking=no -r ./.env root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }}:/app/${{ vars.DJANGO_ENVIRONMENT }}
+          scp -o StrictHostKeyChecking=no -r ./.env root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }}:/app/${{ env.ENVIRONMENT }}
           ssh -o StrictHostKeyChecking=no root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} << 'ENDSSH'
             cd /app/$ENVIRONMENT
             source .env
