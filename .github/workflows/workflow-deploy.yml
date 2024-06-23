@@ -34,6 +34,7 @@ jobs:
         run: |
           echo "BACKEND_IMAGE=$(echo ${{ env.BACKEND_IMAGE }} )" >> $GITHUB_ENV
           echo "BAHEA_CAL_STAGING_DEPLOY_TOKEN=$(echo ${{ secrets.BAHEA_CAL_STAGING_DEPLOY_TOKEN }} )" >> $GITHUB_ENV
+          echo "ENVIRONMENT=${{ vars.DJANGO_ENVIRONMENT }}" >> $GITHUB_ENV
       - name: Log in to GitHub Packages
         uses: docker/login-action@v2
         with:
