@@ -24,21 +24,21 @@ jobs:
         uses: actions/checkout@v2
       - name: Add environment variables to .env
         run: |
-          echo DJANGO_DEBUG=${{ vars.DJANGO_DEBUG}} >> .env
-          echo DJANGO_DATABASES__default__HOST=${{ secrets.DJANGO_DATABASES__default__HOST }} >> .env
-          echo DJANGO_DATABASES__default__ENGINE=${{ secrets.DJANGO_DATABASES__default__ENGINE }} >> .env
-          echo DJANGO_DATABASES__default__NAME=${{ secrets.DJANGO_DATABASES__default__NAME }} >> .env
-          echo DJANGO_DATABASES__default__OPTIONS=${{ secrets.DJANGO_DATABASES__default__OPTIONS }} >> .env
-          echo DJANGO_DATABASES__default__PORT=${{ secrets.DJANGO_DATABASES__default__PORT }} >> .env
-          echo DJANGO_DATABASES__default__USER=${{ secrets.DJANGO_DATABASES__default__USER }} >> .env
-          echo DJANGO_DATABASES__default__PASSWORD=${{ secrets.DJANGO_DATABASES__default__PASSWORD }} >> .env
-          echo DJANGO_ENVIRONMENT=${{ vars.DJANGO_ENVIRONMENT }} >> .env
-          echo DJANGO_ALLOWED_HOSTS=${{ secrets.DJANGO_ALLOWED_HOSTS }} >> .env
-          echo DJANGO_BASE_URL=${{ vars.DJANGO_BASE_URL }} >> .env
-          echo DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }} >> .env
-          echo DJANGO_SETTINGS_MODULE=${{ secrets.DJANGO_SETTINGS_MODULE }} >> .env
-          echo AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }} >> .env
-          echo AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }} >> .env
+          echo "DJANGO_DEBUG=$(echo ${{ vars.DJANGO_DEBUG}} )" >> .env
+          echo "DJANGO_DATABASES__default__HOST=$(echo ${{ secrets.DJANGO_DATABASES__default__HOST }} )" >> .env
+          echo "DJANGO_DATABASES__default__ENGINE=$(echo ${{ secrets.DJANGO_DATABASES__default__ENGINE }} )" >> .env
+          echo "DJANGO_DATABASES__default__NAME=$(echo ${{ secrets.DJANGO_DATABASES__default__NAME }} )" >> .env
+          echo "DJANGO_DATABASES__default__OPTIONS=$(echo ${{ secrets.DJANGO_DATABASES__default__OPTIONS }} )" >> .env
+          echo "DJANGO_DATABASES__default__PORT=$(echo ${{ secrets.DJANGO_DATABASES__default__PORT }} )" >> .env
+          echo "DJANGO_DATABASES__default__USER=$(echo ${{ secrets.DJANGO_DATABASES__default__USER }} )" >> .env
+          echo "DJANGO_DATABASES__default__PASSWORD=$(echo ${{ secrets.DJANGO_DATABASES__default__PASSWORD }} )" >> .env
+          echo "DJANGO_ENVIRONMENT=$(echo ${{ vars.DJANGO_ENVIRONMENT }} )" >> .env
+          echo "DJANGO_ALLOWED_HOSTS=$(echo ${{ secrets.DJANGO_ALLOWED_HOSTS }} )" >> .env
+          echo "DJANGO_BASE_URL=$(echo ${{ vars.DJANGO_BASE_URL }} )" >> .env
+          echo "DJANGO_SECRET_KEY=$(echo ${{ secrets.DJANGO_SECRET_KEY }} )" >> .env
+          echo "DJANGO_SETTINGS_MODULE=$(echo ${{ secrets.DJANGO_SETTINGS_MODULE }} )" >> .env
+          echo "AWS_SECRET_ACCESS_KEY=$(echo ${{ secrets.AWS_SECRET_ACCESS_KEY }} )" >> .env
+          echo "AWS_ACCESS_KEY_ID=$(echo ${{ secrets.AWS_ACCESS_KEY_ID }} )" >> .env
       - name: Set environment variables
         run: |
           echo "BACKEND_IMAGE=$(echo ${{ env.BACKEND_IMAGE }} )" >> $GITHUB_ENV
@@ -87,10 +87,11 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no -r ./.env root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }}:/app/${{ env.ENVIRONMENT }}
           ssh -o StrictHostKeyChecking=no root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} << 'ENDSSH'
-            cd /app/$ENVIRONMENT
+            cd /app/${{ env.ENVIRONMENT }}
             source .env
             docker login ghcr.io -u gogixweb -p $BAHEA_CAL_DEPLOY_TOKEN
             docker pull $BACKEND_IMAGE
-            docker stop bahea-cal-backend-$ENVIRONMENT || true
-            docker run -d --name bahea-cal-backend-$ENVIRONMENT $BACKEND_IMAGE
+            docker stop bahea-cal-backend-${{ env.ENVIRONMENT }} || true
+            docker rm bahea-cal-backend-${{ env.ENVIRONMENT }} || true
+            docker run -d --name bahea-cal-backend-${{ env.ENVIRONMENT }} $BACKEND_IMAGE
           ENDSSH
