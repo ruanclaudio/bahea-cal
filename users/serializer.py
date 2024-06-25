@@ -7,7 +7,7 @@ class UserInfoSerializer(serializers.Serializer):
     email = serializers.EmailField()
     photo = serializers.ImageField()
     selected_teams = serializers.DictField(child=serializers.ListField(child=serializers.EmailField()))
-    time_to_match = serializers.DictField(
+    notify_before = serializers.DictField(
         child=serializers.DateTimeField()
     )
     
