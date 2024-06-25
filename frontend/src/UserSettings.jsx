@@ -1,43 +1,58 @@
-import { useState, useEffect, response } from 'react';
-import axios from 'axios';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
+
+console.log(React)
+
+const MOCKBIN = "https://cc77e5e28280495fa067f145a79ea956.api.mockbin.io/";
+
+//CONTRATO
+/**
+ * 
+{ 
+  "first_name": "Joao", 
+  "last_name": "Silva", 
+  "user_email": "user@mail.com",
+  "photo":"https://st3.depositphotos.com/15648834/17930/v/450/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg", 
+  "teams": { 
+     "team1": "<team_name_1>""team2": "<team_name_2>"..."teamN": "<team_name_N>" }
+  "time_to_match": { 
+     "time1": "value_in_seconds_1", "time2":"value_in_seconds_2", ...}
+}
+ * 
+ * 
+ * 
+ * 
+ */
 const UserSettings = () => {
   const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchData = async () => {
+    async function fetchData() {
       try {
-          axios.get('https://4adc8e583c254fee819e0930bf451559.api.mockbin.io/').then(function (response) {
-          setUserData(response.data);
-        });
+        const response = await axios.get(MOCKBIN);
+        console.log('response: ', response);
         setUserData(response.data);
-        console.log(response);
-        setLoading(false);
       } catch (error) {
-        console.error('Error fetching user data:', error);
-        setLoading(false);
+        console.error('Erro ao buscar dados!', error);
       }
-    };
-
+    }
     fetchData();
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   if (!userData) {
-    return <div>Error loading user data.</div>;
+    return <p>Carregando...</p>;
   }
 
+  
   return (
     <div className="container">
       <div className="user-info">
+
         <img src={userData.picture || 'https://via.placeholder.com/100'} alt="Foto do Usuário" className="profile-photo" />
-        <h2>{userData.name || 'Nome do Usuário'}</h2>
-        <p>Email: <strong>{userData.email || 'example@example.com'}</strong></p>
-        <p>Time escolhido: <strong>{userData.team || 'Time Exemplo FC'}</strong></p>
+        <h2>{userData.middleName || 'Nome do Usuário'}</h2>
+        <p>Email: <strong>{userData.lastName || 'example@example.com'}</strong></p>
+        <p>Time escolhido: <strong>{userData.firstName || 'Time Exemplo FC'}</strong></p>
       </div>
       <div className="notification-settings">
         <h3>Configurações de Notificação:</h3>
