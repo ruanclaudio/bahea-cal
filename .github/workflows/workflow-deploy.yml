@@ -92,5 +92,6 @@ jobs:
             docker login ghcr.io -u gogixweb -p $BAHEA_CAL_DEPLOY_TOKEN
             docker pull $BACKEND_IMAGE
             docker stop bahea-cal-backend-${{ env.ENVIRONMENT }} || true
+            docker rm bahea-cal-backend-${{ env.ENVIRONMENT }} || true
             docker run -d --name bahea-cal-backend-${{ env.ENVIRONMENT }} $BACKEND_IMAGE
           ENDSSH
