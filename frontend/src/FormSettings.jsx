@@ -45,9 +45,9 @@ const FormularioNotificacao = () => {
                     value={calendario} 
                     onChange={(e) => setCalendario(e.target.value)}
                 >
-                    <option value="gregoriano">Google</option>
-                    <option value="juliano">Iphone</option>
-                    <option value="islamico">Outros</option>
+                    <option value="Google">Google</option>
+                    <option value="Iphone">Iphone</option>
+                    <option value="Outros">Outros</option>
                     
                 </select>
             </div>
