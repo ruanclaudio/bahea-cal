@@ -65,3 +65,17 @@ def calendar_token(request):
         return JsonResponse({"error": str(e)})
     else:
         return JsonResponse({"sucess": True})
+
+@api_view(['GET'])
+def user_json_return(request):
+    user_info = {
+        'send_from' : 'backend',
+        'given_name' : 'test name',
+        'family_name' : 'family test',
+        'email' : 'example@email.com',
+        'photo' : 'url/path/profile/photo',
+        'selected_teams' : 'Bahia',
+        'notify_before' : '2 hours'
+    }
+    
+    return JsonResponse(user_info)
