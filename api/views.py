@@ -78,84 +78,17 @@ def calendar_token(request):
         return JsonResponse({"error": str(e)})
     else:
         return JsonResponse({"sucess": True})
-    
 
-@api_view(["GET"])
-def user_info_view(request):
-    user = request.user
-    print('user == ', user.email)
-    print('user fname== ', user.first_name)
-    print('user lname == ', user.last_name)
-    print('user id == ', user.id)
-    print('user id == ', user.acessToken)
-    # print('locale == ', user.photo)
-    # print('locale == ', user.locale)
-    # print('user pimage == ', user.picture)
-    # print('request == ', request_data)
-       
-    user_creds = UserCredential.objects.get(user)
-    creds = Credentials.from_user_credentials(user_creds)
-    
-    calendar_service = googleapiclient.discovery.build('calendar', 'v3', credentials=creds)
-    selected_teams = {}
-    notify_before = {}
-        
+@api_view(['GET'])
+def user_json_return(request):
     user_info = {
-        'first_name': user.first_name,
-        'last_name': user.last_name,
-        'email': user.email,
-        'photo': user.photo,
-        'selected_teams': selected_teams,
-        'notify_before': notify_before
+        'send_from' : 'backend',
+        'given_name' : 'test name',
+        'family_name' : 'family test',
+        'email' : 'example@email.com',
+        'photo' : 'url/path/profile/photo',
+        'selected_teams' : 'Bahia',
+        'notify_before' : '2 hours'
     }
-
+    
     return JsonResponse(user_info)
-
-import requests
-from google.auth.transport import requests as google_requests
-@api_view(["GET"])
-def test_return(request):
-
-    CLIENT_SECRETS_FILE = os.path.join(ROOT_FOLDER, "bahea-cal/webapp", "secrets2.json")
-
-    flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
-    print(flow)
-    creds = flow.run_local_server(port=0)
-    def verify_id_token(id_token):
-        try:
-            # Specify the CLIENT_ID of the app that accesses the backend:
-            CLIENT_ID = "600789865643-nh6ss44i17aov60br8fno3hqoihro4uh.apps.googleusercontent.com"
-            # Verify the token
-            idinfo = id_token.verify_oauth2_token(id_token, google_requests.Request(), CLIENT_ID)
-            # ID token is valid
-            return idinfo
-        except ValueError:
-            # Invalid token
-            return None
-
-
-      # Get the ID token from the credentials
-    id_token_info = creds.id_token
-    # Verify the ID token
-    idinfo = verify_id_token(id_token_info)
-    
-    if idinfo:
-        userinfo = {
-            'sub': idinfo['sub'],
-            'name': idinfo['name'],
-            'given_name': idinfo['given_name'],
-            'family_name': idinfo['family_name'],
-            'picture': idinfo['picture'],
-            'email': idinfo['email'],
-            'email_verified': idinfo['email_verified'],
-            'locale': idinfo['locale']
-        }
-    
-        print("User info:", json.dumps(userinfo, indent=4)) 
-        return JsonResponse({ "userInfo":json.dumps(userinfo, indent=4) })
-
-    # url = "https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=access_token"
-    # response = requests.get(url)
-    
-    # data = json.loads(response.text)
-    # return JsonResponse(data)

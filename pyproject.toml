@@ -50,8 +50,8 @@ Source = "https://github.com/ivancrneto/bahea-cal"
 [project.optional-dependencies]
 prod-only = [
     "gunicorn>=22.0.0",
-    "psycopg2>=2.9.9",
     "gevent>=24.2.1",
+    "psycopg2-binary>=2.9.9",
 ]
 [tool.hatch.version]
 path = "bahea_cal/__about__.py"
