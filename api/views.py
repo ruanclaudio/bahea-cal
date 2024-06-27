@@ -1,23 +1,21 @@
 import json
 import os.path
+import requests
+import googleapiclient.discovery
 
 from django.conf import settings
 from django.contrib.auth import login
-from django.shortcuts import redirect
 from google.auth.transport.requests import Request
+from google.auth.transport import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from core.views import UserService
-from googleapiclient.discovery import build
 from users.models import UserCredential
 from users.services import Credentials, CredentialsService
 from webapp.secrets import get_secret
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from google_auth_oauthlib.flow import Flow
-from google.auth.transport import Request
-from google.oauth2 import service_account
-from googleapiclient.discovery import build as apiClientBuild
-import googleapiclient.discovery
+from bahea_cal.schedule import get_service 
 from pathlib import Path
 
 
@@ -79,6 +77,16 @@ def calendar_token(request):
     else:
         return JsonResponse({"sucess": True})
 
+@api_view(["GET"])
+def user_info_view(request):
+    URL_GOOGLE_USER_DATA = 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token='
+    credential = UserCredential.objects.get(id=1)
+    creds = credential.as_dict()["token"]
+    service = get_service(credential)
+
+    response = requests.get(f"{URL_GOOGLE_USER_DATA}{creds}")
+    return JsonResponse((response.content).decode('utf-8'), safe=False)
+
 @api_view(['GET'])
 def user_json_return(request):
     user_info = {
@@ -91,4 +99,4 @@ def user_json_return(request):
         'notify_before' : '2 hours'
     }
     
-    return JsonResponse(user_info)
+    return JsonResponse(user_info) 
