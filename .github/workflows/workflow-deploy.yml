@@ -1,13 +1,15 @@
 name: Continuous Integration and Delivery
 
 on:
-  workflow_dispatch:
-    inputs:
-      environment:
-        required: true
-        type: string
-        description: 'The environment to deploy to'
-
+  push:
+    branches:
+      - main
+  # workflow_dispatch:
+  #   inputs:
+  #     environment:
+  #       required: true
+  #       type: string
+  #       description: 'The environment to deploy to'
 env:
   BACKEND_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/backend
   BAHEA_CAL_DEPLOY_TOKEN: ${{ secrets.GHCR_PAT }}
