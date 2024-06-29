@@ -93,5 +93,5 @@ jobs:
             docker pull $BACKEND_IMAGE
             docker stop bahea-cal-backend-${{ env.ENVIRONMENT }} || true
             docker rm bahea-cal-backend-${{ env.ENVIRONMENT }} || true
-            docker run -d --name bahea-cal-backend-${{ env.ENVIRONMENT }} $BACKEND_IMAGE
+            docker run -p 28000:8000 -d --name bahea-cal-backend-${{ env.ENVIRONMENT }} $BACKEND_IMAGE
           ENDSSH
