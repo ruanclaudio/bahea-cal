@@ -20,7 +20,7 @@ jobs:
   build:
     name: Build Docker Images
     environment:
-      name: ${{ github.ref_name }}
+      name: staging-bahea-cal
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main
