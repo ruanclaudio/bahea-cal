@@ -30,7 +30,7 @@ const router = createBrowserRouter([
   },
 
   {
-      path: "/formulario",
+      path: "/formsettings",
       element: <FormSettings.jsx/>,
   },
 
