@@ -10,6 +10,7 @@ from google.auth.transport import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from core.views import UserService
 from users.models import UserCredential
+from users.serializer import UserInfoSerializer
 from users.services import Credentials, CredentialsService
 from webapp.secrets import get_secret
 from rest_framework.decorators import api_view
@@ -18,10 +19,6 @@ from google_auth_oauthlib.flow import Flow
 from bahea_cal.schedule import get_service 
 from pathlib import Path
 
-
-
-ROOT_FOLDER = Path().resolve().parent
-FULL_SECRET_PATH = os.path.join(ROOT_FOLDER, "webapp", "secrets.json")
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 SCOPES = [
     "https://www.googleapis.com/auth/calendar.app.created",
@@ -79,13 +76,14 @@ def calendar_token(request):
 
 @api_view(["GET"])
 def user_info_view(request):
-    URL_GOOGLE_USER_DATA = 'https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token='
-    credential = UserCredential.objects.get(id=1)
-    creds = credential.as_dict()["token"]
+    credential = UserCredential.objects.get(user=request.user)
     service = get_service(credential)
-
-    response = requests.get(f"{URL_GOOGLE_USER_DATA}{creds}")
-    return JsonResponse((response.content).decode('utf-8'), safe=False)
+    creds = Credentials.from_user_credentials(credential)
+    
+    user_service = UserService.from_credentials(creds)
+    user_service.check_calendar(credential.user)
+    serializer = UserInfoSerializer(user_service.remote())
+    return JsonResponse(serializer.data, safe=False)
 
 @api_view(['GET'])
 def user_json_return(request):
