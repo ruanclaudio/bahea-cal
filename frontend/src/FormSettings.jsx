@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-console.log(React)
+import { useState } from 'react';
 
 const NotificationForm = () => {
     const [firstName, setFirstName] = useState('');
@@ -11,7 +10,6 @@ const NotificationForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log({ firstName, lastName, calendar, notification, club, anotherClub });
     };
 
     return (
