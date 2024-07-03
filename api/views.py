@@ -1,16 +1,23 @@
+import json
 import os.path
+import requests
+import googleapiclient.discovery
 
 from django.conf import settings
 from django.contrib.auth import login
 from google.auth.transport.requests import Request
+from google.auth.transport import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from core.views import UserService
+from users.models import UserCredential
+from users.serializer import UserInfoSerializer
 from users.services import Credentials, CredentialsService
 from webapp.secrets import get_secret
 from rest_framework.decorators import api_view
 from django.http import JsonResponse
 from google_auth_oauthlib.flow import Flow
-from google.auth.transport import Request
+from bahea_cal.schedule import get_service 
+from pathlib import Path
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 SCOPES = [
@@ -28,6 +35,7 @@ API_VERSION = "v3"
 def calendar_init_view(request):
     config = get_secret(f"{settings.ENVIRONMENT}/google/calendar")
     creds = CredentialsService.init_for(request.user, scopes=SCOPES)
+ 
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
@@ -66,6 +74,17 @@ def calendar_token(request):
     else:
         return JsonResponse({"sucess": True})
 
+@api_view(["GET"])
+def user_info_view(request):
+    credential = UserCredential.objects.get(user=request.user)
+    service = get_service(credential)
+    creds = Credentials.from_user_credentials(credential)
+    
+    user_service = UserService.from_credentials(creds)
+    user_service.check_calendar(credential.user)
+    serializer = UserInfoSerializer(user_service.remote())
+    return JsonResponse(serializer.data, safe=False)
+
 @api_view(['GET'])
 def user_json_return(request):
     user_info = {
@@ -78,4 +97,4 @@ def user_json_return(request):
         'notify_before' : '2 hours'
     }
     
-    return JsonResponse(user_info)
+    return JsonResponse(user_info) 
