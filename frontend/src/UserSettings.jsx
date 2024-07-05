@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 console.log(React)
 
-const MOCKBIN = "https://cc77e5e28280495fa067f145a79ea956.api.mockbin.io/";
+const MOCKBIN = "http://localhost:8000/api/v1/user/info";
 
 //CONTRATO
 /**
