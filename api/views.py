@@ -18,6 +18,8 @@ from django.http import JsonResponse
 from google_auth_oauthlib.flow import Flow
 from bahea_cal.schedule import get_service 
 from pathlib import Path
+from rest_framework.authtoken.views import obtain_auth_token
+from rest_framework.authtoken.models import Token
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 SCOPES = [
@@ -53,6 +55,7 @@ def calendar_init_view(request):
 
     return JsonResponse({"message": "Sucess"})
 
+
 @api_view(['POST'])
 def calendar_token(request):
     config = get_secret(f"{settings.ENVIRONMENT}/google/calendar")
@@ -68,11 +71,13 @@ def calendar_token(request):
         user_service.check_calendar(user)
 
         login(request, user)
+        token, created = Token.objects.get_or_create(user=user)
+        
     except Exception as e:
         print(f"Error: {e}")
         return JsonResponse({"error": str(e)})
     else:
-        return JsonResponse({"sucess": True})
+        return JsonResponse({"sucess": True, 'token': token.key})
 
 @api_view(["GET"])
 def user_info_view(request):
