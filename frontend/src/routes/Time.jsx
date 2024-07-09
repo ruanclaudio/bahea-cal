@@ -18,10 +18,10 @@ class Time extends React.Component {
           <img src={BahiaLogo} alt="Bahia" style={{ width: '50px', height: '50px' }} /> Bahia
         </button>
         <button onClick={() => this.showLogo('Flamengo')}> {/* Alterando para this.showLogo e corrigindo o nome do time */}
-          <img src={flamengologo} alt="Flamengo" style={{ width: '50px', height: '50px' }} /> Flamengo 
+          <img src={flamengologo} alt="Flamengo" style={{ width: '50px', height: '50px' }} /> Flamengo
         </button>
         <button onClick={() => this.showLogo('Palmeiras')}> {/* Alterando para this.showLogo e corrigindo o nome do time */}
-          <img src={palmeiraslogo} alt="Palmeiras" style={{ width: '50px', height: '50px' }} /> Palmeiras 
+          <img src={palmeiraslogo} alt="Palmeiras" style={{ width: '50px', height: '50px' }} /> Palmeiras
         </button>
         {/* Adicione mais botões conforme necessário */}
       </div>

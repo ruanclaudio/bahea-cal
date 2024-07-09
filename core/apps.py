@@ -1,3 +1,4 @@
+# Pip imports
 from django.apps import AppConfig
 
 
@@ -6,4 +7,5 @@ class CoreConfig(AppConfig):
     name = "core"
 
     def ready(self):
-        import core.receivers  # noqa: E401
+        # Internal imports
+        import core.receivers  # noqa: F401

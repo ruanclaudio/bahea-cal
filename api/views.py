@@ -1,23 +1,21 @@
-import json
+# Python imports
 import os.path
-import requests
-import googleapiclient.discovery
 
+# Pip imports
 from django.conf import settings
 from django.contrib.auth import login
+from django.http import JsonResponse
 from google.auth.transport.requests import Request
-from google.auth.transport import Request
-from google_auth_oauthlib.flow import InstalledAppFlow
+from google_auth_oauthlib.flow import Flow, InstalledAppFlow
+from rest_framework.decorators import api_view
+
+# Internal imports
 from core.views import UserService
 from users.models import UserCredential
 from users.serializer import UserInfoSerializer
 from users.services import Credentials, CredentialsService
 from webapp.secrets import get_secret
-from rest_framework.decorators import api_view
-from django.http import JsonResponse
-from google_auth_oauthlib.flow import Flow
-from bahea_cal.schedule import get_service
-from pathlib import Path
+
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 SCOPES = [
@@ -79,7 +77,6 @@ def calendar_token(request):
 @api_view(["GET"])
 def user_info_view(request):
     credential = UserCredential.objects.get(user=request.user)
-    service = get_service(credential)
     creds = Credentials.from_user_credentials(credential)
 
     user_service = UserService.from_credentials(creds)

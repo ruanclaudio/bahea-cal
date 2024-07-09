@@ -131,7 +131,7 @@ sorce .venv/bin/activate
 pdm add -d <dependency_name>
 ```
 
-**3. Install the new dependency:** 
+**3. Install the new dependency:**
 
 ```
 pdm install
@@ -287,7 +287,7 @@ sorce .venv/bin/activate
 pdm add -d <nome_da_dependencia>
 ```
 
-**3. Instale a nova dependência:** 
+**3. Instale a nova dependência:**
 
 ```
 pdm install
@@ -305,7 +305,7 @@ pdm show <nome_da_dependencia>
 pdm export -d -o requirements-dev.txt --without-hashes
 ```
 
-## Como rodar o projeto em REACT.JS 
+## Como rodar o projeto em REACT.JS
 
 ## Passo 1: Configuração da API do Google
 1. Acesse o Google Cloud Console.

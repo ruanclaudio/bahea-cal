@@ -1,5 +1,7 @@
+# Python imports
 import uuid
 
+# Pip imports
 import arrow
 from django.db import models
 from model_utils.models import TimeStampedModel

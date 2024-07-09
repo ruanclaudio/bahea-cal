@@ -1,18 +1,20 @@
+# Python imports
 import os.path
 
+# Pip imports
 import attrs
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
 from django.conf import settings
-from django.contrib.auth import authenticate, login, get_user_model
-from django.shortcuts import redirect
-from django.shortcuts import render
+from django.contrib.auth import get_user_model, login
+from django.shortcuts import redirect, render
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 
-from users.services import Credentials
-from users.services import CredentialsService
+# Internal imports
+from users.services import Credentials, CredentialsService
 from webapp.secrets import get_secret
+
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 SCOPES = [
@@ -42,8 +44,7 @@ def google_calendar_init_view(request):
             flow.redirect_uri = REDIRECT_URL
 
             authorization_url, state = flow.authorization_url(
-                access_type="offline",
-                prompt="consent", include_granted_scopes="true"
+                access_type="offline", prompt="consent", include_granted_scopes="true"
             )
             request.session["state"] = state
 
@@ -55,10 +56,6 @@ def google_calendar_init_view(request):
 def get_config():
     return get_secret(f"{settings.ENVIRONMENT}/google/calendar")
 
-def google_calendar_redirect_view(request):
-    state = request.session.get("state") or request.GET.get("state")
-    if state is None:
-        return render(request, "core/success.html", {"error": "Algo de errado aconteceu."})
 
 @attrs.define
 class FlowService:
@@ -148,7 +145,7 @@ def google_calendar_redirect_view(request):
         user_service.check_calendar(user)
 
         login(request, user)
-    except Exception as e:
+    except Exception:
         return render(request, "core/error.html")
     else:
         return redirect("/calendar/success/")

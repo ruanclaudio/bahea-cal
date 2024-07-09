@@ -1,10 +1,13 @@
+# Python imports
 import os
 import pathlib
 import sys
+
+# Pip imports
 import arrow
 import attrs
-
 import django
+
 
 project_path = pathlib.Path(__file__).parent.parent
 sys.path.append(str(project_path))
@@ -14,10 +17,12 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "webapp.settings")
 django.setup()
 
 
-from django.conf import settings  # noqa: F401
-from django.db import transaction  # noqa: F401
+# Pip imports
+from django.conf import settings  # noqa: E402
+from django.db import transaction  # noqa: E402
 
-from core.models import Team, Championship, Location, Phase, Round, Match, SoccerEvent  # noqa: F401
+# Internal imports
+from core.models import Championship, Location, Match, Phase, Round, SoccerEvent, Team  # noqa: E402
 
 
 @attrs.define
@@ -40,7 +45,10 @@ class CalendarEvent:
         if match.location:
             description += f", {match.location.popular_name}"
         return cls(
-            summary=f"{settings.CALENDAR_NAME_PREFIX}[{match.championship.name}] {match.home_team.popular_name} x {match.away_team.popular_name}",
+            summary=(
+                f"{settings.CALENDAR_NAME_PREFIX}[{match.championship.name}] "
+                f"{match.home_team.popular_name} x {match.away_team.popular_name}"
+            ),
             description=description,
             start_datetime=arrow.get(match.start_at).to(timezone),
             start_timezone=timezone,
@@ -112,6 +120,7 @@ def store(event):
 
 
 def fetch():
+    # Pip imports
     from parse import parse
 
     events = parse()

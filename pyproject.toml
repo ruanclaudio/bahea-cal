@@ -10,8 +10,8 @@ authors = [
     {name = "Fernando Mota", email = "nando.mot@gmail.com"},
     {name = "Ivan Neto", email = "ivan.cr.neto@gmail.com"},
     {name = "Kauan Nery", email = "kauannery0500@gmail.com"},
-    {name = "Ruan Claudio", email = "ruanclaudio4@gmail.com"}, 
-    
+    {name = "Ruan Claudio", email = "ruanclaudio4@gmail.com"},
+
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -140,6 +140,7 @@ sections = [
   "FIRSTPARTY",
   "LOCALFOLDER",
 ]
+skip_glob = "**/migrations/**"
 
 [tool.bandit.assert_used]
 excludes = ['*_test.py', '*/test_*.py']

@@ -14,7 +14,7 @@ jobs:
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
-        
+
 
       - name: List root directory contents
         run: ls -la
@@ -22,7 +22,7 @@ jobs:
 
       - name: Verify package.json existence
         run: |
-          cd frontend 
+          cd frontend
           if [ ! -f package.json ]; then
           echo "package.json not found in frontend directory!"
           exit 1

@@ -10,12 +10,18 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
-import sentry_sdk
-import django.db.models.signals
-from socket import gethostname, gethostbyname
+# Python imports
 from pathlib import Path
-from config import djsettings
+from socket import gethostbyname, gethostname
+
+# Pip imports
+import django.db.models.signals
+import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+
+# Internal imports
+from config import djsettings
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

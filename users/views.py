@@ -1,7 +1,9 @@
+# Pip imports
 from django.core.exceptions import BadRequest
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 
+# Internal imports
 from core.models import Team
 
 

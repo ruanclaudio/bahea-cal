@@ -15,18 +15,21 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+# Pip imports
 from django.conf import settings
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
 from django.views.generic import TemplateView
 
+# Internal imports
 from core import views
+
 
 admin.site.site_header = f'[{settings.ENVIRONMENT}] BaheaCal Admin'
 
 
 def trigger_error(request):
-    division_by_zero = 1 / 0
+    _ = 1 / 0
 
 
 urlpatterns = [
