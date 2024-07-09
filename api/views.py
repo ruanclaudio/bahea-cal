@@ -74,7 +74,7 @@ def calendar_token(request):
         print(f"Error: {e}")
         return JsonResponse({"error": str(e)})
     else:
-        return JsonResponse({"sucess": True, 'token': token.key})
+        return JsonResponse({"sucess": True, "token": token.key})
 
 
 @api_view(["GET"])
