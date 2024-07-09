@@ -7,6 +7,7 @@ from django.contrib.auth import login
 from django.http import JsonResponse
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import Flow, InstalledAppFlow
+from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
 
 # Internal imports
@@ -67,11 +68,13 @@ def calendar_token(request):
         user_service.check_calendar(user)
 
         login(request, user)
+        token, created = Token.objects.get_or_create(user=user)
+
     except Exception as e:
         print(f"Error: {e}")
         return JsonResponse({"error": str(e)})
     else:
-        return JsonResponse({"sucess": True})
+        return JsonResponse({"sucess": True, 'token': token.key})
 
 
 @api_view(["GET"])
