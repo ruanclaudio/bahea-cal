@@ -31,13 +31,14 @@ const router = createBrowserRouter([
   },
 
   {
-<<<<<<< HEAD
+      path: "/settings",
+      element: <UserSettings/>
+
+  },
+
+  {
       path: "/settings/edit",
       element: <FormSettings/>,
-=======
-    path: "/settings",
-    element: <UserSettings/>,
->>>>>>> origin/main
   },
 
 ]);
