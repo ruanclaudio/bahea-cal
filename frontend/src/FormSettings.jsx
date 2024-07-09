@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const NotificationForm = () => {
+const Formsettings = () => {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [calendar, setCalendar] = useState('gregorian');
@@ -103,4 +103,4 @@ const NotificationForm = () => {
     );
 };
 
-export default NotificationForm;
+export default Formsettings;
