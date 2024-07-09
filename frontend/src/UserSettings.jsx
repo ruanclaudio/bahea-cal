@@ -26,11 +26,17 @@ const MOCKBIN = "http://localhost:8000/api/v1/user/info";
  */
 const UserSettings = () => {
   const [userData, setUserData] = useState(null);
-
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(MOCKBIN);
+        const response = await axios.get(
+          MOCKBIN,
+          {
+            headers: {
+              "Authorization": "Token cc667d866d62ce770fd90736daa5a8a36d6db6cd",
+            },
+          }
+        );
         console.log('response: ', response);
         setUserData(response.data);
       } catch (error) {

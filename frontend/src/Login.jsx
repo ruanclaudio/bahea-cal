@@ -1,8 +1,15 @@
+import  { useEffect } from 'react';
 import axios from 'axios';
 import { useGoogleLogin } from '@react-oauth/google';
 import {} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+
 
 export default function Login() {
+
+    const navigate = useNavigate();
+
   const scope = [
     "https://www.googleapis.com/auth/calendar",
     "https://www.googleapis.com/auth/calendar.app.created",
@@ -25,6 +32,10 @@ export default function Login() {
       });
 
       console.log('response-data: ', response.data);
+      localStorage.setItem('loginData', JSON.stringify(response.data));
+    
+      
+      // navigate('/outra-pagina');
     } catch (error) {
       console.error('error: ', error);
     }
@@ -37,6 +48,17 @@ export default function Login() {
     prompt: 'consent',
     onSuccess: handleLogin,
   });
+
+
+  useEffect(() => {
+    const loginData = localStorage.getItem('loginData');
+    if (loginData) {
+      // Se os dados de login existirem no localStorage, redirecione o usuário
+      navigate('../settings');
+      console.log(loginData);
+    }
+  }, [navigate]);
+
 
   return (<button onClick={() => login()}> Fazer login</button>);
 }
