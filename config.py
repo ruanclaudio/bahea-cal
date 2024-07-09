@@ -1,5 +1,7 @@
 
+# Pip imports
 from dynaconf import Dynaconf
+
 
 djsettings = Dynaconf(
     envvar_prefix="DJANGO",

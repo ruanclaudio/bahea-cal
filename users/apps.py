@@ -1,3 +1,4 @@
+# Pip imports
 from django.apps import AppConfig
 
 
@@ -6,4 +7,5 @@ class UsersConfig(AppConfig):
     name = "users"
 
     def ready(self):
-        import users.receivers
+        # Internal imports
+        import users.receivers  # noqa: F401

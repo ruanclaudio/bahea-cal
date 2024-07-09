@@ -1,7 +1,10 @@
-import boto3
-import os
-from botocore.exceptions import ClientError, NoCredentialsError
+# Python imports
 import json
+import os
+
+# Pip imports
+import boto3
+from botocore.exceptions import ClientError, NoCredentialsError
 
 
 def get_secret(secret_name, region_name="sa-east-1"):
@@ -11,11 +14,11 @@ def get_secret(secret_name, region_name="sa-east-1"):
             service_name='secretsmanager',
             region_name=region_name
         )
-            
+
         get_secret_value_response = client.get_secret_value(
             SecretId=secret_name
         )
-        
+
     except (ClientError, NoCredentialsError):
         try:
             with open(os.path.join(os.getcwd(), 'webapp/secrets.json'), 'r') as f:

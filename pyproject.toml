@@ -10,8 +10,8 @@ authors = [
     {name = "Fernando Mota", email = "nando.mot@gmail.com"},
     {name = "Ivan Neto", email = "ivan.cr.neto@gmail.com"},
     {name = "Kauan Nery", email = "kauannery0500@gmail.com"},
-    {name = "Ruan Claudio", email = "ruanclaudio4@gmail.com"}, 
-    
+    {name = "Ruan Claudio", email = "ruanclaudio4@gmail.com"},
+
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -53,35 +53,6 @@ prod-only = [
     "gevent>=24.2.1",
     "psycopg2-binary>=2.9.9",
 ]
-[tool.hatch.version]
-path = "bahea_cal/__about__.py"
-
-[tool.hatch.envs.default]
-dependencies = [
-  "coverage[toml]>=6.5",
-  "pytest",
-]
-[tool.hatch.envs.default.scripts]
-test = "pytest {args:tests}"
-test-cov = "coverage run -m pytest {args:tests}"
-cov-report = [
-  "- coverage combine",
-  "coverage report",
-]
-cov = [
-  "test-cov",
-  "cov-report",
-]
-
-[[tool.hatch.envs.all.matrix]]
-python = ["3.8", "3.9", "3.10", "3.11", "3.12"]
-
-[tool.hatch.envs.types]
-dependencies = [
-  "mypy>=1.0.0",
-]
-[tool.hatch.envs.types.scripts]
-check = "mypy --install-types --non-interactive {args:bahea_cal tests}"
 
 [tool.coverage.run]
 source_pkgs = ["bahea_cal", "tests"]
@@ -125,3 +96,51 @@ dev = [
 [tool.pytest.ini_options]
 DJANGO_CONFIGURATION = "webapp.settings"
 python_files = ["tests.py", "test_.py", "_test.py", "testing/python/*.py"]
+
+[tool.black]
+line-length = 120
+target-version = [ "py38" ]
+exclude = '''
+(
+  /(
+      \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+| migrations
+)
+'''
+
+[tool.isort]
+atomic = true
+case_sensitive = true
+filter_files = true
+import_heading_firstparty = "Internal imports"
+import_heading_stdlib = "Python imports"
+import_heading_thirdparty = "Pip imports"
+known_startup = [
+  "startup",
+]
+line_length = 120
+lines_after_imports = 2
+profile = "black"
+py_version = "auto"
+remove_redundant_aliases = true
+sections = [
+  "FUTURE",
+  "STARTUP",
+  "STDLIB",
+  "THIRDPARTY",
+  "FIRSTPARTY",
+  "LOCALFOLDER",
+]
+skip_glob = "**/migrations/**"
+
+[tool.bandit.assert_used]
+excludes = ['*_test.py', '*/test_*.py']
