@@ -1,8 +1,8 @@
+# Pip imports
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import UserCredential
-from .models import UserEvent, UserSubscription, User
+from .models import User, UserCredential, UserEvent, UserSubscription
 
 
 @admin.register(UserCredential)

@@ -1,0 +1,101 @@
+name: Continuous Integration and Delivery
+
+on:
+  push:
+    branches:
+      - main
+  # workflow_dispatch:
+  #   inputs:
+  #     environment:
+  #       required: true
+  #       type: string
+  #       description: 'The environment to deploy to'
+env:
+  BACKEND_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/backend
+  BAHEA_CAL_DEPLOY_TOKEN: ${{ secrets.GHCR_PAT }}
+  ENVIRONMENT: ${{ vars.DJANGO_ENVIRONMENT }}
+
+jobs:
+
+  build:
+    name: Build Docker Images
+    environment:
+      name: staging-bahea-cal
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v2
+      - name: Add environment variables to .env
+        run: |
+          echo "DJANGO_DEBUG=$(echo ${{ vars.DJANGO_DEBUG}} )" >> .env
+          echo "DJANGO_DATABASES__default__HOST=$(echo ${{ secrets.DJANGO_DATABASES__default__HOST }} )" >> .env
+          echo "DJANGO_DATABASES__default__ENGINE=$(echo ${{ secrets.DJANGO_DATABASES__default__ENGINE }} )" >> .env
+          echo "DJANGO_DATABASES__default__NAME=$(echo ${{ secrets.DJANGO_DATABASES__default__NAME }} )" >> .env
+          echo "DJANGO_DATABASES__default__OPTIONS=$(echo ${{ secrets.DJANGO_DATABASES__default__OPTIONS }} )" >> .env
+          echo "DJANGO_DATABASES__default__PORT=$(echo ${{ secrets.DJANGO_DATABASES__default__PORT }} )" >> .env
+          echo "DJANGO_DATABASES__default__USER=$(echo ${{ secrets.DJANGO_DATABASES__default__USER }} )" >> .env
+          echo "DJANGO_DATABASES__default__PASSWORD=$(echo ${{ secrets.DJANGO_DATABASES__default__PASSWORD }} )" >> .env
+          echo "DJANGO_ENVIRONMENT=$(echo ${{ vars.DJANGO_ENVIRONMENT }} )" >> .env
+          echo "DJANGO_ALLOWED_HOSTS=$(echo ${{ secrets.DJANGO_ALLOWED_HOSTS }} )" >> .env
+          echo "DJANGO_BASE_URL=$(echo ${{ vars.DJANGO_BASE_URL }} )" >> .env
+          echo "DJANGO_SECRET_KEY=$(echo ${{ secrets.DJANGO_SECRET_KEY }} )" >> .env
+          echo "DJANGO_SETTINGS_MODULE=$(echo ${{ secrets.DJANGO_SETTINGS_MODULE }} )" >> .env
+          echo "AWS_SECRET_ACCESS_KEY=$(echo ${{ secrets.AWS_SECRET_ACCESS_KEY }} )" >> .env
+          echo "AWS_ACCESS_KEY_ID=$(echo ${{ secrets.AWS_ACCESS_KEY_ID }} )" >> .env
+      - name: Set environment variables
+        run: |
+          echo "BACKEND_IMAGE=$(echo ${{ env.BACKEND_IMAGE }} )" >> $GITHUB_ENV
+          echo "BAHEA_CAL_STAGING_DEPLOY_TOKEN=$(echo ${{ secrets.BAHEA_CAL_STAGING_DEPLOY_TOKEN }} )" >> $GITHUB_ENV
+          echo "ENVIRONMENT=$(echo ${{ vars.DJANGO_ENVIRONMENT }} )" >> $GITHUB_ENV
+      - name: Log in to GitHub Packages
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: gogixweb
+          password: ${{ secrets.GHCR_PAT }}
+      - name: Pull images
+        run: |
+          docker pull ${{ env.BACKEND_IMAGE }} || true
+      - name: Build images
+        run: |
+          docker build . -f Dockerfile -t ${{ env.BACKEND_IMAGE }}:latest
+      - name: Push images
+        run: |
+          docker push ${{ env.BACKEND_IMAGE }}:latest
+
+  deploy:
+    name: Deploy to DigitalOcean
+    environment:
+      name: staging-bahea-cal
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v2
+      - name: Add environment variables to .env
+        run: |
+          echo BAHEA_CAL_DEPLOY_TOKEN=${{ env.BAHEA_CAL_DEPLOY_TOKEN }} >> .env
+          echo ENVIRONMENT=${{ env.ENVIRONMENT }} >> .env
+          echo BACKEND_IMAGE=${{ env.BACKEND_IMAGE }} >> .env
+      - name: Add the private SSH key to the ssh-agent
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          mkdir -p ~/.ssh
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          ssh-add - <<< "${{ secrets.DEPLOY_KEY }}"
+      - name: Build and deploy images on DigitalOcean
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          scp -o StrictHostKeyChecking=no -r ./.env root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }}:/app/${{ env.ENVIRONMENT }}
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} << 'ENDSSH'
+            cd /app/${{ env.ENVIRONMENT }}
+            source .env
+            docker login ghcr.io -u gogixweb -p $BAHEA_CAL_DEPLOY_TOKEN
+            docker pull $BACKEND_IMAGE
+            docker stop bahea-cal-backend-${{ env.ENVIRONMENT }} || true
+            docker rm bahea-cal-backend-${{ env.ENVIRONMENT }} || true
+            docker run -p 28000:8000 -d --name bahea-cal-backend-${{ env.ENVIRONMENT }} $BACKEND_IMAGE
+          ENDSSH

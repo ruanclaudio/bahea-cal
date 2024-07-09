@@ -131,7 +131,7 @@ sorce .venv/bin/activate
 pdm add -d <dependency_name>
 ```
 
-**3. Install the new dependency:** 
+**3. Install the new dependency:**
 
 ```
 pdm install
@@ -287,7 +287,7 @@ sorce .venv/bin/activate
 pdm add -d <nome_da_dependencia>
 ```
 
-**3. Instale a nova dependência:** 
+**3. Instale a nova dependência:**
 
 ```
 pdm install
@@ -304,3 +304,41 @@ pdm show <nome_da_dependencia>
 ```
 pdm export -d -o requirements-dev.txt --without-hashes
 ```
+
+## Como rodar o projeto em REACT.JS
+
+## Passo 1: Configuração da API do Google
+1. Acesse o Google Cloud Console.
+2. Crie um novo projeto ou selecione um projeto existente.
+3. No painel de navegação à esquerda, clique em "APIs e Serviços" > "Biblioteca".
+4. Procure por "Google Calendar API" e ative-a para o seu projeto.
+5. No painel de navegação, vá para "Credenciais".
+6. Crie uma nova credencial de "Chave da API" e salve-a para uso posterior.
+
+## Passo 2: Configuração do Projeto React
+1. Clone este repositório em sua máquina local.
+
+    git clone <URL_DO_REPOSITORIO>
+
+2. Navegue até o diretório do projeto.
+
+cd <NOME_DO_DIRETORIO>
+
+3. Instale as dependências do projeto.
+
+4. Crie um arquivo .env na raiz do projeto e adicione sua chave da API do Google.
+
+
+REACT_APP_GOOGLE_API_KEY=SuaChaveDaAPI
+
+5. Inicie o servidor de desenvolvimento.
+
+npm start
+
+## Passo 3: Testando o Projeto
+Abra o navegador e acesse http://localhost:3000.
+Você deverá ver o projeto React sendo executado.
+Interaja com o projeto para acessar funcionalidades relacionadas ao Google Calendar.
+
+## Observações
+Certifique-se de que sua chave da API do Google está configurada corretamente e que as permissões necessárias estão ativadas para acessar a API do Google Calendar.

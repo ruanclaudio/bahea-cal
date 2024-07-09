@@ -1,8 +1,11 @@
+# Python imports
 import json
 
+# Pip imports
 import arrow
 from google.oauth2.credentials import Credentials as GoogleCredentials
 
+# Internal imports
 from users.models import UserCredential
 
 

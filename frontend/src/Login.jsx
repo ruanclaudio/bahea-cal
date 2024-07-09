@@ -10,7 +10,7 @@ export default function Login() {
     "https://www.googleapis.com/auth/userinfo.profile",
     "openid"
   ];
-  
+
   console.log('escopo configurado:');
   console.log(scope);
 
@@ -20,10 +20,10 @@ export default function Login() {
     try {
       const response = await axios.post('http://localhost:8000/api/v1/calendar/token/', credentialResponse, {
         headers: {
-          'Content-Type': 'application/json',        
+          'Content-Type': 'application/json',
         }
       });
-      
+
       console.log('response-data: ', response.data);
     } catch (error) {
       console.error('error: ', error);
