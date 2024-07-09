@@ -6,4 +6,4 @@ class CoreConfig(AppConfig):
     name = "core"
 
     def ready(self):
-        import core.receivers
+        import core.receivers  # noqa: E401

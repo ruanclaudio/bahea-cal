@@ -55,7 +55,7 @@ def schedule_for(credential):
     for event in events:
         try:
             calendar_event = CalendarEvent.from_parsed(event.event)
-        except:
+        except Exception:
             print(f"Skipping: {event.match.home_team} x {event.match.away_team}")
             continue
 

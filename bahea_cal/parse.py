@@ -4,7 +4,7 @@ import re
 
 import requests
 
-collections.Callable = collections.abc.Callable
+collections.Callable = collections.abc.Callable  # noqa: E401
 
 from bs4 import BeautifulSoup
 

@@ -1,6 +1,8 @@
 import os
 import pathlib
 import sys
+import arrow
+import attrs
 
 import django
 
@@ -11,13 +13,11 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "webapp.settings")
 
 django.setup()
 
-import arrow
-import attrs
 
-from django.conf import settings
-from django.db import transaction
+from django.conf import settings  # noqa: F401
+from django.db import transaction  # noqa: F401
 
-from core.models import Team, Championship, Location, Phase, Round, Match, SoccerEvent
+from core.models import Team, Championship, Location, Phase, Round, Match, SoccerEvent  # noqa: F401
 
 
 @attrs.define
