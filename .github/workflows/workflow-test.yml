@@ -3,6 +3,18 @@ on:
   pull_request:
     branches:
       ['main']
+
+env:
+  DJANGO_SETTINGS_MODULE: webapp.settings
+  DJANGO_DEBUG: true
+  DJANGO_SECRET_KEY: "django-insecure-btjo6xg-test-secret-key"
+  DJANGO_ALLOWED_HOSTS: "*"
+  DJANGO_BASE_URL: "http://test.localhost:8000"
+  DJANGO_DATABASES__default__ENGINE: "django.db.backends.sqlite3"
+  DJANGO_DATABASES__default__NAME: "db.sqlite3"
+  DJANGO_ENVIRONMENT: "test"
+  DJANGO_CALENDAR_NAME_PREFIX: "(test) "
+
 jobs:
   pytest-django:
     runs-on: ubuntu-latest
