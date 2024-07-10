@@ -108,7 +108,7 @@ WSGI_APPLICATION = "webapp.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-if ENVIRONMENT == "dev":
+if ENVIRONMENT in ["dev", "test"]:
     DATABASES = {
         "default": {
             "ENGINE": djsettings.DATABASES__default__ENGINE,
