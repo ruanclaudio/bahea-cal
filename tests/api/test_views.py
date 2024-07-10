@@ -4,30 +4,25 @@ from unittest.mock import patch
 
 # Pip imports
 import pytest
+from rest_framework.test import APIClient
+
+# Internal imports
+from users.models import User, UserCredential
 
 
 @pytest.fixture
 def user():
-    # Internal imports
-    from users.models import User
-
     yield User.objects.create(username=f"test{random.randint(1, 100)}")
 
 
 @pytest.fixture
 def user_with_credential(user):
-    # Internal imports
-    from users.models import UserCredential
-
     UserCredential.objects.create(user=user)
     yield user
 
 
 @pytest.fixture
 def client():
-    # Pip imports
-    from rest_framework.test import APIClient
-
     yield APIClient()
 
 
@@ -38,6 +33,7 @@ def authenticated_client(client, user):
     client.force_authenticate(user=None)
 
 
+@pytest.mark.django_db
 class TestUserInfoView:
 
     def test_get_user_info_missing_credential(self, user):
