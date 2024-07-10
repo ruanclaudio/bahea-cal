@@ -13,6 +13,8 @@ class UserCredential(TimeStampedModel):
     user = models.ForeignKey("users.User", on_delete=models.CASCADE, blank=True, null=True)
 
     def as_dict(self):
+        if not self.credentials:
+            return {"token": "", "refresh_token": "", "token_uri": "", "client_id": "", "client_secret": ""}
         return {**self.credentials, "client_id": self.client_id}
 
 

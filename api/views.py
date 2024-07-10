@@ -79,6 +79,9 @@ def calendar_token(request):
 
 @api_view(["GET"])
 def user_info_view(request):
+    if request.user.is_anonymous:
+        return JsonResponse({"error": "User not authenticated"}, status=403)
+
     credential = UserCredential.objects.get(user=request.user)
     creds = Credentials.from_user_credentials(credential)
 
