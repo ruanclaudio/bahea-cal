@@ -13,7 +13,7 @@ on:
 env:
   FRONTEND_IMAGE: ghcr.io/$(echo $GITHUB_REPOSITORY | tr '[:upper:]' '[:lower:]')/frontend
   BAHEA_CAL_DEPLOY_TOKEN: ${{ secrets.GHCR_PAT }}
-  ENVIRONMENT: ${{ vars.DJANGO_ENVIRONMENT }}-fe
+  ENVIRONMENT: ${{ vars.REACT_ENVIRONMENT }}
 
 jobs:
 
@@ -77,9 +77,9 @@ jobs:
         env:
           SSH_AUTH_SOCK: /tmp/ssh_agent.sock
         run: |
-          scp -o StrictHostKeyChecking=no -r ./.env root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }}:/app/${{ env.ENVIRONMENT }}
+          scp -o StrictHostKeyChecking=no -r ./.env root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }}:/app/fe/${{ env.ENVIRONMENT }}
           ssh -o StrictHostKeyChecking=no root@${{ secrets.DIGITAL_OCEAN_IP_ADDRESS }} << 'ENDSSH'
-            cd /app/${{ env.ENVIRONMENT }}
+            cd /app/fe/${{ env.ENVIRONMENT }}
             source .env
             docker login ghcr.io -u gogixweb -p $BAHEA_CAL_DEPLOY_TOKEN
             docker pull $FRONTEND_IMAGE
