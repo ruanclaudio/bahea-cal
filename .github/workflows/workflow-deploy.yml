@@ -3,7 +3,7 @@ name: Continuous Integration and Delivery
 on:
   push:
     branches:
-      - docker-fe
+      - main
   # workflow_dispatch:
   #   inputs:
   #     environment:
