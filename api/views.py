@@ -1,7 +1,5 @@
-# Python imports
 import os.path
 
-# Pip imports
 from django.conf import settings
 from django.contrib.auth import login
 from django.http import JsonResponse
@@ -9,14 +7,13 @@ from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import Flow, InstalledAppFlow
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
+from rest_framework import status
 
-# Internal imports
 from core.views import UserService
 from users.models import UserCredential
 from users.serializer import UserInfoSerializer
 from users.services import Credentials, CredentialsService
 from webapp.secrets import get_secret
-
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 SCOPES = [
@@ -29,7 +26,6 @@ SCOPES = [
 REDIRECT_URL = f"{settings.BASE_URL}/calendar/redirect/"
 API_SERVICE_NAME = "calendar"
 API_VERSION = "v3"
-
 
 @api_view(["GET"])
 def calendar_init_view(request):
@@ -51,7 +47,6 @@ def calendar_init_view(request):
             return JsonResponse({"authorization_url": authorization_url})
 
     return JsonResponse({"message": "Sucess"})
-
 
 @api_view(["POST"])
 def calendar_token(request):
@@ -76,7 +71,6 @@ def calendar_token(request):
     else:
         return JsonResponse({"sucess": True, "token": token.key})
 
-
 @api_view(["GET"])
 def user_info_view(request):
     credential = UserCredential.objects.get(user=request.user)
@@ -87,7 +81,14 @@ def user_info_view(request):
     serializer = UserInfoSerializer(user_service.remote())
     return JsonResponse(serializer.data, safe=False)
 
-
+@api_view(['GET'])
+def check_user_is_loggedin(request):
+    session_key = request.session.session_key
+    if request.user.is_authenticated:
+        return JsonResponse({"session_key " : session_key}, status=status.HTTP_200_OK)
+    response_data = {"error" : "user has been desconnected"}
+    return JsonResponse(response_data, status=status.HTTP_403_FORBIDDEN)
+    
 @api_view(["GET"])
 def user_json_return(request):
     user_info = {
