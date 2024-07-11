@@ -33,8 +33,8 @@ export default function Login() {
 
       console.log('response-data: ', response.data);
       localStorage.setItem('loginData', JSON.stringify(response.data));
-    
-      
+
+
       // navigate('/outra-pagina');
     } catch (error) {
       console.error('error: ', error);
