@@ -1,5 +1,9 @@
+# Pip imports
 from django.urls import path
+
+# Internal imports
 from api import views
+
 
 urlpatterns = [
     path("v1/calendar/init/", views.calendar_init_view, name="calendar_init"),
