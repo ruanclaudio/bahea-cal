@@ -51,9 +51,8 @@ export default function Login() {
   useEffect(() => {
     const loginData = localStorage.getItem('loginData');
     if (loginData) {
-      // Se os dados de login existirem no localStorage, redirecione o usuário
       navigate('../settings');
-      console.log(loginData);
+     
     }
   }, [navigate]);
 
