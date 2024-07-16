@@ -4,12 +4,10 @@ from unittest.mock import patch
 
 # Pip imports
 import pytest
-from google.auth.transport.requests import Request
 from rest_framework.test import APIClient
 
 # Internal imports
 from users.models import User, UserCredential
-from users.services import CredentialsService
 
 
 @pytest.fixture
@@ -20,11 +18,6 @@ def user():
 @pytest.fixture
 def user_with_credential(user):
     UserCredential.objects.create(user=user)
-    yield user
-
-
-@pytest.fixture
-def user_without_credential(user):
     yield user
 
 
@@ -42,9 +35,7 @@ def authenticated_client(client, user):
 @pytest.mark.django_db
 class TestUserInfoView:
 
-    def test_get_user_info_missing_credential(self, user_without_credential, authenticated_client):
-        user = user_without_credential
-
+    def test_get_user_info_missing_credential(self, authenticated_client):
         response = authenticated_client.get("/api/v1/user/info/")
         assert response.status_code == 404
         assert response.json() == {"error": "Missing Credentials"}

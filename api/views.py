@@ -94,8 +94,6 @@ def user_info_view(request):
         return JsonResponse({"error": "Missing Credentials"}, status=404)
 
 
-
-
 @api_view(["GET"])
 def user_json_return(request):
     user_info = {
