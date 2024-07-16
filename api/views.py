@@ -81,7 +81,7 @@ def calendar_token(request):
 def user_info_view(request):
     if request.user.is_anonymous:
         return JsonResponse({"error": "User not authenticated"}, status=403)
-      
+
     try:
         credential = UserCredential.objects.get(user=request.user)
         if credential:
@@ -89,11 +89,11 @@ def user_info_view(request):
             user_service = UserService.from_credentials(creds)
             user_service.check_calendar(credential.user)
             serializer = UserInfoSerializer(user_service.remote())
-            return JsonResponse(serializer.data, safe=False)           
+            return JsonResponse(serializer.data, safe=False)
     except UserCredential.DoesNotExist:
         return JsonResponse({"error": "Missing Credentials"}, status=404)
 
-    
+
 
 
 @api_view(["GET"])
