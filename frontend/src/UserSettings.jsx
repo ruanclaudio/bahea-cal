@@ -4,24 +4,20 @@ import React, { useEffect, useState } from "react";
 
 console.log(React)
 
-const MOCKBIN = "http://localhost:8000/api/v1/user/info";
+const USER_INFO = "http://localhost:8000/api/v1/user/info/";
 
 
 const UserSettings = () => {
   const [userData, setUserData] = useState(null);
   useEffect(() => {
     async function fetchData() {
-
       try {
-
-        const loginData = localStorage.getItem('loginData');
-
-
+        const accessToken = localStorage.getItem('accessToken');
         const response = await axios.get(
-          MOCKBIN,
+          USER_INFO,
           {
             headers: {
-              "Authorization": "Token " + loginData.token,
+              "Authorization": "Token " + accessToken,
             },
           }
         );
