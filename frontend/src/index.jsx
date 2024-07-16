@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import Login from './Login.jsx'
-
+// import NotificationForm from './NotificationForm';
+import FormSettings from './FormSettings';
 
 
 import {
@@ -30,8 +31,14 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/settings",
-    element: <UserSettings/>,
+      path: "/settings",
+      element: <UserSettings/>
+
+  },
+
+  {
+      path: "/settings/edit",
+      element: <FormSettings/>,
   },
 
 ]);
