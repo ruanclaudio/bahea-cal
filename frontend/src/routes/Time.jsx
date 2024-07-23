@@ -12,8 +12,10 @@ class Time extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='container'>
+        
         <h1>Escolha seu time favorito para Acompanhar:</h1>
+        
         <button onClick={() => this.showLogo('Bahia')}> {/* Alterando para this.showLogo */}
           <img src={BahiaLogo} alt="Bahia" style={{ width: '50px', height: '50px' }} /> Bahia
         </button>

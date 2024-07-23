@@ -35,8 +35,13 @@ export default function Login() {
     flow: 'auth-code',
     access_type: 'offline',
     prompt: 'consent',
-    onSuccess: handleLogin,
+    onSuccess: handleLogin, 
   });
 
-  return (<button onClick={() => login()}> Fazer login</button>);
+  return (
+    <div className="login-container">
+           <button onClick={login} className="login-button">Fazer login</button>
+    </div>
+  );
 }
+
