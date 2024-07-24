@@ -63,7 +63,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #a0a0a0;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -77,6 +77,11 @@ button img {
 
 h1 {
   text-align: center;
+}
+
+h2{
+  text-align: center;
+
 }
 
 button:hover {
@@ -131,7 +136,7 @@ button:focus-visible {
 }
 
 .login-button:hover {
-  background-color: #994949;
+  background-color: #5f5d5d;
 }
 
 
@@ -152,11 +157,59 @@ button:focus-visible {
   
 }
 
+.container {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Estilização específica para o botão "Bahia" */
+.bahia-button {
+  display: flex;
+  align-items: center; /* Centraliza verticalmente o conteúdo do botão */
+  justify-content: center; /* Centraliza horizontalmente o conteúdo do botão */
+  margin: 20px auto; /* Centraliza o botão "Bahia" e adiciona margem */
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #274c85;
+}
+
+.bahia-button img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px; /* Espaço entre a imagem e o texto */
+}
+
+/* Alinha os botões horizontalmente e centraliza-os */
+.horizontal-buttons {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  gap: 20px; /* Espaço entre os botões */
+  margin-top: 20px; /* Espaço acima dos botões */
+}
+
+.horizontal-buttons button {
+  display: flex;
+  align-items: center; /* Centraliza verticalmente o conteúdo do botão */
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #6d6d6d;
+}
+
+.horizontal-buttons button img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px; /* Espaço entre a imagem e o texto */
+}
 
 footer {
   background-color: rgba(0, 0, 0, 0.2);
   text-align: center;
-  padding: 20px 0;
   position: relative;
 }
 
