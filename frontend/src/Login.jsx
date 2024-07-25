@@ -35,7 +35,7 @@ export default function Login() {
     flow: 'auth-code',
     access_type: 'offline',
     prompt: 'consent',
-    onSuccess: handleLogin, 
+    onSuccess: handleLogin,
   });
 
   return (
@@ -44,4 +44,3 @@ export default function Login() {
     </div>
   );
 }
-

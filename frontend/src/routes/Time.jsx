@@ -16,7 +16,7 @@ class Time extends React.Component {
   render() {
     return (
       <div className='container'>
-        
+
         <h1>Adicione Jogos do Seu Time</h1>
 
         <h3>no calendário do seu celular</h3>
@@ -36,15 +36,15 @@ class Time extends React.Component {
           <img src={palmeiraslogo} alt="Palmeiras" style={{ width: '50px', height: '50px' }} /> Palmeiras
         </button>
         <button onClick={() => this.showLogo('Flamengo')}> {/* Alterando para this.showLogo e corrigindo o nome do time */}
-          <img src={corinthiaslogo} alt="corinthinas" style={{ width: '50px', height: '50px' }} /> Corinthians 
+          <img src={corinthiaslogo} alt="corinthinas" style={{ width: '50px', height: '50px' }} /> Corinthians
         </button>
         <button onClick={() => this.showLogo('Fluminense')}> {/* Alterando para this.showLogo e corrigindo o nome do time */}
-          <img src={fluminenselogo} alt="fluminense" style={{ width: '50px', height: '50px' }} /> Fluminense 
-        </button>   
+          <img src={fluminenselogo} alt="fluminense" style={{ width: '50px', height: '50px' }} /> Fluminense
+        </button>
         <button onClick={() => this.showLogo('Atletico')}> {/* Alterando para this.showLogo e corrigindo o nome do time */}
-          <img src={atleticologo} alt="atletico" style={{ width: '50px', height: '50px' }} /> Atlético 
-        </button>   
-        </div>     
+          <img src={atleticologo} alt="atletico" style={{ width: '50px', height: '50px' }} /> Atlético
+        </button>
+        </div>
       </div>
     </div>
     );
