@@ -1,5 +1,7 @@
+# Pip imports
 from django.contrib import admin
-from .models import Team, Championship, Location, Phase, Round, Match, SoccerEvent
+
+from .models import Championship, Location, Match, Phase, Round, SoccerEvent, Team
 
 
 @admin.register(Team)

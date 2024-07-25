@@ -1,9 +1,14 @@
+# Python imports
 import os
 import pathlib
 import sys
 
+# Pip imports
 import arrow
 import django
+import googleapiclient.discovery
+from google.auth.transport.requests import Request
+
 
 project_path = pathlib.Path(__file__).parent.parent
 sys.path.append(str(project_path))
@@ -12,13 +17,12 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "webapp.settings")
 
 django.setup()
 
-import googleapiclient.discovery
 
-from bahea_cal.fetch import CalendarEvent
-from google.auth.transport.requests import Request
+# Internal imports
+from bahea_cal.fetch import CalendarEvent  # noqa: E402
+from users.models import UserCredential, UserEvent  # noqa: E402
+from users.services import Credentials, CredentialsService  # noqa: E402
 
-from users.services import Credentials, CredentialsService
-from users.models import UserCredential, UserEvent
 
 SCOPES = [
     "https://www.googleapis.com/auth/calendar.app.created",
@@ -42,7 +46,7 @@ def get_service(user_credentials):
             CredentialsService.update_for(user_credentials.user, creds)
         else:
             raise ScheduleException(
-                f"Credentials for user %s invalid or expired, and unable to refresh", user_credentials.user.username
+                "Credentials for user %s invalid or expired, and unable to refresh", user_credentials.user.username
             )
     return googleapiclient.discovery.build(API_SERVICE_NAME, API_VERSION, credentials=creds)
 
@@ -55,7 +59,7 @@ def schedule_for(credential):
     for event in events:
         try:
             calendar_event = CalendarEvent.from_parsed(event.event)
-        except:
+        except Exception:
             print(f"Skipping: {event.match.home_team} x {event.match.away_team}")
             continue
 
@@ -101,7 +105,7 @@ def update_for(credential):
     for event in events:
         try:
             calendar_event = CalendarEvent.from_parsed(event.event)
-        except:
+        except Exception:
             print(f"Failed to parse: {event.match}")
             continue
 

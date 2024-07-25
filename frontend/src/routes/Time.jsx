@@ -30,10 +30,10 @@ class Time extends React.Component {
 
         <div className="horizontal-buttons">
         <button onClick={() => this.showLogo('Flamengo')}> {/* Alterando para this.showLogo e corrigindo o nome do time */}
-          <img src={flamengologo} alt="Flamengo" style={{ width: '50px', height: '50px' }} /> Flamengo 
+          <img src={flamengologo} alt="Flamengo" style={{ width: '50px', height: '50px' }} /> Flamengo
         </button>
         <button onClick={() => this.showLogo('Palmeiras')}> {/* Alterando para this.showLogo e corrigindo o nome do time */}
-          <img src={palmeiraslogo} alt="Palmeiras" style={{ width: '50px', height: '50px' }} /> Palmeiras 
+          <img src={palmeiraslogo} alt="Palmeiras" style={{ width: '50px', height: '50px' }} /> Palmeiras
         </button>
         <button onClick={() => this.showLogo('Flamengo')}> {/* Alterando para this.showLogo e corrigindo o nome do time */}
           <img src={corinthiaslogo} alt="corinthinas" style={{ width: '50px', height: '50px' }} /> Corinthians 

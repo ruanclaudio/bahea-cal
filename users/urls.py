@@ -1,7 +1,10 @@
-from django.contrib.auth.views import auth_login, auth_logout, logout_then_login
+# Pip imports
+from django.contrib.auth.views import auth_login, logout_then_login
 from django.urls import path
 
+# Internal imports
 from users import views
+
 
 urlpatterns = [
     path("login/", auth_login, name="login"),

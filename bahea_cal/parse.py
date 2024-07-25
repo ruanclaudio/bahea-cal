@@ -1,12 +1,16 @@
+# Python imports
 import collections
 import json
 import re
 
+# Pip imports
 import requests
+
 
 collections.Callable = collections.abc.Callable
 
-from bs4 import BeautifulSoup
+# Pip imports
+from bs4 import BeautifulSoup  # noqa: E402
 
 
 class Team:

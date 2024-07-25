@@ -8,21 +8,21 @@ const MOCKBIN = "http://localhost:8000/api/v1/user/info";
 
 //CONTRATO
 /**
- * 
-{ 
-  "first_name": "Joao", 
-  "last_name": "Silva", 
+ *
+{
+  "first_name": "Joao",
+  "last_name": "Silva",
   "user_email": "user@mail.com",
-  "photo":"https://st3.depositphotos.com/15648834/17930/v/450/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg", 
-  "teams": { 
+  "photo":"https://st3.depositphotos.com/15648834/17930/v/450/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg",
+  "teams": {
      "team1": "<team_name_1>""team2": "<team_name_2>"..."teamN": "<team_name_N>" }
-  "time_to_match": { 
+  "time_to_match": {
      "time1": "value_in_seconds_1", "time2":"value_in_seconds_2", ...}
 }
- * 
- * 
- * 
- * 
+ *
+ *
+ *
+ *
  */
 const UserSettings = () => {
   const [userData, setUserData] = useState(null);
@@ -44,7 +44,7 @@ const UserSettings = () => {
     return <p>Carregando...</p>;
   }
 
-  
+
   return (
     <div className="container">
       <div className="user-info">

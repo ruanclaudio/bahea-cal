@@ -1,7 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import Login from './Login.jsx'
+
 import './index.css'; 
+// import NotificationForm from './NotificationForm';
+import FormSettings from './FormSettings';
+
 
 import {
   createBrowserRouter,
@@ -29,8 +33,14 @@ const router = createBrowserRouter([
   },
 
   {
-    path: "/settings",
-    element: <UserSettings/>,
+      path: "/settings",
+      element: <UserSettings/>
+
+  },
+
+  {
+      path: "/settings/edit",
+      element: <FormSettings/>,
   },
 
 ]);
