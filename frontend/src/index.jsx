@@ -1,18 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import Login from './Login.jsx'
+
+import './index.css';
 // import NotificationForm from './NotificationForm';
-import FormSettings from './FormSettings';
-
-
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Time from "./routes/Time.jsx";
+
+import Login from './components/Login.jsx'
+import FormSettings from './components/FormSettings.jsx';
+import Club from "./components/Club.jsx";
+import UserSettings from './components/UserSettings.jsx';
 import  { GoogleOAuthProvider }  from  '@react-oauth/google' ;
 import './index.css'
-import UserSettings from './UserSettings.jsx';
 
 const router = createBrowserRouter([
 
@@ -27,7 +29,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/time",
-    element: <Time />,
+    element: <Club/>,
   },
 
   {
