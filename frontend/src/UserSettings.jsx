@@ -4,33 +4,23 @@ import React, { useEffect, useState } from "react";
 
 console.log(React)
 
-const MOCKBIN = "http://localhost:8000/api/v1/user/info";
+const USER_INFO = "http://localhost:8000/api/v1/user/info/";
 
-//CONTRATO
-/**
- *
-{
-  "first_name": "Joao",
-  "last_name": "Silva",
-  "user_email": "user@mail.com",
-  "photo":"https://st3.depositphotos.com/15648834/17930/v/450/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg",
-  "teams": {
-     "team1": "<team_name_1>""team2": "<team_name_2>"..."teamN": "<team_name_N>" }
-  "time_to_match": {
-     "time1": "value_in_seconds_1", "time2":"value_in_seconds_2", ...}
-}
- *
- *
- *
- *
- */
+
 const UserSettings = () => {
   const [userData, setUserData] = useState(null);
-
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await axios.get(MOCKBIN);
+        const accessToken = localStorage.getItem('accessToken');
+        const response = await axios.get(
+          USER_INFO,
+          {
+            headers: {
+              "Authorization": "Token " + accessToken,
+            },
+          }
+        );
         console.log('response: ', response);
         setUserData(response.data);
       } catch (error) {
