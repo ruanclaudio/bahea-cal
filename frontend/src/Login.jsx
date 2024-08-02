@@ -1,13 +1,20 @@
+import  { useEffect } from 'react';
 import axios from 'axios';
 import { useGoogleLogin } from '@react-oauth/google';
 import {} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+
 
 export default function Login() {
+
+  const navigate = useNavigate();
+
   const scope = [
-    "https://www.googleapis.com/auth/calendar",
     "https://www.googleapis.com/auth/calendar.app.created",
     "https://www.googleapis.com/auth/userinfo.email",
     "https://www.googleapis.com/auth/userinfo.profile",
+    "https://www.googleapis.com/auth/calendar",
     "openid"
   ];
 
@@ -25,13 +32,15 @@ export default function Login() {
       });
 
       console.log('response-data: ', response.data);
+      localStorage.setItem('loginData', JSON.stringify(response.data));
+
     } catch (error) {
       console.error('error: ', error);
     }
   }
 
   const login = useGoogleLogin({
-    scope: "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/calendar.app.created https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid",
+    scope: "https://www.googleapis.com/auth/calendar.app.created https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/calendar openid",
     flow: 'auth-code',
     access_type: 'offline',
     prompt: 'consent',
