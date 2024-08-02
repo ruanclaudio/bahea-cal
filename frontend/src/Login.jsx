@@ -1,14 +1,14 @@
-import  { useEffect } from 'react';
+// import  { useEffect } from 'react';
 import axios from 'axios';
 import { useGoogleLogin } from '@react-oauth/google';
 import {} from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 
 
 export default function Login() {
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const scope = [
     "https://www.googleapis.com/auth/calendar.app.created",
@@ -47,15 +47,9 @@ export default function Login() {
     onSuccess: handleLogin,
   });
 
-
-  useEffect(() => {
-    const loginData = localStorage.getItem('accessToken');
-    if (loginData) {
-      navigate('../settings');
-
-    }
-  }, [navigate]);
-
-
-  return (<button onClick={() => login()}> Fazer login</button>);
+  return (
+    <div className="login-container">
+           <button onClick={login} className="login-button">Fazer login</button>
+    </div>
+  );
 }
