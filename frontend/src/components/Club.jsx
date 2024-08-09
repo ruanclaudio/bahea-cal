@@ -45,8 +45,7 @@ export default function Club(){
         const response = await axios.post(apiUrl, credentialResponse, {
           headers: {
             'Content-Type': 'application/json',
-          } 
-          
+          }       
         });
 
         console.log('response-data: ', response.data);
