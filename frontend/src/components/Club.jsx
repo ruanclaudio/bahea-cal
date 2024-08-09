@@ -29,6 +29,7 @@ export default function Club(){
   // }
 
   const handleLogin = async (credentialResponse) => {
+    let apiUrl;
     console.log('credential Response', credentialResponse);
 
     if(process.env.NODE_ENV === 'production'){
@@ -44,7 +45,8 @@ export default function Club(){
         const response = await axios.post(apiUrl, credentialResponse, {
           headers: {
             'Content-Type': 'application/json',
-          }
+          } 
+          
         });
 
         console.log('response-data: ', response.data);
