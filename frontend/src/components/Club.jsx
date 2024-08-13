@@ -29,17 +29,9 @@ export default function Club(){
   // }
 
   const handleLogin = async (credentialResponse) => {
-    let apiUrl;
+    const apiUrl = process.env.REACT_APP_API_URL;
+    
     console.log('credential Response', credentialResponse);
-
-    if(process.env.NODE_ENV === 'production'){
-      apiUrl = process.env.REACT_APP_API_URL_PROD;
-    } else if (process.env.NODE_ENV === 'staging') {
-      apiUrl = process.env.REACT_APP_API_URL_STAGING;
-    } else {
-      apiUrl = process.env.REACT_APP_API_URL;
-    }
-
 
     try {
         const response = await axios.post(apiUrl, credentialResponse, {
