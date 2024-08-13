@@ -30,7 +30,7 @@ export default function Club(){
 
   const handleLogin = async (credentialResponse) => {
     const apiUrl = process.env.REACT_APP_API_URL;
-    
+
     console.log('credential Response', credentialResponse);
 
     try {
