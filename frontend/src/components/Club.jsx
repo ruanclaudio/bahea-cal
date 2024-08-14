@@ -29,12 +29,17 @@ export default function Club(){
   // }
 
   const handleLogin = async (credentialResponse) => {
+    const apiUrl = process.env.REACT_APP_API_URL + '/api/v1/calendar/token/';
+
+
     console.log('credential Response', credentialResponse);
+
     try {
-        const response = await axios.post('http://localhost:8000/api/v1/calendar/token/', credentialResponse, {
+        const response = await axios.post(apiUrl, credentialResponse, {
           headers: {
             'Content-Type': 'application/json',
-          }
+        }
+
         });
 
         console.log('response-data: ', response.data);
