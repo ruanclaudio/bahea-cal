@@ -9,7 +9,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import Login from './components/Login.jsx'
+//import Login from './components/Login.jsx'
 import FormSettings from './components/FormSettings.jsx';
 import Club from "./components/Club.jsx";
 import UserSettings from './components/UserSettings.jsx';
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
 
   {
       path:"/",
-      element: <Login/>,
+      element: <Club/>,
 
   },
   {
