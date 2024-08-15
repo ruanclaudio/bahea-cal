@@ -29,8 +29,12 @@ jobs:
         run: |
           echo REACT_APP_GOOGLE_CLIENT_ID=$(echo ${{ secrets.REACT_APP_GOOGLE_CLIENT_ID }} ) >> .env
           echo REACT_APP_GOOGLE_CLIENT_API_KEY=$(echo ${{ secrets.REACT_APP_GOOGLE_CLIENT_API_KEY }} ) >> .env
+<<<<<<< HEAD
           echo REACT_APP_API_URL=$(echo ${{ secrets.REACT_APP_API_URL }} ) >> .env
 
+=======
+          mv ./.env ./frontend/.env
+>>>>>>> main
 
       - name: Set environment variables
         run: |
