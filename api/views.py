@@ -84,7 +84,6 @@ def calendar_token(request):
 def user_info_view(request):
     credential = UserCredential.objects.get(user=request.user)
     creds = Credentials.from_user_credentials(credential)
-
     user_service = UserService.from_credentials(creds)
     user_service.check_calendar(credential.user)
     serializer = UserInfoSerializer(user_service.remote())
