@@ -59,7 +59,7 @@ def calendar_init_view(request):
 @api_view(["POST"])
 def calendar_token(request):
     config = get_secret(f"{settings.ENVIRONMENT}/google/calendar")
-    flow = Flow.from_client_config(config, scopes=SCOPES,redirect_uri=DJANGO_BASE_APP_URL)
+    flow = Flow.from_client_config(config, scopes=SCOPES, redirect_uri=settings.BASE_APP_URL)
     code = request.data["code"]
 
     try:
