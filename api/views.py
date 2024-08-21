@@ -59,7 +59,7 @@ def calendar_init_view(request):
 @api_view(["POST"])
 def calendar_token(request):
     config = get_secret(f"{settings.ENVIRONMENT}/google/calendar")
-    flow = Flow.from_client_config(config, scopes=SCOPES, redirect_uri="http://localhost:3000")
+    flow = Flow.from_client_config(config, scopes=SCOPES, redirect_uri=settings.BASE_APP_URL)
     code = request.data["code"]
 
     try:
@@ -84,7 +84,6 @@ def calendar_token(request):
 def user_info_view(request):
     credential = UserCredential.objects.get(user=request.user)
     creds = Credentials.from_user_credentials(credential)
-
     user_service = UserService.from_credentials(creds)
     user_service.check_calendar(credential.user)
     serializer = UserInfoSerializer(user_service.remote())
