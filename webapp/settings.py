@@ -22,6 +22,7 @@ from sentry_sdk.integrations.django import DjangoIntegration
 # Internal imports
 from config import djsettings
 
+
 # requests
 BASE_APP_URL = "http://localhost:3000"
 
