@@ -22,7 +22,8 @@ from sentry_sdk.integrations.django import DjangoIntegration
 # Internal imports
 from config import djsettings
 
-#request 
+
+#request
 BASE_APP_URL="http://localhost:3000"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
