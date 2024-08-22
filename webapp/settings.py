@@ -11,14 +11,13 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 # Python imports
-import os
+
 from pathlib import Path
 from socket import gethostbyname, gethostname
 
 # Pip imports
 import django.db.models.signals
 import sentry_sdk
-from dotenv import load_dotenv
 from sentry_sdk.integrations.django import DjangoIntegration
 
 # Internal imports
