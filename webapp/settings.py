@@ -13,18 +13,22 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 # Python imports
 from pathlib import Path
 from socket import gethostbyname, gethostname
+import os 
 
 # Pip imports
 import django.db.models.signals
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+from dotenv import load_dotenv
 
 # Internal imports
 from config import djsettings
 
 
 # requests
-BASE_APP_URL = "http://localhost:3000"
+load_dotenv()
+ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
+BASE_APP_URL = os.getenv('BASE_APP_URL', 'http://localhost:3000')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
