@@ -26,10 +26,8 @@ from config import djsettings
 
 
 # requests
-load_dotenv()
-ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
-BASE_APP_URL = os.getenv('BASE_APP_URL', 'http://localhost:3000')
 
+BASE_APP_URL = djsettings.BASE_APP_URL
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
