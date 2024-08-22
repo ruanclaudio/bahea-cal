@@ -43,7 +43,7 @@ jobs:
           echo "AWS_SECRET_ACCESS_KEY=$(echo ${{ secrets.AWS_SECRET_ACCESS_KEY }} )" >> .env
           echo "AWS_ACCESS_KEY_ID=$(echo ${{ secrets.AWS_ACCESS_KEY_ID }} )" >> .env
           echo "BASE_APP_URL=$(echo ${{ vars.BASE_APP_URL }} )" >> .env
-        
+
       - name: Set environment variables
         run: |
           echo "BACKEND_IMAGE=$(echo ${{ env.BACKEND_IMAGE }} )" >> $GITHUB_ENV
