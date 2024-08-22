@@ -24,8 +24,8 @@ from config import djsettings
 
 
 # requests
-
 BASE_APP_URL = djsettings.BASE_APP_URL
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
