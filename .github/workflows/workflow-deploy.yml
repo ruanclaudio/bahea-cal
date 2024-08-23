@@ -31,7 +31,7 @@ jobs:
           echo "AWS_SECRET_ACCESS_KEY=$(echo ${{ secrets.AWS_SECRET_ACCESS_KEY }} )" >> .env
           echo "DJANGO_ALLOWED_HOSTS=$(echo ${{ secrets.DJANGO_ALLOWED_HOSTS }} )" >> .env
           echo "DJANGO_BASE_APP_URL=$(echo ${{ vars.DJANGO_BASE_APP_URL }} )" >> .env
-          echo "DJANGO_BASE_URL=$(echo ${{ vars.DJANGO_BASE_URL }} )" >> .env         
+          echo "DJANGO_BASE_URL=$(echo ${{ vars.DJANGO_BASE_URL }} )" >> .env
           echo "DJANGO_DATABASES__default__HOST=$(echo ${{ secrets.DJANGO_DATABASES__default__HOST }} )" >> .env
           echo "DJANGO_DATABASES__default__ENGINE=$(echo ${{ secrets.DJANGO_DATABASES__default__ENGINE }} )" >> .env
           echo "DJANGO_DATABASES__default__NAME=$(echo ${{ secrets.DJANGO_DATABASES__default__NAME }} )" >> .env
@@ -40,9 +40,9 @@ jobs:
           echo "DJANGO_DATABASES__default__USER=$(echo ${{ secrets.DJANGO_DATABASES__default__USER }} )" >> .env
           echo "DJANGO_DATABASES__default__PASSWORD=$(echo ${{ secrets.DJANGO_DATABASES__default__PASSWORD }} )" >> .env
           echo "DJANGO_DEBUG=$(echo ${{ vars.DJANGO_DEBUG}} )" >> .env
-          echo "DJANGO_ENVIRONMENT=$(echo ${{ vars.DJANGO_ENVIRONMENT }} )" >> .env        
+          echo "DJANGO_ENVIRONMENT=$(echo ${{ vars.DJANGO_ENVIRONMENT }} )" >> .env
           echo "DJANGO_SECRET_KEY=$(echo ${{ secrets.DJANGO_SECRET_KEY }} )" >> .env
-          echo "DJANGO_SETTINGS_MODULE=$(echo ${{ secrets.DJANGO_SETTINGS_MODULE }} )" >> .env               
+          echo "DJANGO_SETTINGS_MODULE=$(echo ${{ secrets.DJANGO_SETTINGS_MODULE }} )" >> .env
 
       - name: Set environment variables
         run: |
