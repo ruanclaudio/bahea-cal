@@ -1,3 +1,5 @@
+#cleanup
+get-pip.py
 
 node_modules/
 secrets.json
